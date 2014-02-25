@@ -1,0 +1,139 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+html, body
+{
+    font-family: Calibri;
+    font-size: 12pt;
+    color: #5B5A50;
+}
+.wrapper, .footer, .header,
+.header .menu
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+}
+h1, h2, h3, h4, h5, h6
+{
+    font-family: Arial;
+    font-weight: 900;
+}
+.header
+{
+    
+}
+.header .menu
+{
+    background: #5B5A50;
+    padding: 15px 20px;
+}
+.header .menu li
+{
+    float: left;
+}
+.header .menu li img
+{
+    margin-right: 40px;
+}
+.header .menu li a
+{
+    text-transform: uppercase;
+    display: block;
+    color: white;
+    padding: 0 15px;
+    line-height: 70px;
+    text-decoration: none;
+}
+.header .menu li a:hover
+{
+    text-decoration: underline;
+}
+.wrapper
+{
+    padding: 15px 20px;
+}
+
+.item
+{
+    padding: 0px;
+    box-shadow: 0 0 5px rgb(200,200,200);
+    border-radius: 5px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+.item .text
+{
+    font-family: Calibri;
+    padding: 10px 20px;
+}
+.item .text ul
+{
+    list-style: none;
+    padding-left: 2em;
+}
+.item .text .param
+{
+    font-weight: bold;
+}
+.item .text .table
+{
+    border: 1px solid rgb(245,240,235);
+    padding-left: 0px;
+    border-radius: 3px;
+}
+.item .text .table li
+{
+    cursor: default;
+}
+.item .text .table li:first-child
+{
+    background: rgb(245,240,235);
+}
+.item .text .table li:hover
+{
+    background: rgb(245,240,235);
+}
+.item .text .table li .param,
+.item .text .table li .info,
+.item .text .table li .type
+{
+    display: block;
+    float: left;
+}
+.item .text .table li .param
+{
+    width: 10%;
+    text-align: right;
+}
+.item .text .table li .type
+{
+    font-style: italic;
+    width: 8%;
+    text-align: center;
+}
+.item .text .table li .info
+{
+    
+}
+.item h4
+{
+    padding: 10px 20px;
+    background: #5B5A50;
+    color: white;
+}
+.footer
+{
+    
+}
+
+.header .menu:after,
+.item .text .table li:after
+{
+    content: '';
+    clear: both;
+    display: block;
+}
