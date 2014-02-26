@@ -31,7 +31,8 @@
  */
 class TrUser extends CActiveRecord
 {
-    public function getDbConnection(){
+    public function getDbConnection()
+    {
         return Yii::app()->db_exch;
     }
     /**
