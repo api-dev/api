@@ -50,8 +50,8 @@ class TrUser extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('inn, status, phone', 'numerical', 'integerOnly'=>true),
-            array('login', 'length', 'max'=>64),
+            array('status, phone', 'numerical', 'integerOnly'=>true),
+            array('inn, login', 'length', 'max'=>64),
             array('email', 'email', 'message'=>'Неправильный Email адрес'),
             array('company, country, region, city, district, name, secondname, surname, password, email', 'safe'),
             // The following rule is used by search().
