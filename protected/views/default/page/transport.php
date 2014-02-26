@@ -19,10 +19,16 @@
                     <li><span class="param">currency</span> <span class="type">(integer)</span> <span class="info">Валюта. 0 - рубли(руб), 1 - доллары($), 2 - евро(€)</span> </li>
                     <li><span class="param">location_from</span> <span class="type">(string)</span> <span class="info">Место загрузки</span> </li>
                     <li><span class="param">location_to</span> <span class="type">(string)</span> <span class="info">Место разгрузки</span> </li>
-                    <li><span class="param">date_from</span> <span class="type">(date)</span> <span class="info">Дата загрузки. Формат - YYYY-MM-DD 08:00:00</span> </li>
-                    <li><span class="param">date_to</span> <span class="type">(date)</span> <span class="info">Дата разгрузки. Формат - YYYY-MM-DD 08:00:00</span> </li>
+                    <li><span class="param">date_from</span> <span class="type">(date)</span> <span class="info">Дата загрузки. Формат - YYYY-MM-DD</span> </li>
+                    <li><span class="param">date_to</span> <span class="type">(date)</span> <span class="info">Дата разгрузки. Формат - YYYY-MM-DD</span> </li>
                     <li><span class="param">auto_info</span> <span class="type">(string)</span> <span class="info">Информация об автомобиле</span> </li>
                     <li><span class="param">description</span> <span class="type">(string)</span> <span class="info">Описание</span> </li>
+                    <li><span class="param">points</span> <span class="type">(array)</span> <span class="info">Массив с промежуточными точками:<ul class="table">
+                                <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                                <li><span class="param">point</span> <span class="type">(string)</span> <span class="info">Название/место</span> </li>
+                                <li><span class="param">date</span> <span class="type">(date)</span> <span class="info">Дата. Формат - YYYY-MM-DD</span>
+                        </ul></span>
+                    </li>
                 </ul>
             </li>
             <li><br>Принимаемые параметры <span class="param">data</span> при <span class="param">action=user:</span></li>
@@ -49,6 +55,11 @@
     data[1][t_id] = '1N34'
     data[1][type] = '0'
     data[1][user_id] = '82324'
+    data[1][location_from] = 'Ставрополь'
+    data[1][points][1][point] = 'Уфа'
+    data[1][points][1][date] = '2014-03-14'
+    data[1][points][2][point] = 'Москва'
+    data[1][points][2][date] = '2014-03-16'
     ...
     data[2][t_id] = '2U52'
     data[2][type] = '1'

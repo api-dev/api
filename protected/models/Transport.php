@@ -148,4 +148,10 @@ class Transport extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        protected function beforeSave() {
+            parent::beforeSave();
+            $this->date_from = date('Y-m-d H:i:s', strtotime($this->date_from . ' 08:00:00'));
+            return true;
+        }
 }

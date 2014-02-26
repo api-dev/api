@@ -18,6 +18,8 @@ class TrController extends Controller
 
     public function actionTest()
     {
+        echo date('Y-m-d H:i:s', strtotime('2014-02-28 08:00:00'));
+        exit();
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         $request = $post ? array_merge_recursive($post, $get) : $get;
@@ -25,33 +27,25 @@ class TrController extends Controller
             var_dump($request);
         echo '</pre>';
         exit();
-//        $post = filter_input_array(INPUT_POST);
-//        $get = filter_input_array(INPUT_GET);
-//        $transport = $post ? array_merge_recursive($post, $get) : $get;
-//        $app = Yii::app();
-//
-//        $command = $app->db_exch->createCommand();
-//        $old = $command->select('id')->from('transport')
-//            ->where('id_1c=:t_id', array(':t_id'=>$transport['t_id']))->queryRow();
-//        if($old)
-//            var_dump($old);
-
-        echo CActiveRecord::model('Transport')->getAttributeLabel('t_id');
     }
 
     private function setTransport($request)
     {
         $data = $request['data'];
         if (!$data || empty($data))
-            return $this->result('Ошибка. Нет данных о перевозке. Попробуйте еще раз.');
+            return $this->result(' Ошибка. Нет данных о перевозке. Попробуйте еще раз.');
 
         if (isset($data['t_id'])){
-            $this->setOneItem('Transport', $data, 't_id');
+            $id = $this->setOneItem('Transport', $data, 't_id');
+            if($id && $data['points'])
+                $this->setInterPoint((int)$id, $data['points']);
         }else{
             foreach ($data as $transport):
-                $this->setOneItem('Transport', $transport, 't_id');
+                $id = $this->setOneItem('Transport', $transport, 't_id');
+                if($id && $transport['points'])
+                    $this->setInterPoint((int)$id, $transport['points']);
             endforeach;
-            return $this->result('Выгрузка перевозок закончена.');
+            return $this->result(' Выгрузка перевозок закончена.');
         }
     }
 
@@ -68,6 +62,26 @@ class TrController extends Controller
                 $this->setOneItem('TrUser', $user, 'inn');
             endforeach;
             return $this->result('Выгрузка перевозчиков закончена.');
+        }
+    }
+
+    private function setInterPoint($id, $point)
+    {
+        if(isset($id) && is_array($point) && !empty($point))
+        {
+            TransportInterPoint::model()->deleteAll('t_id=:tid', array(':tid'=>$id));
+            foreach ($point as $i=>$p)
+            {
+                if(!empty($p)){
+                    $new = new TransportInterPoint;
+                    $new->t_id = $id;
+                    $new->point = $p['point'];
+                    $new->date = date('Y-m-d H:i:s', strtotime($p['date'] . ' 08:00:00'));
+                    $new->sort = $i;
+                    if(!$new->validate() || !$new->save())
+                        return $this->result($new->getErrors());
+                }
+            }
         }
     }
 
@@ -161,7 +175,7 @@ class TrController extends Controller
             }
             if ($model->validate() && $model->save()){
                 $transaction->commit();
-                return $this->result('Сохранение произошло успешно.');
+                return $model->id;
             }
             $transaction->rollback();
             return $this->result($model->getErrors());

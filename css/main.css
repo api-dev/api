@@ -84,6 +84,7 @@ h1, h2, h3, h4, h5, h6
     border: 1px solid rgb(245,240,235);
     padding-left: 0px;
     border-radius: 3px;
+    clear: both;
 }
 .item .text .table li
 {
@@ -117,7 +118,7 @@ h1, h2, h3, h4, h5, h6
 }
 .item .text .table li .info
 {
-    
+    width: 82%
 }
 .item h4
 {
