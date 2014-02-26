@@ -11,7 +11,7 @@
  * @property integer $start_rate
  * @property integer $status
  * @property integer $type
- * @property integer $user_id
+ * @property string $user_id
  * @property integer $currency
  * @property string $location_from
  * @property string $location_to
@@ -22,7 +22,6 @@
  * @property string $date_published
  *
  * The followings are the available model relations:
- * @property Message[] $messages
  * @property Rate[] $rates
  * @property TransportFieldEq[] $transportFieldEqs
  * @property UserEvent[] $userEvents
@@ -34,6 +33,7 @@ class Transport extends CActiveRecord
         {
             return Yii::app()->db_exch;
         }
+        
 	/**
 	 * @return string the associated database table name
 	 */
@@ -50,8 +50,8 @@ class Transport extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			//array('new_transport, rate_id, start_rate, status, type, user_id, currency', 'numerical', 'integerOnly'=>true),
-			array('t_id', 'length', 'max'=>64),
+			array('new_transport, rate_id, start_rate, status, type, currency', 'numerical', 'integerOnly'=>true),
+			array('t_id, user_id', 'length', 'max'=>64),
 			array('location_from, location_to, auto_info, description, date_from, date_to, date_published', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -67,7 +67,6 @@ class Transport extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'messages' => array(self::HAS_MANY, 'Message', 'transport_id'),
 			'rates' => array(self::HAS_MANY, 'Rate', 'transport_id'),
 			'transportFieldEqs' => array(self::HAS_MANY, 'TransportFieldEq', 'transport_id'),
 			'userEvents' => array(self::HAS_MANY, 'UserEvent', 'transport_id'),
@@ -124,7 +123,7 @@ class Transport extends CActiveRecord
 		$criteria->compare('start_rate',$this->start_rate);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('type',$this->type);
-		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('user_id',$this->user_id,true);
 		$criteria->compare('currency',$this->currency);
 		$criteria->compare('location_from',$this->location_from,true);
 		$criteria->compare('location_to',$this->location_to,true);
