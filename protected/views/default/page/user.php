@@ -22,8 +22,8 @@
                         <li><span class="param">direction</span> <span class="type">(string)</span> <span class="info">Направление/Служба</span> </li>
                         <li><span class="param">department</span> <span class="type">(string)</span> <span class="info">Отдел</span> </li>
                         <li><span class="param">position</span> <span class="type">(string)</span> <span class="info">Должность</span> </li>
-                        <li><span class="param">dob</span> <span class="type">(date)</span> <span class="info">Дата рождения. Формат - yyyy.mm.dd</span> </li>
-                        <li><span class="param">date_hire</span> <span class="type">(date)</span> <span class="info">Дата приема на работу. Формат - yyyy.mm.dd</span> </li>
+                        <li><span class="param">dob</span> <span class="type">(date)</span> <span class="info">Дата рождения. Формат YYYY-MM-DD</span> </li>
+                        <li><span class="param">date_hire</span> <span class="type">(date)</span> <span class="info">Дата приема на работу. Формат - YYYY-MM-DD</span> </li>
                         <li><span class="param">phone_in</span> <span class="type">(integer)</span> <span class="info">Номер внутренний</span> </li>
                         <li><span class="param">phone_mb</span> <span class="type">(integer)</span> <span class="info">Номер мобильный Беларусь</span> </li>
                         <li><span class="param">phone_mr</span> <span class="type">(integer)</span> <span class="info">Номер мобильный Россия</span> </li>
