@@ -57,7 +57,7 @@ return array(
             ),
         ),
 
-        'db' => array(
+        'db_exch' => array(
             'class' => 'CDbConnection',
             'connectionString' => 'sqlite:' . dirname(__FILE__) . '/../../../data/exchange.db',
             'initSQLs' => array(
