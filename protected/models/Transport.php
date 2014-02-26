@@ -50,7 +50,7 @@ class Transport extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('new_transport, rate_id, start_rate, status, type, user_id, currency', 'numerical', 'integerOnly'=>true),
+			//array('new_transport, rate_id, start_rate, status, type, user_id, currency', 'numerical', 'integerOnly'=>true),
 			array('t_id', 'length', 'max'=>64),
 			array('location_from, location_to, auto_info, description, date_from, date_to, date_published', 'safe'),
 			// The following rule is used by search().
