@@ -18,6 +18,13 @@ class TrController extends Controller
 
     public function actionTest()
     {
+        $post = filter_input_array(INPUT_POST);
+        $get = filter_input_array(INPUT_GET);
+        $request = $post ? array_merge_recursive($post, $get) : $get;
+        echo '<pre>';
+            var_dump($request);
+        echo '</pre>';
+        exit();
 //        $post = filter_input_array(INPUT_POST);
 //        $get = filter_input_array(INPUT_GET);
 //        $transport = $post ? array_merge_recursive($post, $get) : $get;
