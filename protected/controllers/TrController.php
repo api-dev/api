@@ -147,7 +147,7 @@ class TrController extends Controller
         $app = Yii::app();
         $transaction = $app->db_exch->beginTransaction();
         try {
-            $model = CActiveRecord::model($model_name)->find($pk.'='.$attribute[$pk]);
+            $model = CActiveRecord::model($model_name)->find($pk."='".$attribute[$pk]."'");
             if(!$model)
             {
                 $model = new $model_name;
