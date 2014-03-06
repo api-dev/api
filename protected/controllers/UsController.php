@@ -64,6 +64,7 @@ class UsController extends Controller
 
     private function setPhoto($request)
     {
+        var_dump($_FILES);
         var_dump($request);
     }
 
