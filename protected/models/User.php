@@ -5,7 +5,6 @@
  *
  * The followings are the available columns in table 'user':
  * @property integer $id
- * @property string $u_id
  * @property integer $g_id
  * @property string $login
  * @property string $password
@@ -22,12 +21,15 @@
  * @property string $photo
  * @property string $skype
  * @property integer $status
- *
- * The followings are the available model relations:
- * @property Group $g
  */
 class User extends CActiveRecord
 {
+    
+        public function getDbConnection()
+        {
+            return Yii::app()->db_auth;
+        }
+        
 	/**
 	 * @return string the associated database table name
 	 */
@@ -45,10 +47,10 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('g_id, status', 'numerical', 'integerOnly'=>true),
-			array('u_id, login, password, email, name, surname, secondname, gender, dob, date_hire, phone_in, phone_mb, phone_mr, photo, skype', 'safe'),
+			array('login, password, email, name, surname, secondname, gender, dob, date_hire, phone_in, phone_mb, phone_mr, photo, skype', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, u_id, g_id, login, password, email, name, surname, secondname, gender, dob, date_hire, phone_in, phone_mb, phone_mr, photo, skype, status', 'safe', 'on'=>'search'),
+			array('id, g_id, login, password, email, name, surname, secondname, gender, dob, date_hire, phone_in, phone_mb, phone_mr, photo, skype, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,7 +62,6 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'g' => array(self::BELONGS_TO, 'Group', 'g_id'),
 		);
 	}
 
@@ -71,7 +72,6 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'u_id' => 'U',
 			'g_id' => 'G',
 			'login' => 'Login',
 			'password' => 'Password',
@@ -110,7 +110,6 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('u_id',$this->u_id,true);
 		$criteria->compare('g_id',$this->g_id);
 		$criteria->compare('login',$this->login,true);
 		$criteria->compare('password',$this->password,true);

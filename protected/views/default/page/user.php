@@ -11,8 +11,7 @@
                 <li>
                     <ul class="table">
                         <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
-                        <li><span class="param">u_id</span> <span class="type">(integer)</span> <span class="info">Идентефикатор пользователя в системе учета. Уникальный. Обязательный</span> </li>
-                        <li><span class="param">login</span> <span class="type">(mixed)</span> <span class="info">Логин. Уникальный</span> </li>
+                        <li><span class="param">login</span> <span class="type">(mixed)</span> <span class="info">Логин. Уникальный. Обязательный.</span> </li>
                         <li><span class="param">email</span> <span class="type">(mixed)</span> <span class="info">E-mail адрес. Уникальный</span> </li>
                         <li><span class="param">gender</span> <span class="type">(boolean)</span> <span class="info">Пол. 0 - женский, 1 - мужской</span> </li>
                         <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Имя</span> </li>
@@ -34,16 +33,14 @@
             <p>Пример добавляет/редактирует двух пользователей:
 <pre style='font-size: 11px;'>
     action = 'add'
-    data[1][u_id] = '1N34'
     data[1][login] = 'first_user_login'
     ...
-    data[2][u_id] = '2U52'
     data[2][login] = 'second_user_login'
 </pre>
             Пример удаляет одного пользователя:
 <pre style='font-size: 11px;'>
     action = 'del'
-    data[u_id] = '1N34'
+    data[login] = 'first_user_login'
 </pre>
            </p>
             </p>
@@ -55,16 +52,16 @@
             <p><b>URL:</b> /?r=us&m=del</p>
             <p>Параметры:
             <ul>
-                <li><span class="param">u_id</span> <span class="type">(integer)</span> <span class="info">Идентефикатор пользователя в системе учета. Уникальный. Обязательный</span> </li>
+                <li><span class="param">login</span> <span class="type">(mixed)</span> <span class="info">Логин пользователя в системе учета. Уникальный. Обязательный</span> </li>
             </ul>
 <p>Пример удаляет двух пользователей:
 <pre style='font-size: 11px;'>
-    data[1][u_id] = '1N34'
-    data[2][u_id] = '2U52'
+    data[1][login] = 'first_user_login'
+    data[2][login] = 'second_user_login'
 </pre>
 Пример удаляет одного пользователя:
 <pre style='font-size: 11px;'>
-    data[u_id] = '1N34'
+    data[login] = 'first_user_login'
 </pre>
 </p>
             </p>

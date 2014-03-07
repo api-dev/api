@@ -1,5 +1,4 @@
 <form action="/?r=us&m=set" method="post">
-    <input type="text" name="data[u_id]" value="3"><br>
     <input type="text" name="data[login]" value="login"><br>
     <input type="text" name="data[email]" value="email@mail.com"><br>
     <input type="text" name="data[gender]" value="0"><br>

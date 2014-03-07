@@ -27,7 +27,7 @@ class UsController extends Controller
 
     private function getUser($request)
     {
-        $user_db = User::model()->find('u_id=:u_id', array(':u_id' => $request['u_id']));
+        $user_db = User::model()->find('login=:login', array(':login' => $request['login']));
         var_dump($user_db);
     }
 
@@ -37,11 +37,11 @@ class UsController extends Controller
         if (!$data || empty($data))
             return $this->result('Ошибка. Нет данных о пользователе. Попробуйте еще раз.');
 
-        if (isset($data['u_id']))
-            User::model()->deleteAll('u_id=:uid', array(':uid' => $data['u_id']));
+        if (isset($data['login']))
+            User::model()->deleteAll('login=:uid', array(':uid' => $data['login']));
         else{
             foreach ($data as $user):
-                User::model()->deleteAll('u_id=:uid', array(':uid' => $user['u_id']));
+                User::model()->deleteAll('login=:uid', array(':uid' => $user['login']));
             endforeach;
         }
         return $this->result('Удаление прошло успешно.');
@@ -53,7 +53,7 @@ class UsController extends Controller
         if (!$data || empty($data))
             return $this->result('Ошибка. Нет данных о пользователе. Попробуйте еще раз.');
 
-        if (isset($data['u_id'])){
+        if (isset($data['login'])){
             $this->setOneUser($data);
         }else{
             foreach ($data as $user):
@@ -72,8 +72,7 @@ class UsController extends Controller
 
     /**
      * Принимаемые параметры:
-     * @u_id - Уникальный 1С идентефикатор
-     * @login - Логин
+     * @login - Логин. Уникальный 1С идентефикатор
      * @email - Почта
      * @gender - Пол
      * @name - Имя
@@ -99,13 +98,13 @@ class UsController extends Controller
      */
     private function setOneUser($user)
     {
-        if (!$user['u_id'] || empty($user['u_id']))
+        if (!$user['login'] || empty($user['login']))
             return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
 
         $app = Yii::app();
         $transaction = $app->db_auth->beginTransaction();
         try {
-            $user_db = User::model()->find('u_id=:u_id', array(':u_id' => $user['u_id']));
+            $user_db = User::model()->find('login=:login', array(':login' => $user['login']));
             if (!$user_db)
                 $user_db = new User();
 
@@ -120,7 +119,7 @@ class UsController extends Controller
 
             if ($user_db->validate() && $user_db->save()) {
                     $transaction->commit();
-                    return $this->result('Сохранение '.$user_db->u_id.' произошло успешно.');
+                    return $this->result('Сохранение '.$user_db->login.' произошло успешно.');
             }
             $transaction->rollback();
             return $this->result($user_db->getErrors());
