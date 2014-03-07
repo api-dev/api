@@ -65,7 +65,6 @@ class UsController extends Controller
     private function setPhoto($request)
     {
         Yii::log(serialize($_FILES), 'info');
-        Yii::log(serialize($request), 'info');
         var_dump($_FILES);
         var_dump($request);
     }
