@@ -2,7 +2,6 @@
 class Image {
     
     public $dir = 'images/uploads';
-    public $sub = '';
     public $ext = array('jpg', 'jpeg', 'png', 'gif');
     public $size = 4194304;
     public $mini = true;
@@ -19,13 +18,10 @@ class Image {
         if (empty($array))
             return $this->error("Файл не выбран.");
         
-        if ($this->sub=='')
-            $this->sub = date('Y-m-d').'/';
-
         $server = filter_input_array(INPUT_SERVER);
         
         $uploadDir = $server['DOCUMENT_ROOT'].'/'.$this->dir;
-        $imageDir = 'http://'.$server['SERVER_NAME'].'/'.$this->dir.'/'.$this->sub;
+        $imageDir = 'http://'.$server['SERVER_NAME'].'/'.$this->dir;
         
         $ext = end(explode('.', strtolower($array['name'])));
         
@@ -33,7 +29,7 @@ class Image {
             return $this->error("Недопустимое расширение, либо размер файла.");
 
         if (is_uploaded_file($array['tmp_name'])){
-            $dir = $uploadDir.'/'.$this->sub;
+            $dir = $uploadDir;
             if(!file_exists($dir)){
                if(!mkdir($dir, 0755, true))
                    return $this->error('Ошибка создания каталога.');
@@ -56,9 +52,9 @@ class Image {
                     }else{
                         return $this->error('Ошибка создания миниатюры.');
                     }
+                    $return['min'] = '/' . $this->dir . '/tmp/'. $file;
                 }
-                $return['min'] = '/' . $this->dir . '/' . $this->sub . 'tmp/'. $file;
-                $return['link'] = '/' . $this->dir . '/' . $this->sub . $file;
+                $return['link'] = '/' . $this->dir . '/' . $file;
                 $return['name'] = $file;
             }else{
                 return $this->error('Файл не загружен.');

@@ -128,7 +128,7 @@ class UsController extends Controller
         
         if(is_array($return) && !empty($return))
         {
-            $user->photo = $return;
+            $user->photo = $return[link];
             if($user->save())
                 return $this->result('Фото пользователя '.$user->surname.' '.$user->name.' успешно загружено и сохранено.');
         }else
