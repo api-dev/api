@@ -3,8 +3,8 @@
 class TrController extends Controller
 {
 
-	public function actionIndex()
-	{
+    public function actionIndex()
+    {
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         $request = $post ? array_merge_recursive($post, $get) : $get;
@@ -14,7 +14,7 @@ class TrController extends Controller
         }else
             return $this->result('Неверные параметры. Допустимые: m - set/get; action - transport/rate/user. Полученые: m='.$request['m'].', action='.$request['action']);
 
-	}
+    }
 
     public function actionTest()
     {
@@ -56,34 +56,67 @@ class TrController extends Controller
             return $this->result('Ошибка. Нет данных о перевозчике. Попробуйте еще раз.');
 
         if (isset($data['inn'])){
-            $this->setOneItem('TrUser', $data, 'inn');
+            $id = $this->setOneItem('TrUser', $data, 'inn');
+            if($id){
+                $this->setUserField($id);
+                if($data['persons'])
+                    $this->setContactPersons((int)$id, $data['persons']);
+            }
         }else{
             foreach ($data as $user):
-                $this->setOneItem('TrUser', $user, 'inn');
+                $id = $this->setOneItem('TrUser', $user, 'inn');
+                if($id){
+                    $this->setUserField($id);
+                    if($data['persons'])
+                        $this->setContactPersons((int)$id, $data['persons']);
+                }
             endforeach;
             return $this->result('Выгрузка перевозчиков закончена.');
         }
     }
-
-    private function setInterPoint($id, $point)
+    
+    private function setUserField($id)
     {
-        if(isset($id) && is_array($point) && !empty($point))
+        $model = new TrUserField;
+        $model->user_id = $id;
+        $model->mail_transport_create_1 = false;
+        $model->mail_transport_create_2 = false;
+        $model->mail_kill_rate = false;
+        $model->mail_before_deadline = false;
+        $model->mail_deadline = true;
+        $model->with_nds = false;
+        if($model->save())
+            return $this->result('Дополнительные поля успешно сохранены.');
+    }
+    private function setContactPersons($id, $persons)
+    {
+        if(isset($id) && is_array($persons) && !empty($persons))
         {
-            TransportInterPoint::model()->deleteAll('t_id=:tid', array(':tid'=>$id));
-            foreach ($point as $i=>$p)
+            foreach ($persons as $p)
             {
-                if(!empty($p)){
-                    $new = new TransportInterPoint;
-                    $new->t_id = $id;
-                    $new->point = $p['point'];
-                    $new->date = date('Y-m-d H:i:s', strtotime($p['date'] . ' 08:00:00'));
-                    $new->sort = $i;
-                    if(!$new->validate() || !$new->save())
-                        return $this->result($new->getErrors());
+                if(!$p)
+                    return $this->result('Неверные данные контактного лица');
+                
+                $contact = TrUserContact::model()->findByAttributes(array('u_id'=>$id, 'c_id'=>$p['c_id']));
+                if(!$contact)
+                    $contact = new TrUserContact;
+                
+                $contact->u_id = $id;
+                $contact->status = 1;
+                foreach ($contact as $name => $v){
+                    if (isset($p[$name]) || !empty($p[$name]))
+                        $contact->$name = $p[$name];
                 }
+                
+                if(!$contact->validate() || !$contact->save())
+                    return $this->result('Контактное лицо не сохранено. Даные не сохранены.');
+                    
             }
         }
+        else
+            return $this->result('Контактные лица не сохранены. Не найден перевозчик, либо не переданы данные о контактном лице.');
     }
+
 
     private function delTransport($request)
     {

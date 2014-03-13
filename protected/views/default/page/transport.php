@@ -46,6 +46,16 @@
                     <li><span class="param">surname</span> <span class="type">(string)</span> <span class="info">Фамилия контактного лица</span> </li>
                     <li><span class="param">secondname</span> <span class="type">(string)</span> <span class="info">Отчество контактного лица</span> </li>
                     <li><span class="param">phone</span> <span class="type">(integer)</span> <span class="info">Номер телефона</span> </li>
+                    <li><span class="param">persons</span> <span class="type">(array)</span> <span class="info">Дополнительные контактные лица:<ul class="table">
+                                <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                                <li><span class="param">c_id</span> <span class="type">(mixed)</span> <span class="info">Уникальный идентефикатор</span> </li>
+                                <li><span class="param">email</span> <span class="type">(mixed)</span> <span class="info">E-mail адрес. Уникальный</span> </li>
+                                <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Имя контактного лица</span> </li>
+                                <li><span class="param">surname</span> <span class="type">(string)</span> <span class="info">Фамилия контактного лица</span> </li>
+                                <li><span class="param">secondname</span> <span class="type">(string)</span> <span class="info">Отчество контактного лица</span> </li>
+                                <li><span class="param">phone</span> <span class="type">(integer)</span> <span class="info">Номер телефона</span> </li>
+                                <li><span class="param">phone2</span> <span class="type">(integer)</span> <span class="info">Дополнительный номер телефона</span> </li>
+                        </ul></span> </li>
                 </ul>
             </li>
         </ul><br>
