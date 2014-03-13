@@ -22,14 +22,18 @@ class UsController extends Controller
 
     public function actionForm()
     {
-        
+//        $user = User::model()->find("login='cheshenkov'");
+//        if(!$user)
+//            return $this->result('Пользователя cheshenkov не существует!');
+//        
+//        var_dump($user->g_id);
 //        var_dump($ancestors);
 //        $this->render('form');
     }
 
     private function getUser($request)
     {
-        $user_db = User::model()->find('login=:login', array(':login' => $request['login']));
+        $user_db = User::model()->find('u_id=:u_id', array(':u_id' => $request['u_id']));
         var_dump($user_db);
     }
 
@@ -39,11 +43,11 @@ class UsController extends Controller
         if (!$data || empty($data))
             return $this->result('Ошибка. Нет данных о пользователе. Попробуйте еще раз.');
 
-        if (isset($data['login']))
-            User::model()->deleteAll('login=:uid', array(':uid' => $data['login']));
+        if (isset($data['u_id']))
+            User::model()->deleteAll('u_id=:uid', array(':uid' => $data['u_id']));
         else{
             foreach ($data as $user):
-                User::model()->deleteAll('login=:uid', array(':uid' => $user['login']));
+                User::model()->deleteAll('u_id=:uid', array(':uid' => $user['u_id']));
             endforeach;
         }
         return $this->result('Удаление прошло успешно.');
@@ -55,7 +59,7 @@ class UsController extends Controller
         if (!$data || empty($data))
             return $this->result('Ошибка. Нет данных о пользователе. Попробуйте еще раз.');
 
-        if (isset($data['login'])){
+        if (isset($data['u_id'])){
             $this->setOneUser($data);
         }else{
             foreach ($data as $user):
@@ -96,6 +100,9 @@ class UsController extends Controller
     
     private function getPhotoDir($id)
     {
+        if(!$id)
+            return $this->result('Не найдено id категории');
+            
         $group = Group::model()->findByPk($id);
         $ancestors = $group->ancestors()->findAll();
         $parent = 'images/photo';
@@ -113,7 +120,7 @@ class UsController extends Controller
         if(!$user)
             return $this->result('Пользователя '.$photo['login'].' не существует!');
         
-        $dir = $this->getPhotoDir($user->id);
+        $dir = $this->getPhotoDir($user->g_id);
         $image = new Image;
         $image->mini = false;
         $image->dir = $dir;
@@ -129,9 +136,10 @@ class UsController extends Controller
             
     }
 
-        /**
+    /**
      * Принимаемые параметры:
-     * @login - Логин. Уникальный 1С идентефикатор
+     * @u_id - Уникальный 1С идентефикатор
+     * @login - Логин
      * @email - Почта
      * @gender - Пол
      * @name - Имя
@@ -157,13 +165,13 @@ class UsController extends Controller
      */
     private function setOneUser($user)
     {
-        if (!$user['login'] || empty($user['login']))
+        if (!$user['u_id'] || empty($user['u_id']))
             return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
 
         $app = Yii::app();
         $transaction = $app->db_auth->beginTransaction();
         try {
-            $user_db = User::model()->find('login=:login', array(':login' => $user['login']));
+            $user_db = User::model()->find('u_id=:u_id', array(':u_id' => $user['u_id']));
             if (!$user_db)
                 $user_db = new User();
 
@@ -178,7 +186,7 @@ class UsController extends Controller
 
             if ($user_db->validate() && $user_db->save()) {
                     $transaction->commit();
-                    return $this->result('Сохранение '.$user_db->login.' произошло успешно.');
+                    return $this->result('Сохранение '.$user_db->u_id.' произошло успешно.');
             }
             $transaction->rollback();
             return $this->result($user_db->getErrors());
