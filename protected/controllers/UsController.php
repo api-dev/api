@@ -121,7 +121,7 @@ class UsController extends Controller
             return $this->result('Пользователя '.$photo['login'].' не существует!');
         
         $dir = $this->getPhotoDir($user->g_id);
-        $image = new Image;
+        $image = new Image();
         $image->mini = false;
         $image->dir = $dir;
         $return = $image->load($photo);
