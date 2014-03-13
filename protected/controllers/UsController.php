@@ -22,7 +22,13 @@ class UsController extends Controller
 
     public function actionForm()
     {
-        $this->render('form');
+//        $user = User::model()->find("login='cheshenkov'");
+//        if(!$user)
+//            return $this->result('Пользователя cheshenkov не существует!');
+//        
+//        var_dump($user->g_id);
+//        var_dump($ancestors);
+//        $this->render('form');
     }
 
     private function getUser($request)
@@ -64,7 +70,70 @@ class UsController extends Controller
 
     private function setPhoto($request)
     {
-        var_dump($request);
+        if(!empty($_FILES))
+        {
+            $uploadFile = $_FILES['datafile'];
+            $tmp_name = $uploadFile['tmp_name'];
+            if(is_array($tmp_name))
+            {
+                foreach ($tmp_name as $login=>$name)
+                {
+                    $this->setOnePhoto(array(
+                        'name' => $uploadFile['name'][$login],
+                        'type' => $uploadFile['type'][$login],
+                        'tmp_name' => $uploadFile['tmp_name'][$login],
+                        'error' => $uploadFile['error'][$login],
+                        'size' => $uploadFile['size'][$login],
+                        'login' => $login
+                    ));
+                }
+            }
+//                $this->setOnePhoto($uploadFile)
+//            if ( !is_uploaded_file($tmp_name) ) 
+//                die('Ошибка при загрузке файла ' . $data_filename);
+            else 
+            {
+
+            }
+        }
+    }
+    
+    private function getPhotoDir($id)
+    {
+        if(!$id)
+            return $this->result('Не найдено id категории');
+            
+        $group = Group::model()->findByPk($id);
+        $ancestors = $group->ancestors()->findAll();
+        $parent = 'images/photo';
+        for($i=1; $i<count($ancestors); $i++)
+        {
+            $folder = Translite::rusencode($ancestors[$i]->name);
+            $parent .= '/'.$folder;
+        }
+        return $parent;
+    }
+
+    private function setOnePhoto($photo)
+    {
+        $user = User::model()->find("login='".$photo['login']."'");
+        if(!$user)
+            return $this->result('Пользователя '.$photo['login'].' не существует!');
+        
+        $dir = $this->getPhotoDir($user->g_id);
+        $image = new Image;
+        $image->mini = false;
+        $image->dir = $dir;
+        $return = $image->load($photo);
+        
+        if(is_array($return) && !empty($return))
+        {
+            $user->photo = $return;
+            if($user->save())
+                return $this->result('Фото пользователя '.$user->surname.' '.$user->name.' успешно загружено и сохранено.');
+        }else
+            return $this->result($return);
+            
     }
 
     /**
