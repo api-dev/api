@@ -9,7 +9,7 @@ class Image {
     public $minW = '250';
     public $minH = '150';
 
-    public static function load($array){
+    public function load($array){
         
         if(!$array)
             $array = $_FILES['datafile'];
