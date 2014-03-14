@@ -216,7 +216,7 @@ class UsController extends Controller
         $id = 0;
         foreach ($params as $group) {
             if ($group) {
-//                $group = str_replace(array("'", "/", "\\"), '', trim($group));
+                $group = str_replace(array("'", "/", "\\"), '', trim($group));
                 $g = Group::model()->find("name='".$group."' AND parent_id='".$id."'");
                 if (!$g)
                     $g = new Group();
@@ -229,8 +229,11 @@ class UsController extends Controller
                 } else {
                     $action = $g->saveNode();
                 }
-                if($action)
+                if($action){
+                    Yii::log($g->id, 'info');
                     $id = $g->id;
+                }
+                Yii::log($id, 'info');
             }
         }
         return $id;
