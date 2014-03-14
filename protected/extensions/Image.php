@@ -21,7 +21,7 @@ class Image {
         
         $server = filter_input_array(INPUT_SERVER);
         
-        $dir = $server['DOCUMENT_ROOT'].'../auth/'.$this->dir;
+        $dir = $server['DOCUMENT_ROOT'].'/../auth/'.$this->dir;
 //        $imageDir = 'http://'.$server['SERVER_NAME'].'/'.$this->dir;
         
         $ext = end(explode('.', strtolower($array['name'])));
