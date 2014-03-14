@@ -133,7 +133,7 @@ class UsController extends Controller
             if($user->save())
                 return $this->result('Фото пользователя '.$user->surname.' '.$user->name.' успешно загружено и сохранено.');
         }else
-            return $this->result($return);
+            return $this->result('Фото пользователя '.$user->surname.' НЕ загружено');
             
     }
 
