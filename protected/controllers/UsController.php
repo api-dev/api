@@ -22,6 +22,12 @@ class UsController extends Controller
 
     public function actionForm()
     {
+//        $branch = Yii::app()->db_lbr->createCommand()->
+//                    select('name, domain')->
+//                    from('contacts')->
+//                    where('oneC_id="STV"')->
+//                    queryRow();
+//            var_dump($branch);
 //        $user = User::model()->find("login='cheshenkov'");
 //        if(!$user)
 //            return $this->result('Пользователя cheshenkov не существует!');
@@ -184,7 +190,7 @@ class UsController extends Controller
                     from('contacts')->
                     where('oneC_id="'.$user['f_id'].'"')->
                     queryRow();
-                $user_db->g_id = $this->returnGroup(array('branch' => $branch->name, 'direction' => $user['direction'], 'department' => $user['department'], 'position' => $user['position']));
+                $user_db->g_id = $this->returnGroup(array('branch' => $branch[name], 'direction' => $user['direction'], 'department' => $user['department'], 'position' => $user['position']));
             }else
                 $this->result('Внимание!!! Невозможно сформировать группу, не указан филиал/должность.');
             
@@ -229,11 +235,8 @@ class UsController extends Controller
                 } else {
                     $action = $g->saveNode();
                 }
-                if($action){
-                    Yii::log($g->id, 'info');
+                if($action)
                     $id = $g->id;
-                }
-                Yii::log($id, 'info');
             }
         }
         return $id;
