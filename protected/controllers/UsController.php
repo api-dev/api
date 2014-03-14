@@ -216,7 +216,8 @@ class UsController extends Controller
         $id = 0;
         foreach ($params as $group) {
             if ($group) {
-                $g = Group::model()->find('name="'.$group.'" AND parent_id="'.$id.'"');
+                $group = str_replace(array("'", "/", "\\"), '', trim($group));
+                $g = Group::model()->find("name='".$group."' AND parent_id='".$id."'");
                 if (!$g)
                     $g = new Group();
 
