@@ -12,5 +12,5 @@ if(is_array($text))
         }
     }
 }elseif($text){
-    echo $text;
+    echo $text.'; \n ';
 }

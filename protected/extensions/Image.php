@@ -49,6 +49,7 @@ class Image {
 
             $return[link] = '/'.$this->dir.'/'.$array['login'].'.'.$ext;
             
+            // Декодирование файла
             if ($this->decode)
                 $data = base64_decode($data);
 
@@ -65,26 +66,7 @@ class Image {
                     return $this->error ("Ошибка декодирования файла");
             }
             else
-            {
                 return $this->error('Ошибка при записи файла '.$array['name']);
-            }
-
-//            if(move_uploaded_file($array['tmp_name'], $fileName)){
-//                if($this->mini){
-//                    $resize = $this->resize($file, $dir, $this->minW, $this->minH);
-//                    if($resize){
-//                        $return['min'] = $imageDir.'tmp/'.$file;
-//                    }else{
-//                        return $this->error('Ошибка создания миниатюры.');
-//                    }
-//                    $return['min'] = '/' . $this->dir . '/tmp/'. $file;
-//                }
-//                $return['link'] = '/' . $this->dir . '/' . $file;
-//                $return['name'] = $file;
-//            }else{
-//                return $this->error('Файл не загружен.');
-//            }
-            
         }
         return $return;
     }
