@@ -179,11 +179,11 @@ class UsController extends Controller
                     $user_db->$name = $user[$name];
             }
             if ($user['f_id'] && $user['position']){
-                $branch = Yii::app()->db_lbr->createCommand()->
-                        select('name, domain')->
-                        from('contacts')->
-                        where('oneC_id="'.$user['f_id'].'"')->
-                        queryRow();
+                $branch = $app->db_lbr->createCommand()->
+                    select('name, domain')->
+                    from('contacts')->
+                    where('oneC_id="'.$user['f_id'].'"')->
+                    queryRow();
                 $user_db->g_id = $this->returnGroup(array('branch' => $branch->name, 'direction' => $user['direction'], 'department' => $user['department'], 'position' => $user['position']));
             }else
                 $this->result('Внимание!!! Невозможно сформировать группу, не указан филиал/должность.');
