@@ -123,6 +123,7 @@ class UsController extends Controller
         $dir = $this->getPhotoDir($user->g_id);
         $image = new Image();
         $image->mini = false;
+        $image->decode = true;
         $image->dir = $dir;
         $return = $image->load($photo);
         

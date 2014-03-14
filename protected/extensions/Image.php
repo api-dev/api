@@ -7,6 +7,7 @@ class Image {
     public $mini = true;
     public $minW = '250';
     public $minH = '150';
+    public $decode = false;
 
     public function load($array){
         
@@ -20,45 +21,61 @@ class Image {
         
         $server = filter_input_array(INPUT_SERVER);
         
-        $uploadDir = $server['DOCUMENT_ROOT'].'/'.$this->dir;
-        $imageDir = 'http://'.$server['SERVER_NAME'].'/'.$this->dir;
+        $dir = $server['DOCUMENT_ROOT'].'/'.$this->dir;
+//        $imageDir = 'http://'.$server['SERVER_NAME'].'/'.$this->dir;
         
         $ext = end(explode('.', strtolower($array['name'])));
         
-        if (!in_array($ext, $this->ext) || $this->size < $array['size'])
-            return $this->error("Недопустимое расширение, либо размер файла.");
+        if (!in_array($ext, $this->ext))
+            return $this->error("Недопустимое расширение файла.");
 
+        if($this->size < $array['size'])
+            return $this->error ("Недопустимый размер файла.");
+        
         if (is_uploaded_file($array['tmp_name'])){
-            $dir = $uploadDir;
+            
             if(!file_exists($dir)){
                if(!mkdir($dir, 0755, true))
                    return $this->error('Ошибка создания каталога.');
             }
-            $fileName = $dir.$array['name']; 
-            $file = $array['name'];
-            //если файл с таким именем уже существует...
-            if (file_exists($fileName)) {
-                //...добавляем текущее время к имени файла
-                $nameParts = explode('.', $array['name']);
-                $nameParts[count($nameParts)-2] .= time();
-                $file = implode('.', $nameParts);
-                $fileName = $dir.$file;
+            
+            $file = $dir.'/'.$array['login'].'.'.$ext; 
+            
+            //если файл с таким именем уже существует, то удаляем его к чертовой матери
+            if (file_exists($file)) 
+                unlink($file);
+            
+            $data = file_get_contents($array['tmp_name']);
+
+            if ($$this->decode)
+                $data = base64_decode($data);
+
+            if ( !empty($data) && ($fp = @fopen($file, 'wb')) )
+            {
+                @fwrite($fp, $data);
+                @fclose($fp);
             }
-            if(move_uploaded_file($array['tmp_name'], $fileName)){
-                if($this->mini){
-                    $resize = $this->resize($file, $dir, $this->minW, $this->minH);
-                    if($resize){
-                        $return['min'] = $imageDir.'tmp/'.$file;
-                    }else{
-                        return $this->error('Ошибка создания миниатюры.');
-                    }
-                    $return['min'] = '/' . $this->dir . '/tmp/'. $file;
-                }
-                $return['link'] = '/' . $this->dir . '/' . $file;
-                $return['name'] = $file;
-            }else{
-                return $this->error('Файл не загружен.');
+            else
+            {
+                return $this->error('Ошибка при записи файла '.$array['name']);
             }
+
+//            if(move_uploaded_file($array['tmp_name'], $fileName)){
+//                if($this->mini){
+//                    $resize = $this->resize($file, $dir, $this->minW, $this->minH);
+//                    if($resize){
+//                        $return['min'] = $imageDir.'tmp/'.$file;
+//                    }else{
+//                        return $this->error('Ошибка создания миниатюры.');
+//                    }
+//                    $return['min'] = '/' . $this->dir . '/tmp/'. $file;
+//                }
+//                $return['link'] = '/' . $this->dir . '/' . $file;
+//                $return['name'] = $file;
+//            }else{
+//                return $this->error('Файл не загружен.');
+//            }
+            $return[link] = '/'.$this->dir.'/'.$array['login'].'.'.$ext;
             
         }
         return $return;
