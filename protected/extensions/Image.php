@@ -58,6 +58,8 @@ class Image {
                 {
                     if(move_uploaded_file($array['tmp_name'], $file))
                         return $return;
+                    else
+                        return $this->error ("Файл не скопирован. Ошибка.");
                 }
                 else
                     return $this->error ("Ошибка декодирования файла");
