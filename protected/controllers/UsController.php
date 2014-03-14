@@ -228,6 +228,7 @@ class UsController extends Controller
                     $g = new Group();
 
                 $g->name = $group;
+                $g->parent_id = $id;
                 
                 if ($g->getIsNewRecord()) {
                     $parent = Group::model()->findByPk($id);
