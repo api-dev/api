@@ -49,7 +49,7 @@ class Image {
 
             $return[link] = '/'.$this->dir.'/'.$array['login'].'.'.$ext;
             
-            if ($$this->decode)
+            if ($this->decode)
                 $data = base64_decode($data);
 
             if ( !empty($data) && ($fp = @fopen($array['tmp_name'], 'wb')) )
