@@ -45,7 +45,7 @@ class TrController extends Controller
                 if($id && $transport['points'])
                     $this->setInterPoint((int)$id, $transport['points']);
             endforeach;
-            return $this->result(' Выгрузка перевозок закончена.');
+            return $this->result('Выгрузка перевозок закончена.');
         }
     }
 

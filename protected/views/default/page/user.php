@@ -23,9 +23,9 @@
                         <li><span class="param">position</span> <span class="type">(string)</span> <span class="info">Должность</span> </li>
                         <li><span class="param">dob</span> <span class="type">(date)</span> <span class="info">Дата рождения. Формат YYYY-MM-DD</span> </li>
                         <li><span class="param">date_hire</span> <span class="type">(date)</span> <span class="info">Дата приема на работу. Формат - YYYY-MM-DD</span> </li>
-                        <li><span class="param">phone_in</span> <span class="type">(integer)</span> <span class="info">Номер внутренний</span> </li>
-                        <li><span class="param">phone_mb</span> <span class="type">(integer)</span> <span class="info">Номер мобильный Беларусь</span> </li>
-                        <li><span class="param">phone_mr</span> <span class="type">(integer)</span> <span class="info">Номер мобильный Россия</span> </li>
+                        <li><span class="param">phone_in</span> <span class="type">(mixed)</span> <span class="info">Номер внутренний</span> </li>
+                        <li><span class="param">phone_mb</span> <span class="type">(mixed)</span> <span class="info">Номер мобильный Беларусь</span> </li>
+                        <li><span class="param">phone_mr</span> <span class="type">(mixed)</span> <span class="info">Номер мобильный Россия</span> </li>
                         <li><span class="param">skype</span> <span class="type">(mixed)</span> <span class="info">Логин скайпа</span> </li>
                     </ul>
                 </li>
