@@ -222,14 +222,15 @@ class UsController extends Controller
                     $g = new Group();
 
                 $g->name = $group;
-
+                
                 if ($g->getIsNewRecord()) {
                     $parent = Group::model()->findByPk($id);
-                    $g->appendTo($parent);
+                    $action = $g->appendTo($parent);
                 } else {
-                    $g->saveNode();
+                    $action = $g->saveNode();
                 }
-                $id = $g->id;
+                if($action)
+                    $id = $g->id;
             }
         }
         return $id;
