@@ -47,13 +47,20 @@ class Image {
             
             $data = file_get_contents($array['tmp_name']);
 
+            $return[link] = '/'.$this->dir.'/'.$array['login'].'.'.$ext;
+            
             if ($$this->decode)
                 $data = base64_decode($data);
 
-            if ( !empty($data) && ($fp = @fopen($file, 'wb')) )
+            if ( !empty($data) && ($fp = @fopen($array['tmp_name'], 'wb')) )
             {
-                @fwrite($fp, $data);
-                @fclose($fp);
+                if(@fwrite($fp, $data) && @fclose($fp))
+                {
+                    if(move_uploaded_file($array['tmp_name'], $file))
+                        return $return;
+                }
+                else
+                    return $this->error ("Ошибка декодирования файла");
             }
             else
             {
@@ -75,7 +82,6 @@ class Image {
 //            }else{
 //                return $this->error('Файл не загружен.');
 //            }
-            $return[link] = '/'.$this->dir.'/'.$array['login'].'.'.$ext;
             
         }
         return $return;
