@@ -145,7 +145,7 @@ class UsController extends Controller
      * @name - Имя
      * @surname - Фамилия
      * @secondname - Отчество
-     * @branch - Филиал
+     * @f_id - Филиал (Код из трех символов)
      * @direction - Направление/Служба
      * @department - Отдел
      * @position - Должность
@@ -179,9 +179,14 @@ class UsController extends Controller
                 if (isset($user[$name]) || !empty($user[$name]))
                     $user_db->$name = $user[$name];
             }
-            if ($user['branch'] && $user['position'])
-                $user_db->g_id = $this->returnGroup(array('branch' => $user['branch'], 'direction' => $user['direction'], 'department' => $user['department'], 'position' => $user['position']));
-            else
+            if ($user['f_id'] && $user['position']){
+                $branch = Yii::app()->db_lbr->createCommand()->
+                        select('name, domain')->
+                        from('contacts')->
+                        where('oneC_id="'.$user['f_id'].'"')->
+                        queryRow();
+                $user_db->g_id = $this->returnGroup(array('branch' => $branch->name, 'direction' => $user['direction'], 'department' => $user['department'], 'position' => $user['position']));
+            }else
                 $this->result('Внимание!!! Невозможно сформировать группу, не указан филиал/должность.');
             
             $user_db->status = 1;

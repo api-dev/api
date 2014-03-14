@@ -17,7 +17,7 @@
                         <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Имя</span> </li>
                         <li><span class="param">surname</span> <span class="type">(string)</span> <span class="info">Фамилия</span> </li>
                         <li><span class="param">secondname</span> <span class="type">(string)</span> <span class="info">Отчество</span> </li>
-                        <li><span class="param">branch</span> <span class="type">(string)</span> <span class="info">Филиал</span> </li>
+                        <li><span class="param">f_id</span> <span class="type">(string)</span> <span class="info">Филиал (Код из трех символов)</span> </li>
                         <li><span class="param">direction</span> <span class="type">(string)</span> <span class="info">Направление/Служба</span> </li>
                         <li><span class="param">department</span> <span class="type">(string)</span> <span class="info">Отдел</span> </li>
                         <li><span class="param">position</span> <span class="type">(string)</span> <span class="info">Должность</span> </li>
