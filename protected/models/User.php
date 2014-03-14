@@ -21,6 +21,7 @@
  * @property string $photo
  * @property string $skype
  * @property integer $status
+ * @property string $f_id
  */
 class User extends CActiveRecord
 {
@@ -47,10 +48,10 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('g_id, status', 'numerical', 'integerOnly'=>true),
-			array('login, password, email, name, surname, secondname, gender, dob, date_hire, phone_in, phone_mb, phone_mr, photo, skype', 'safe'),
+			array('f_id, login, password, email, name, surname, secondname, gender, dob, date_hire, phone_in, phone_mb, phone_mr, photo, skype', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, g_id, login, password, email, name, surname, secondname, gender, dob, date_hire, phone_in, phone_mb, phone_mr, photo, skype, status', 'safe', 'on'=>'search'),
+			array('id, g_id, login, password, email, name, surname, secondname, gender, dob, date_hire, phone_in, phone_mb, phone_mr, photo, skype, status, f_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -88,6 +89,7 @@ class User extends CActiveRecord
 			'photo' => 'Photo',
 			'skype' => 'Skype',
 			'status' => 'Status',
+			'f_id' => 'Филиал',
 		);
 	}
 
@@ -126,6 +128,7 @@ class User extends CActiveRecord
 		$criteria->compare('photo',$this->photo,true);
 		$criteria->compare('skype',$this->skype,true);
 		$criteria->compare('status',$this->status);
+		$criteria->compare('f_id',$this->f_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

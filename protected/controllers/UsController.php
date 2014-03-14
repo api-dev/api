@@ -155,7 +155,6 @@ class UsController extends Controller
      * @phone_mb - Номер мобильный Беларусь
      * @phone_mr - Номер мобильный Россия
      * @skype - Логин скайпа
-     * @photo - Фотография !!!ВНИМАНИЕ!!! - это пока не рабочий параметр
      *
      * Генерируемые параметры:
      * @id - ID пользователя в базе
@@ -190,6 +189,7 @@ class UsController extends Controller
                 $this->result('Внимание!!! Невозможно сформировать группу, не указан филиал/должность.');
             
             $user_db->status = 1;
+            
             if($user_db->isNewRecord)
                 $user_db->password = User::randomPassword();
             
