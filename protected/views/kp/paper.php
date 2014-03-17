@@ -329,6 +329,11 @@ function getCollum($array){
     {
         padding-right: 10px;
     }
+    .wrapper .row-table .t-r-image img
+    {
+        width: 100%;
+        max-width: 150px;
+    }
     .wrapper .row-table .t-r-header
     {
         font-family: Calibri;
