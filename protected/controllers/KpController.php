@@ -12,7 +12,7 @@ class KpController extends Controller
             if(method_exists($this, $method)){
                 $this->$method($request);
             }else
-                return $this->result('Неверные параметры. Допустимые: m - set/get; action - transport/rate/user. Полученые: m='.$request['m'].', action='.$request['action']);
+                return $this->result('Неверные параметры. Допустимые: m - set/get; action - paper/kp/time. Полученые: m='.$request['m'].', action='.$request['action']);
         }
         
         private function getPaper($request)
