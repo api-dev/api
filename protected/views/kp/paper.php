@@ -119,18 +119,15 @@ function getRow($array){
     $return = '<table class="row-table">';
     for($i = 1; $i<=count($array); $i++){
         $return .= '<tr>';
-//            $return .= '<td class="t-r-date">';
-//                $return .= '<span>'.$array[$i]['date'].'</span>';
-//            $return .= '</td>';
-            $return .= '<td class="t-r-header" colspan="2">';
+            $return .= '<td class="t-r-image" rowspan="2">';
+                $return .= $array[$i]['image'];
+            $return .= '</td>';
+            $return .= '<td class="t-r-header">';
                 $return .= '<span class="t-r-date">'.$array[$i]['date'].'</span>';
                 $return .= '<span>'.$array[$i]['caption'].'</span>';
             $return .= '</td>';
         $return .= '</tr>';
         $return .= '<tr>';
-            $return .= '<td class="t-r-image">';
-                $return .= $array[$i]['image'];
-            $return .= '</td>';
             $return .= '<td class="t-r-text">';
                 $return .= $array[$i]['text'];
             $return .= '</td>';
@@ -149,7 +146,7 @@ function getCollum($array){
         $tdclass = floor(100/$c);
         for($k = 1; $k<=$c; $k++)
         {
-            $return .= '<td class="width-'.$tdclass.'">';
+            $return .= '<td class="width-'.$tdclass.'" valign="top">';
                 $return .= '<div class="t-c-header"><span class="t-c-date">'.$array[$i][$k]['date'].'</span> '.$array[$i][$k]['caption'].'</div>';
                 $return .= '<div class="t-c-image">'.$array[$i][$k]['image'].'</div>';
                 $return .= '<div class="t-c-text">'.$array[$i][$k]['text'].'</div>';
@@ -208,12 +205,14 @@ function getCollum($array){
     .wrapper 
     {
         padding: 20px 50px;
+        margin: 0 auto;
+        max-width: 900px;
     }
     .header
     {
         background: url('http://api.lbr.ru/images/paper/billy.png') no-repeat bottom left;
-        border-bottom: 3px solid #666147;
-        padding: 15px 0px 20px;
+        border-bottom: 3px solid rgb(102, 97, 71);
+        padding: 20px 0px;
         font-family: Capitalist, Impact;
         margin: 0px 0 0 0;
         min-height: 160px;
@@ -269,6 +268,16 @@ function getCollum($array){
     {
         color: rgb(255,251,239);
     }
+    .wrapper .collum-table .width-50
+    {
+        width: 48%;
+        padding-left: 2%;
+    }
+    .wrapper .collum-table .width-50:first-child
+    {
+        padding-left: 0;
+        padding-right: 2%;
+    }
     .wrapper .collum-table .t-c-header
     {
         font-family: Calibri;
@@ -290,11 +299,11 @@ function getCollum($array){
     }
     .wrapper .collum-table .t-c-image
     {
-        width: 95%;
+        /*width: 95%;*/
     }
     .wrapper .collum-table .t-c-text
     {
-        width: 95%;
+        /*width: 95%;*/
         color: rgb(91,91,91);
         text-align: justify;
     }
@@ -315,7 +324,7 @@ function getCollum($array){
     }
     .wrapper .row-table .t-r-image
     {
-        
+        padding-right: 10px;
     }
     .wrapper .row-table .t-r-header
     {
@@ -326,7 +335,7 @@ function getCollum($array){
     }
     .wrapper .row-table .t-r-text
     {
-        padding: 10px 15px 15px 0px;
+        padding: 5px 0px 15px;
         color: rgb(91,91,91);
         text-align: justify;
     }
