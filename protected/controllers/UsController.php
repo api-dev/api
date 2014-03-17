@@ -77,18 +77,17 @@ class UsController extends Controller
         {
             $uploadFile = $_FILES['datafile'];
             $tmp_name = $uploadFile['tmp_name'];
-            if(!empty($tmp_name))
+            if(isset($tmp_name[$index]))
             {
                 return $this->setOnePhoto(array(
                     'name' => $uploadFile['name'][$index],
                     'type' => $uploadFile['type'][$index],
-                    'tmp_name' => $uploadFile['tmp_name'][$index],
+                    'tmp_name' => $tmp_name[$index],
                     'error' => $uploadFile['error'][$index],
                     'size' => $uploadFile['size'][$index],
                     'login' => $login,
                 ), $group);
-            }else
-                $this->result('Массив с фото пустой.');
+            }
         }
         return true;
     }
