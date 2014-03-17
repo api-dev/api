@@ -77,7 +77,7 @@ class UsController extends Controller
         {
             $uploadFile = $_FILES['datafile'];
             $tmp_name = $uploadFile['tmp_name'];
-            if(is_array($tmp_name[$index]))
+            if(!empty($tmp_name))
             {
                 return $this->setOnePhoto(array(
                     'name' => $uploadFile['name'][$index],
@@ -88,7 +88,7 @@ class UsController extends Controller
                     'login' => $login,
                 ), $group);
             }else
-                $this->result('Фото не массив. ');
+                $this->result('Массив с фото пустой.');
         }
         return true;
     }
