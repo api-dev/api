@@ -122,7 +122,7 @@ function getRow($array){
             $photo = User::model()->findByAttributes(array('login' => $array[$i]['login']))->photo;
         $return .= '<tr>';
             $return .= '<td class="t-r-image" rowspan="2">';
-                if($photo)
+                if($photo && $photo!='1')
                     $return .= '<img src="http://api.lbr.ru'.$photo.'" alt="'.$array[$i]['login'].'">';
             $return .= '</td>';
             $return .= '<td class="t-r-header">';
