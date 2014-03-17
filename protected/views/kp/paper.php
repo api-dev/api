@@ -327,14 +327,14 @@ function getCollum($array){
     }
     .wrapper .row-table .t-r-image
     {
-        min-width: 150px;
+        min-width: 100px;
         padding-right: 10px;
     }
     .wrapper .row-table .t-r-image img
     {
-        width: 100%;
-        max-width: 250px;
-        max-height: 350px;
+        width: 90px;
+        max-width: 150px;
+        max-height: 250px;
     }
     .wrapper .row-table .t-r-header
     {
