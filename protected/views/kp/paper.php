@@ -327,12 +327,13 @@ function getCollum($array){
     }
     .wrapper .row-table .t-r-image
     {
+        min-width: 200px;
         padding-right: 10px;
     }
     .wrapper .row-table .t-r-image img
     {
         width: 100%;
-        max-width: 150px;
+        max-width: 250px;
     }
     .wrapper .row-table .t-r-header
     {
