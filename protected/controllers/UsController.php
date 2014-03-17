@@ -87,7 +87,8 @@ class UsController extends Controller
                     'size' => $uploadFile['size'][$index],
                     'login' => $login,
                 ), $group);
-            }
+            }else
+                $this->result('Фото не массив. ');
         }
         return true;
     }
@@ -124,6 +125,8 @@ class UsController extends Controller
         
         if(is_array($return) && !empty($return))
             return $return[link];
+        else 
+            $this->result($return);
     }
 
     /**
