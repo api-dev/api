@@ -146,12 +146,12 @@ class UsController extends Controller
      * @phone_mb - Номер мобильный Беларусь
      * @phone_mr - Номер мобильный Россия
      * @skype - Логин скайпа
+     * @status - статус пользователя 1 - активирован, 2 - не проверен, 3 - заблокирован, 4 - уволен
      *
      * Генерируемые параметры:
      * @id - ID пользователя в базе
      * @g_id - идентификатор группы(основан на @branch, @direction, @department, @position)
      * @password - пароль (если не активирован, то сюда записывается хэш ссылки для активации)
-     * @status - статус пользователя активирован/неактивирован
      */
     private function setOneUser($user, $index = 1)
     {
@@ -178,8 +178,6 @@ class UsController extends Controller
                 $user_db->g_id = $this->returnGroup(array('branch' => $branch[name], 'direction' => $user['direction'], 'department' => $user['department'], 'position' => $user['position']));
             }else
                 $this->result('Внимание!!! Невозможно сформировать группу, не указан филиал/должность.');
-            
-            $user_db->status = 1;
             
             if($user_db->isNewRecord)
                 $user_db->password = User::randomPassword();

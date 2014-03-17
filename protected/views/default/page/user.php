@@ -6,7 +6,7 @@
             <p><span class="param">URL</span> : api.lbr.ru/?r=us&m=set</p>
             <p>Параметры:
             <ul>
-                <li><span class="param">action</span> - действие с передаваемым пользователем. <b>photo</b> - добавление/редактирование фотографии пользователя, во всех остальных случаях добавление/редактирование </li>
+                <li><span class="param">action</span> - <b>user</b>, действие с передаваемым пользователем. </li>
                 <li><span class="param">data</span> - массив с данными о пользователе. Может быть множественным массивом с несколькими пользователями. <br> Принимаемые параметры о пользователе:</li>
                 <li>
                     <ul class="table">
@@ -27,9 +27,9 @@
                         <li><span class="param">phone_mb</span> <span class="type">(mixed)</span> <span class="info">Номер мобильный Беларусь</span> </li>
                         <li><span class="param">phone_mr</span> <span class="type">(mixed)</span> <span class="info">Номер мобильный Россия</span> </li>
                         <li><span class="param">skype</span> <span class="type">(mixed)</span> <span class="info">Логин скайпа</span> </li>
+                        <li><span class="param">status</span> <span class="type">(integer)</span> <span class="info">Статус: 1 - активирован, 2 - не проверен, 3 - заблокирован, 4 - уволен</span> </li>
                     </ul>
                 </li>
-                <li>action = <b>photo</b> - добавление/редактирование фотографии пользователя</li>
             </ul><br>
             <p>Пример добавляет/редактирует двух пользователей:
 <pre style='font-size: 11px;'>
