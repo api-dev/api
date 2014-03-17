@@ -27,7 +27,7 @@ class Image {
         $ext = end(explode('.', strtolower($array['name'])));
         
         if (!in_array($ext, $this->ext))
-            return $this->error("Недопустимое расширение файла.");
+            return $this->error("Недопустимое расширение файла(".$ext.").");
 
         if($this->size < $array['size'])
             return $this->error ("Недопустимый размер файла.");
