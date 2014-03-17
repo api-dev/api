@@ -9,10 +9,7 @@ class UsController extends Controller
         $get = filter_input_array(INPUT_GET);
         $request = $post ? array_merge_recursive($post, $get) : $get;
         if ($request['m'] == 'set'){
-            if($request['action'] == 'photo')
-                $this->setPhoto();
-            else
-                $this->setUser($request);
+            $this->setUser($request);
         }elseif($request['m'] == 'del'){
             $this->delUser($request);
         }else{
@@ -68,40 +65,31 @@ class UsController extends Controller
         if (isset($data['login'])){
             $this->setOneUser($data);
         }else{
-            foreach ($data as $user):
-                $this->setOneUser($user);
+            foreach ($data as $i=>$user):
+                $this->setOneUser($user, $i);
             endforeach;
         }
     }
 
-    private function setPhoto()
+    private function setPhoto($index, $login, $group)
     {
         if(!empty($_FILES))
         {
             $uploadFile = $_FILES['datafile'];
             $tmp_name = $uploadFile['tmp_name'];
-            if(is_array($tmp_name))
+            if(is_array($tmp_name[$index]))
             {
-                foreach ($tmp_name as $login=>$name)
-                {
-                    $this->setOnePhoto(array(
-                        'name' => $uploadFile['name'][$login],
-                        'type' => $uploadFile['type'][$login],
-                        'tmp_name' => $uploadFile['tmp_name'][$login],
-                        'error' => $uploadFile['error'][$login],
-                        'size' => $uploadFile['size'][$login],
-                        'login' => $login
-                    ));
-                }
-            }
-//                $this->setOnePhoto($uploadFile)
-//            if ( !is_uploaded_file($tmp_name) ) 
-//                die('Ошибка при загрузке файла ' . $data_filename);
-            else 
-            {
-
+                return $this->setOnePhoto(array(
+                    'name' => $uploadFile['name'][$index],
+                    'type' => $uploadFile['type'][$index],
+                    'tmp_name' => $uploadFile['tmp_name'][$index],
+                    'error' => $uploadFile['error'][$index],
+                    'size' => $uploadFile['size'][$index],
+                    'login' => $login,
+                ), $group);
             }
         }
+        return true;
     }
     
     private function getPhotoDir($id)
@@ -120,13 +108,14 @@ class UsController extends Controller
         return $parent;
     }
 
-    private function setOnePhoto($photo)
+    private function setOnePhoto($photo, $group)
     {
-        $user = User::model()->find("login='".$photo['login']."'");
-        if(!$user)
-            return $this->result('Пользователя '.$photo['login'].' не существует!');
+        if(!$photo['login']){
+            $this->result('Пользователя '.$photo['login'].' не существует!');
+            return false;
+        }
         
-        $dir = $this->getPhotoDir($user->g_id);
+        $dir = $this->getPhotoDir($group);
         $image = new Image();
         $image->mini = false;
         $image->decode = true;
@@ -134,13 +123,7 @@ class UsController extends Controller
         $return = $image->load($photo);
         
         if(is_array($return) && !empty($return))
-        {
-            $user->photo = $return[link];
-            if($user->save())
-                return $this->result('Фото пользователя '.$user->surname.' '.$user->name.' успешно загружено и сохранено.');
-        }else
-            return $this->result('Фото пользователя '.$user->surname.' НЕ загружено! '.$return);
-            
+            return $return[link];
     }
 
     /**
@@ -168,7 +151,7 @@ class UsController extends Controller
      * @password - пароль (если не активирован, то сюда записывается хэш ссылки для активации)
      * @status - статус пользователя активирован/неактивирован
      */
-    private function setOneUser($user)
+    private function setOneUser($user, $index = 1)
     {
         if (!$user['login'] || empty($user['login']))
             return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
@@ -198,6 +181,10 @@ class UsController extends Controller
             
             if($user_db->isNewRecord)
                 $user_db->password = User::randomPassword();
+            
+            $photo = $this->setPhoto($index, $user['login'], $user_db->g_id);
+            if($photo)
+                $user_db->photo = $photo;
             
             if ($user_db->validate() && $user_db->save()) {
                     $transaction->commit();

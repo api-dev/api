@@ -165,7 +165,6 @@ function getCollum($array){
         margin: 0;
         padding: 0;
         font-family: Calibri;
-        background: url('http://api.lbr.ru/images/paper/bg.jpg') repeat;
     }
     .code
     {
@@ -204,9 +203,10 @@ function getCollum($array){
     }
     .wrapper 
     {
+        background: url('http://api.lbr.ru/images/paper/bg.jpg') repeat;
         padding: 20px 50px;
         margin: 0 auto;
-        max-width: 900px;
+        max-width: 1000px;
     }
     .header
     {
