@@ -118,9 +118,12 @@ endif;
 function getRow($array){
     $return = '<table class="row-table">';
     for($i = 1; $i<=count($array); $i++){
+        if(isset($array[$i]['login']) && !empty($array[$i]['login']))
+            $photo = User::model()->findByAttributes(array('login' => $array[$i]['login']))->photo;
         $return .= '<tr>';
             $return .= '<td class="t-r-image" rowspan="2">';
-                $return .= $array[$i]['image'];
+                if($photo)
+                    $return .= '<img src="http://api.lbr.ru'.$photo.'" alt="'.$array[$i]['login'].'">';
             $return .= '</td>';
             $return .= '<td class="t-r-header">';
                 $return .= '<span class="t-r-date">'.$array[$i]['date'].'</span>';
