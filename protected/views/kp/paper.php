@@ -118,6 +118,7 @@ endif;
 function getRow($array){
     $return = '<table class="row-table">';
     for($i = 1; $i<=count($array); $i++){
+        $photo = false;
         if(isset($array[$i]['login']) && !empty($array[$i]['login']))
             $photo = User::model()->findByAttributes(array('login' => $array[$i]['login']))->photo;
         $return .= '<tr>';
@@ -327,13 +328,12 @@ function getCollum($array){
     }
     .wrapper .row-table .t-r-image
     {
-        min-width: 100px;
-        padding-right: 10px;
+        
     }
     .wrapper .row-table .t-r-image img
     {
         width: 90px;
-        max-width: 150px;
+        margin-right: 10px;
         max-height: 250px;
     }
     .wrapper .row-table .t-r-header
