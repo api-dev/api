@@ -9,29 +9,6 @@
 </head>
 <body>
 <?php
-function getMonthName($unixTimeStamp = false) {
-	
-	if (!$unixTimeStamp) {
-		$mN = date('m');
-	} else {
-		$mN = date('m', (int)$unixTimeStamp);
-	}
-	$monthAr = array(
-		1 => array('Январь', 'Января'),
-		2 => array('Февраль', 'Февраля'),
-		3 => array('Март', 'Марта'),
-		4 => array('Апрель', 'Апреля'),
-		5 => array('Май', 'Мая'),
-		6 => array('Июнь', 'Июня'),
-		7 => array('Июль', 'Июля'),
-		8 => array('Август', 'Августа'),
-		9 => array('Сентябрь', 'Сентября'),
-		10=> array('Октябрь', 'Октября'),
-		11=> array('Ноябрь', 'Ноября'),
-		12=> array('Декабрь', 'Декабря')
-	);
-	return $monthAr[(int)$mN];
-}
 
 $test = $data;
 
@@ -39,6 +16,7 @@ if(empty($data['wrapper'])):
     $test = array();
     $test['title'] = 'Фронт продаж!';
     $test['epigraph'] = 'Они тоже Продавцы!';
+    $test['date'] = '17 декабря 2023';
     $test['wrapper'] = array();
     $test['wrapper']['1'] = array();
     $test['wrapper']['1']['header'] = 'Новости Филиальной сети';
@@ -89,12 +67,7 @@ if(!empty($test)):?>
     </div>
     <div class="epigraph">
         <?php echo $test['epigraph']; ?>
-        <span class="datetime">
-        <?php
-            $curTime = mktime();
-            $monthNameAr = getMonthName ($curTime);
-            echo date('d', $curTime).' '.$monthNameAr[1].' '.date('Y', $curTime);
-        ?></span>
+        <span class="datetime"><?php echo $test['date']; ?></span>
     </div>
     <?php if(!empty($test['wrapper'])): ?>
     <div class="w-wrapper">
