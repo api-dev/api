@@ -19,4 +19,14 @@ class KpController extends Controller
         {
             $this->renderPartial('paper', array('data'=>$request));
         }
+        
+        private function setSpares($request)
+        {
+            Yii::app()->cache->set('12345', 'Looool');
+        }
+        
+        private function getSpares($request)
+        {
+            var_dump(Yii::app()->cache->get('12345'));
+        }
 }
