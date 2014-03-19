@@ -92,7 +92,7 @@ return array(
             ),
         ),
         'cache'=>array(
-            'class'=>'CMemCache',
+            'class'=>'system.caching.CMemCache',
             'servers'=>array(
                 array(
                     'host'=>'server1',
