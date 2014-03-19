@@ -22,11 +22,20 @@ class KpController extends Controller
         
         private function setSpares($request)
         {
-            Yii::app()->cache->set('12345', 'Looool');
+            $id = 'test33';
+             if(Yii::app()->cache->set($id, serialize($request)))
+            {
+                    var_dump('Ouuuu yyeessss!!!');
+            }else{
+                    echo 'Fuckin cached';
+            }
         }
         
         private function getSpares($request)
         {
-            var_dump(Yii::app()->cache->get('12345'));
+            var_dump(Yii::app()->cache->servers);
+            $id = 'test33';
+            $text = unserialize(Yii::app()->cache->get($id));
+            var_dump($text);
         }
 }

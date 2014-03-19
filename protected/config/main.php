@@ -97,13 +97,8 @@ return array(
                 array(
                     'host'=>'server1',
                     'port'=>11211,
-                    'weight'=>60,
-                ),
-                array(
-                    'host'=>'server2',
-                    'port'=>11211,
-                    'weight'=>40,
-                ),
+                    'weight'=>64,
+                )
             ),
         ),
     ),
