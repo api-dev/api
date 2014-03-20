@@ -22,20 +22,31 @@ class KpController extends Controller
         
         private function setSpares($request)
         {
-            $id = 'test33';
-             if(Yii::app()->cache->set($id, serialize($request)))
-            {
-                    var_dump('Ouuuu yyeessss!!!');
-            }else{
-                    echo 'Fuckin cached';
-            }
+            $id = $this->getHash();
+            
+            if(Yii::app()->cache->set($id, serialize($request)))
+                echo 'http://api.lbr.ru/?r=kp&m=get&action=paper&hash='.$id;
+            else
+                echo 'Fuckin cached';
         }
         
         private function getSpares($request)
         {
-            var_dump(Yii::app()->cache->servers);
-            $id = 'test33';
-            $text = unserialize(Yii::app()->cache->get($id));
+            $hash = Yii::app()->cache->get($request['hash']);
+            if($hash)
+                $text = unserialize($hash);
+            
             var_dump($text);
         }
+        
+        private function getHash()
+        {
+            $id = User::randomPassword(8);
+            $cache = Yii::app()->cache->get($id);
+            if($cache===false){
+                return $id;
+            }else
+                return $this->getHash();
+        }
+
 }
