@@ -69,6 +69,7 @@ h1, h2, h3, h4, h5, h6
 {
     font-family: Calibri;
     padding: 10px 20px;
+    position: relative;
 }
 .item .text ul
 {
@@ -137,4 +138,20 @@ h1, h2, h3, h4, h5, h6
     content: '';
     clear: both;
     display: block;
+}
+
+.h2
+{
+    margin: 10px 0;
+    font-size: 15px;
+    color: white;
+    background: #5B5A50;
+    position: relative;
+    margin-left: -20px;
+    padding: 5px 15px;
+    display: table;
+}
+.example p
+{
+    margin: 10px 0;
 }
