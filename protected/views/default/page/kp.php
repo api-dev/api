@@ -5,14 +5,15 @@
     <div class="text">
         <p><b>URL для генерации:</b> api.lbr.ru/?r=kp&m=set</p>
         <div class="h2">Основные параметры:</div>
-        <ul style="margin-top: 7px;">
-            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>spares</b> - Запчасти; <i><b>machine</b> - Техника(в разработке)</i></li>
-            <li><span class="param">template</span> - шаблон. Принимаемые: <b>email</b> - письмо на электронную почту; <b>print</b> - печатный шаблон(возвращает ссылку на документ) </li>
-            <li><span class="param">header</span> - Шапка. Текст либо число. 0 - скрыть шапку.</li>
-            <li><span class="param">client</span> - Клиент. ФИО.</li>
-            <li><span class="param">login</span> - Логин сзязанного лица(любой человек, существующий в базе <a href="http://auth.lbr.ru">Центра авторизации</a>)</li>
-            <li><span class="param">f_id</span> - Филиал (Код из трех символов)</li>
-            <li><span class="param">data</span> - массив с данными. Может быть множественным массивом.</li>
+        <ul style="margin-top: 7px;" class="table">
+            <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+            <li><span class="param">action</span> <span class="type">(string)</span> <span class="info">тип передаваемых данных. Принимаемые: <b>spares</b> - Запчасти; <i><b>machine</b> - Техника(в разработке)</i></span></li>
+            <li><span class="param">template</span> <span class="type">(string)</span> <span class="info">шаблон. Принимаемые: <b>email</b> - письмо на электронную почту; <b>print</b> - печатный шаблон(возвращает ссылку на документ) </span></li>
+            <li><span class="param">header</span> <span class="type">(mixed)</span> <span class="info">Шапка. Текст либо число. 0 - скрыть шапку.</span></li>
+            <li><span class="param">client</span> <span class="type">(string)</span> <span class="info">Клиент. ФИО.</span></li>
+            <li><span class="param">login</span> <span class="type">(string)</span> <span class="info">Логин сзязанного лица(любой человек, существующий в базе <a href="http://auth.lbr.ru">Центра авторизации</a>)</span></li>
+            <li><span class="param">f_id</span> <span class="type">(string)</span> <span class="info">Филиал (Код из трех символов)</span></li>
+            <li><span class="param">data</span> <span class="type">(array)</span> <span class="info">массив с данными. Может быть множественным массивом.</span></li>
         </ul>
     </div>
 </div>

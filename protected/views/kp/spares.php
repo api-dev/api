@@ -1,3 +1,12 @@
 <?php
+if($request[header]!='0')
+    echo '<div class="header">'.$request[header].'</div>';
+
+if($table[title])
+    echo '<div class="title">'.$table[title].'</div>';
+
 if($table)
-    echo $table;
+    echo '<div class="content">'.$table.'</div>';
+
+if($request[footer]!='0')
+    echo '<div class="footer">'.$request[footer].'</div>';

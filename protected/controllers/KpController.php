@@ -50,7 +50,7 @@ class KpController extends Controller
                     $this->renderPartial ('spares', array('request'=>$request, 'table'=>$this->getTable($request[data][table])));
                 else{
                     foreach ($request[data] as $table)
-                        $this->renderPartial ('spares', array('request'=>$request, 'table'=>$this->getTable($table[table])));
+                        $this->renderPartial ('spares', array('request'=>$request, 'table'=>$this->getTable($table[table]), 'title'=>$table[title]));
                 }
             }
         }
