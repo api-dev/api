@@ -22,21 +22,34 @@ class KpController extends Controller
         
         private function setSpares($request)
         {
-            $id = $this->getHash();
-            
-            if(Yii::app()->cache->set($id, serialize($request)))
-                echo 'http://api.lbr.ru/?r=kp&m=get&action=paper&hash='.$id;
-            else
-                echo 'Fuckin cached';
+            if($request['template']=='print'){
+                $id = $this->getHash();
+                if(Yii::app()->cache->set($id, serialize($request)))
+                    echo 'http://api.lbr.ru/?r=kp&m=get&action=spares&hash='.$id;
+                else
+                    echo 'Fuckin cached';
+            }else{
+                if(is_array($request[data]) && !empty($request[data]))
+                {
+                    if($request[data][table])
+                        echo $this->getTable($request[data][table]);
+                    else{
+                        foreach ($request[data] as $table)
+                            echo $this->getTable($table[table]);
+                    }
+                }
+            }
         }
         
         private function getSpares($request)
         {
+            
             $hash = Yii::app()->cache->get($request['hash']);
             if($hash)
-                $text = unserialize($hash);
+                $r = unserialize($hash);
             
-            var_dump($text);
+            if(is_array($r[data][table]) && !empty($r[data][table]))
+                    echo $this->getTable($r[data][table]);
         }
         
         private function getHash()
@@ -48,5 +61,82 @@ class KpController extends Controller
             }else
                 return $this->getHash();
         }
+        
+        public function getTest()
+        {
+//            $table = array();
+//            $table[head][0][0] = '№';
+//            $table[head][0][1] = 'Наименование';
+//            $table[head][0][2] = 'В заказе';
+//            $table[head][0][3] = 'Количество';
+//            $table[head][0][4] = 'Срок поставки';
+//            $table[head][0][5] = 'Цена с НДС, руб';
+//            $table[head][0][6] = 'Цена с НДС со скидкой, руб';
+//            $table[head][0][7] = 'Сумма с НДС со скидкой, руб';
+//            
+//            $table[body][0][0] = '1';
+//            $table[body][0][1] = 'Фильтр масляный LF16015';
+//            $table[body][0][2] = '2';
+//            $table[body][0][3] = '2';
+//            $table[body][0][4] = 'В наличии';
+//            $table[body][0][5] = '491,64';
+//            $table[body][0][6] = '417,89';
+//            $table[body][0][7] = '835,79';
+//            
+//            $table[body][1][0] = '2';
+//            $table[body][1][1][body][0][0][head][0] = 'Тип';
+//            $table[body][1][1][body][0][0][head][1] = 'Тип';
+//            $table[body][1][1][body][0][0][head][2] = 'Тип';
+//            $table[body][1][1][body][0][0][body][0][0] = 'Фильтр масляный 1.1';
+//            $table[body][1][1][body][0][0][body][0][1] = 'Фильтр масляный 1.2';
+//            $table[body][1][1][body][0][0][body][0][2] = 'Фильтр масляный 1.3';
+//            $table[body][1][1][body][1][0] = 'Фильтр масляный 2';
+//            $table[body][1][1][body][2][1] = 'Фильтр масляный 3';
+//            $table[body][1][2] = '343';
+//            $table[body][1][3] = '525';
+//            $table[body][1][4][body][0][0] = 'В наличии';
+//            $table[body][1][4][body][0][1] = 'Под заказ';
+//            $table[body][1][5][body][0][2] = '431,64';
+//            $table[body][1][5][body][1][3] = '431,64';
+//            $table[body][1][5][body][2][4] = '431,64';
+//            $table[body][1][6] = '477,89';
+//            $table[body][1][7] = '805,79';
+        
+            $data = array();
+            $data[1][table][head][0][0] = '№';
+            $data[1][table][head][0][1] = 'Наименование';
+            $data[1][table][head][0][2] = 'Количество';
+            $data[1][table][head][0][3] = 'Цена';
+            $data[1][table][head][0][4] = 'Сумма';
 
+            $data[1][table][body][0][0] = '1';
+            $data[1][table][body][0][1] = 'Запчасть под номер 1';
+            $data[1][table][body][0][2] = '345';
+            $data[1][table][body][0][3] = '34';
+            $data[1][table][body][0][4] = '11730';
+
+            $data[1][table][body][1][0] = '2';
+            $data[1][table][body][1][1] = 'Вторая ЗЧ';
+            $data[1][table][body][1][2][body][0][0] = '345';
+            $data[1][table][body][1][2][body][1][0] = '565';
+            $data[1][table][body][1][3][body][0][0] = '35';
+            $data[1][table][body][1][3][body][1][0] = '37';
+            $data[1][table][body][1][4] = '32980';
+            
+            echo $this->getTable($data[1][table]);
+        }
+
+        private function getTable($table)
+        {
+            if(!$table || empty($table))
+                return $this->result('Ошибка. Данные о таблице не переданы.');
+            
+            return Table::generateTable($table, 'parent');
+        }
+        
+        public function result($text)
+        {
+            $this->renderPartial('index', array('text' => $text));
+            return false;
+        }
 }
