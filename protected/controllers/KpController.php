@@ -29,7 +29,7 @@ class KpController extends Controller
                 else
                     echo 'Fuckin cached';
             }else
-                $this->showSpares($r);
+                $this->showSpares($request);
         }
         
         private function getSpares($request)
