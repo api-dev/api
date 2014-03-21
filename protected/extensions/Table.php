@@ -7,7 +7,7 @@ class Table {
         $return = '<table class="'.$class.'" cellspacing="0" cellpadding="0">';
         if(!empty($table[head])){
             $return .= '<thead>';
-                $return .= self::generateTr($table[head][0]);
+                $return .= self::generateTr($table[head][1]);
             $return .= '</thead>';
         }
         $return .= '<tbody>';
