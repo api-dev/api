@@ -47,7 +47,7 @@ class KpController extends Controller
             if(is_array($request[data]) && !empty($request[data]))
             {
                 if($request[data][table])
-                    $this->renderPartial ('spares', array('request'=>$request, 'table'=>$this->getTable($request[data][table])));
+                    $this->renderPartial ('spares', array('request'=>$request, 'table'=>$this->getTable($request[data][table]), 'title'=>$data[title]));
                 else{
                     foreach ($request[data] as $table)
                         $this->renderPartial ('spares', array('request'=>$request, 'table'=>$this->getTable($table[table]), 'title'=>$table[title]));
@@ -65,7 +65,7 @@ class KpController extends Controller
                 return $this->getHash();
         }
         
-        public function getTest()
+        public function getTest($request)
         {
 //            $table = array();
 //            $table[head][0][0] = '№';
@@ -106,6 +106,8 @@ class KpController extends Controller
 //            $table[body][1][7] = '805,79';
         
             $data = array();
+            $data[1][title] = 'Title';
+            
             $data[1][table][head][0][0] = '№';
             $data[1][table][head][0][1] = 'Наименование';
             $data[1][table][head][0][2] = 'Количество';
@@ -126,7 +128,7 @@ class KpController extends Controller
             $data[1][table][body][1][3][body][1][0] = '37';
             $data[1][table][body][1][4] = '32980';
             
-            echo $this->getTable($data[1][table]);
+            $this->renderPartial ('spares', array('request'=>$request, 'table'=>$this->getTable($data[1][table]), 'title'=>$data[1][title]));
         }
 
         private function getTable($table)

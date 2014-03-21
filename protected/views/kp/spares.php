@@ -2,7 +2,7 @@
 if($request[header]!='0')
     echo '<div class="header">'.$request[header].'</div>';
 
-if($table[title])
+if($title)
     echo '<div class="title">'.$table[title].'</div>';
 
 if($table)
