@@ -28,28 +28,31 @@ class KpController extends Controller
                     echo 'http://api.lbr.ru/?r=kp&m=get&action=spares&hash='.$id;
                 else
                     echo 'Fuckin cached';
-            }else{
-                if(is_array($request[data]) && !empty($request[data]))
-                {
-                    if($request[data][table])
-                        echo $this->getTable($request[data][table]);
-                    else{
-                        foreach ($request[data] as $table)
-                            echo $this->getTable($table[table]);
-                    }
-                }
-            }
+            }else
+                $this->showSpares($r);
         }
         
         private function getSpares($request)
         {
-            
             $hash = Yii::app()->cache->get($request['hash']);
             if($hash)
                 $r = unserialize($hash);
             
-            if(is_array($r[data][table]) && !empty($r[data][table]))
-                    echo $this->getTable($r[data][table]);
+            if($r)
+                $this->showSpares($r);
+        }
+        
+        private function showSpares($request)
+        {
+            if(is_array($request[data]) && !empty($request[data]))
+            {
+                if($request[data][table])
+                    $this->renderPartial ('spares', array('request'=>$request, 'table'=>$this->getTable($request[data][table])));
+                else{
+                    foreach ($request[data] as $table)
+                        $this->renderPartial ('spares', array('request'=>$request, 'table'=>$this->getTable($table[table])));
+                }
+            }
         }
         
         private function getHash()

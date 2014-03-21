@@ -22,6 +22,10 @@ h1, h2, h3, h4, h5, h6
     font-family: Arial;
     font-weight: 900;
 }
+a, a:link, a:active, a:visited
+{
+    color: #0297CD;
+}
 .header
 {
     
@@ -74,7 +78,7 @@ h1, h2, h3, h4, h5, h6
 .item .text ul
 {
     list-style: none;
-    padding-left: 2em;
+    padding-left: 1em;
 }
 .item .text .param
 {

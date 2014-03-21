@@ -1,9 +1,9 @@
-<h1>КП API</h1>
+<h1>КП API.</h1>
 <p>Для того чтобы начать работать с пользователями, требуется открыть http соединение по адресу <b>api.lbr.ru</b></p>
 <div class="item">
     <!--<h4>КП по запасным частям и <i>технике(временно не функционирует)</i></h4>-->
     <div class="text">
-        <p><b>URL:</b> api.lbr.ru/?r=kp&m=set</p>
+        <p><b>URL для генерации:</b> api.lbr.ru/?r=kp&m=set</p>
         <div class="h2">Основные параметры:</div>
         <ul style="margin-top: 7px;">
             <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>spares</b> - Запчасти; <i><b>machine</b> - Техника(в разработке)</i></li>
