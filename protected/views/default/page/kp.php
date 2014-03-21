@@ -7,12 +7,12 @@
         <p>Параметры:
         <ul>
             <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>spares</b> - Запчасти; <i><b>machine</b> - Техника(в разработке)</i></li>
-            <li><span class="param">template</span> - <span class="info">Шаблон: <b>email</b> - письмо на электронную почту, <b>print</b> - печатный шаблон(возвращает ссылку на документ)</span> </li>
-            <li><span class="param">header</span> - Шапка. 0 - скрыть шапку.</li>
+            <li><span class="param">template</span> - шаблон. Принимаемые: <b>email</b> - письмо на электронную почту, <b>print</b> - печатный шаблон(возвращает ссылку на документ) </li>
+            <li><span class="param">header</span> - Шапка. Текст либо число. 0 - скрыть шапку.</li>
             <li><span class="param">client</span> - Клиент. ФИО.</li>
             <li><span class="param">login</span> - Логин сзязанного лица(любой человек, существующий в базе <a href="http://auth.lbr.ru">Центра авторизации</a>)</li>
             <li><span class="param">f_id</span> - Филиал (Код из трех символов)</li>
-            <li><span class="param">data</span> - массив с данными. Может быть множественным массивом с несколькими перевозками/перевозчиками.</li>
+            <li><span class="param">data</span> - массив с данными. Может быть множественным массивом.</li>
             <li><br>Принимаемые параметры массива <b>data</b> для <b>action=spares</b></li>
             <li>
                 <ul class="table">
