@@ -15,3 +15,11 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 # otherwise forward it to index.php
 RewriteRule . index.php
+
+#защита паролем файла
+<files index.php="">
+AuthType Basic
+AuthName «This is SPARTA!»
+AuthUserFile /var/www/vhosts/lbr.ru/httpdocs/.htpasswd
+Require valid-user
+</files>
