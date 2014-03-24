@@ -7,7 +7,7 @@ class Table {
         $return = '<table class="'.$class.'" cellspacing="0" cellpadding="0">';
         if(!empty($table[head])){
             $return .= '<thead>';
-                $return .= self::generateTr($table[head][0]);
+                $return .= self::generateTh($table[head][0]);
             $return .= '</thead>';
         }
         $return .= '<tbody>';
@@ -29,13 +29,26 @@ class Table {
         $return = '<tr>';
         foreach ($tr as $td)
         {
-            $return .= '<td>';
                 if(is_array($td))
-                    $return .= self::generateTable($td, 'children');
+                    $return .= '<td class="parent">'.self::generateTable($td, 'children');
                 else
-                    $return .= $td;
+                    $return .= '<td class="text">'.$td;
             $return .= '</td>';
         }
+        $return .= '</tr>';
+
+        return $return;
+    }
+    private function generateTh($tr)
+    {
+        if(!is_array($tr) || empty($tr))
+            return false;
+
+        $return = '<tr>';
+        
+        foreach ($tr as $i=>$th)
+            $return .= '<th class="text th-'.$i.'">'.$th.'</td>';
+        
         $return .= '</tr>';
 
         return $return;

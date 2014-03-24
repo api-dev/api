@@ -116,7 +116,8 @@ class KpController extends Controller
 
             $data[1][table][body][0][0] = '1';
             $data[1][table][body][0][1] = 'Запчасть под номер 1';
-            $data[1][table][body][0][2] = '345';
+            $data[1][table][body][0][2][body][0][0] = '345';
+            $data[1][table][body][0][2][body][0][1] = '7323';
             $data[1][table][body][0][3] = '34';
             $data[1][table][body][0][4] = '11730';
 
