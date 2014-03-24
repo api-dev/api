@@ -1,8 +1,0 @@
-Options -Indexes
-#защита паролем файла
-#<files secure.php="">
-#AuthType Basic
-#AuthName «Prompt»
-#AuthUserFile /pub/home/.htpasswd
-#Require valid-user
-#</files>
