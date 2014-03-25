@@ -90,7 +90,7 @@ endif;
 
 function getRow($array){
     $return = '<table class="row-table">';
-    for($i = 0; $i<=count($array); $i++){
+    for($i = 0; $i<count($array); $i++){
         $photo = false;
         if(isset($array[$i]['login']) && !empty($array[$i]['login']))
             $photo = User::model()->findByAttributes(array('login' => $array[$i]['login']))->photo;
@@ -115,13 +115,13 @@ function getRow($array){
 }
 function getCollum($array){
     $return = '<table class="collum-table">';
-    for($i = 0; $i<=count($array); $i++){
+    for($i = 0; $i<count($array); $i++){
         $return .= '<tr>';
         $c = count($array[$i]);
         if($c<=0)
             continue;
         $tdclass = floor(100/$c);
-        for($k = 0; $k<=$c; $k++)
+        for($k = 0; $k<$c; $k++)
         {
             $return .= '<td class="width-'.$tdclass.'" valign="top">';
                 $return .= '<div class="t-c-header"><span class="t-c-date">'.$array[$i][$k]['date'].'</span> '.$array[$i][$k]['caption'].'</div>';
