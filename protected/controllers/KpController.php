@@ -46,11 +46,20 @@ class KpController extends Controller
         {
             if(is_array($request[data]) && !empty($request[data]))
             {
-                if($request[data][table])
-                    $this->renderPartial ('spares', array('request'=>$request, 'table'=>$this->getTable($request[data][table]), 'title'=>$data[title]));
-                else{
-                    foreach ($request[data] as $table)
-                        $this->renderPartial ('spares', array('request'=>$request, 'table'=>$this->getTable($table[table]), 'title'=>$table[title]));
+                if($request[data][table]){
+                    $this->renderPartial ('spares', array(
+                        'request'=>$request,
+                        'table'=>$this->getTable($request[data][table]),
+                        'title'=>$request[data][title]
+                        ));
+                }else{
+                    foreach ($request[data] as $table){
+                        $this->renderPartial ('spares', array(
+                            'request'=>$request, 
+                            'table'=>$this->getTable($table[table]), 
+                            'title'=>$table[title]
+                            ));
+                    }
                 }
             }
         }
@@ -67,6 +76,9 @@ class KpController extends Controller
         
         public function getTest($request)
         {
+            $request[header] = '1';
+            $request[f_id] = 'UPR';
+            $request[login] = 'cheshenkov';
 //            $table = array();
 //            $table[head][0][0] = '№';
 //            $table[head][0][1] = 'Наименование';

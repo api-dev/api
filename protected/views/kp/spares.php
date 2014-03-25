@@ -22,7 +22,9 @@
             echo '<div class="content">'.$table.'</div>';
         endif;
         if($request[footer]!='0'):
-            echo '<div class="footer">'.$request[footer].'</div>';
+            echo '<div class="footer">';
+                echo User::getPasteboard($request[login]);
+            echo '</div>';
         endif;
         ?>
     </div>

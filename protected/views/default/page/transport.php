@@ -3,7 +3,7 @@
 <div class="item">
     <h4>Добавление/редактирование перевозки/перевозчика</h4>
     <div class="text">
-        <p><span class="param">URL</span> : api.lbr.ru/?r=tr&m=set</p>
+        <p><span class="param">URL</span> : api.lbr.ru/tr?m=set</p>
         <p>Параметры:
         <ul>
             <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>transport, user.</b></li>
@@ -104,13 +104,13 @@
 <div class="item">
     <h4>Получение данных о пользователе</h4>
     <div class="text">
-        <p><b>URL:</b> api.lbr.ru/?r=tr&m=get</p>
+        <p><b>URL:</b> api.lbr.ru/tr?m=get</p>
     </div>
 </div>
 <div class="item">
     <h4>Удаление перевозки/перевозчика</h4>
     <div class="text">
-        <p><b>URL:</b> api.lbr.ru/?r=tr&m=del</p>
+        <p><b>URL:</b> api.lbr.ru/tr?m=del</p>
         <p>Параметры:
         <ul>
             <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>transport, user.</b></li>

@@ -3,7 +3,7 @@
     <div class="item">
         <h4>Добавление/редактирование пользователя</h4>
         <div class="text">
-            <p><span class="param">URL</span> : api.lbr.ru/?r=us&m=set</p>
+            <p><span class="param">URL</span> : api.lbr.ru/us?m=set</p>
             <p>Параметры:
             <ul>
                 <li><span class="param">action</span> - <b>user</b>, действие с передаваемым пользователем. </li>
@@ -50,7 +50,7 @@
     <div class="item">
         <h4>Удаление пользователя</h4>
         <div class="text">
-            <p><b>URL:</b> /?r=us&m=del</p>
+            <p><b>URL:</b> /us?m=del</p>
             <p>Параметры:
             <ul>
                 <li><span class="param">login</span> <span class="type">(mixed)</span> <span class="info">Логин пользователя в системе учета. Уникальный. Обязательный</span> </li>

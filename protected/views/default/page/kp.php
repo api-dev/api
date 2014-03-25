@@ -3,7 +3,7 @@
 <div class="item">
     <!--<h4>КП по запасным частям и <i>технике(временно не функционирует)</i></h4>-->
     <div class="text">
-        <p><b>URL для генерации:</b> api.lbr.ru/?r=kp&m=set</p>
+        <p><b>URL для генерации:</b> api.lbr.ru/kp?m=set</p>
         <div class="h2">Основные параметры:</div>
         <ul style="margin-top: 7px;" class="table">
             <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>

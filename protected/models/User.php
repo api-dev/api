@@ -156,4 +156,88 @@ class User extends CActiveRecord
             }
             return implode($pass); //turn the array into a string
         }
+
+        /**
+         * @param string $login user login
+         * @param string $type print - div view for print, email - table view for e-mail
+         * @return html vCard User
+         */ 
+        public static function getPasteboard($login, $type = 'print')
+        {
+            $model = User::model()->findByAttributes(array('login' => $login));
+            if(!$model)
+                return false;
+            $return = '';
+            $phone = implode('; ', array_diff(array($model->phone_mb, $model->phone_mr), array('-', '', ' ', '0', null)));
+            if($type=='print'){
+                $return .= '<div class="pasteboard">';
+                    if($model->photo && $model->photo!='1')
+                    {
+                        $return .= '<div class="photo">';
+                            $return .= '<img src="http://api.lbr.ru'.$model->photo.'" alt="Фото персонального менеджера">';
+                        $return .= '</div>';
+                    }
+                    $return .= '<div class="desc">';
+                        $return .= '<div class="you-manage">Ваш персональный менеджер:</div>';
+                        
+                        if($model->name && $model->surname)
+                            $return .= '<div class="name">'.$model->surname.' '.$model->name.' '.$model->secondname.'</div>';
+                        
+                        if($phone)
+                            $return .= '<div class="phone"><b>Телефон:</b> '.$phone.'</div>';
+                        
+                        if($model->skype)
+                            $return .= '<div class="skype"><b>Skype:</b> '.$model->skype.'</div>';
+                        
+                        if($model->email)
+                            $return .= '<div class="email"><b>E-mail:</b> '.$model->email.'</div>';
+                        
+                        $return .= '<div class="sitelink"><a href="http://www.lbr.ru/" target="_blank">www.lbr.ru</a></div>';
+                    $return .= '</div>';
+                $return .= '</div>';
+            }elseif($type=='email'){
+                $return .= '<table cellspacing="0" cellpadding="0"  style="margin: 0; padding: 0px; border: 0;">';
+                    $return .= '<tr>';
+                        if($model->photo && $model->photo!='1')
+                        {
+                            $return .= '<td style="padding-right: 15px;" valign="top">';
+                                $return .= '<img src="http://api.lbr.ru'.$model->photo.'" height="130" border="0" alt="Фото персонального менеджера">';
+                            $return .= '</td>';
+                        }
+                        $return .= '<td valign="top">';
+                            $return .= '<table cellspacing="0" cellpadding="0"  style="margin: 0; padding: 0px; border: 0;">';
+                                $return .= '<tr>';
+                                    $return .= '<td><b style="font-size: 1.1em;">Ваш персональный менеджер:</b></td>';
+                                $return .= '</tr>';
+                                if($model->name && $model->surname){
+                                    $return .= '<tr>';
+                                        $return .= '<td>'.$model->surname.' '.$model->name.' '.$model->secondname.'</td>';
+                                    $return .= '</tr>';
+                                }
+                                if(!empty($phone)){
+                                    $return .= '<tr>';
+                                        $return .= '<td><b>Телефон:</b> '.$phone.'</td>';
+                                    $return .= '</tr>';
+                                }
+                                if($model->skype){
+                                    $return .= '<tr>';
+                                        $return .= '<td><b>Skype:</b> '.$model->skype.'</td>';
+                                    $return .= '</tr>';
+                                }
+                                if($model->email){
+                                    $return .= '<tr>';
+                                        $return .= '<td><b>Телефон:</b> '.$model->email.'</td>';
+                                    $return .= '</tr>';
+                                }
+                                $return .= '<tr>';
+                                    $return .= '<td><a href="http://www.lbr.ru/" target="_blank">www.lbr.ru</a></td>';
+                                $return .= '</tr>';
+                            $return .= '</table>';
+                        $return .= '</td>';
+                    $return .= '</tr>';
+                $return .= '</table>';
+            }
+            
+            return $return;
+        }
 }
