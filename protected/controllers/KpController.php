@@ -25,7 +25,7 @@ class KpController extends Controller
             if($request['template']=='print'){
                 $id = $this->getHash();
                 if(Yii::app()->cache->set($id, serialize($request)))
-                    echo 'http://api.lbr.ru/?r=kp&m=get&action=spares&hash='.$id;
+                    echo 'http://api.lbr.ru/kp?m=get&action=spares&hash='.$id;
                 else
                     echo 'Fuckin cached';
             }else
