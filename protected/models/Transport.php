@@ -17,6 +17,7 @@
  * @property string $location_to
  * @property string $auto_info
  * @property string $description
+ * @property string $date_close
  * @property string $date_from
  * @property string $date_to
  * @property string $date_published
@@ -24,11 +25,16 @@
  * The followings are the available model relations:
  * @property Rate[] $rates
  * @property TransportFieldEq[] $transportFieldEqs
+ * @property TransportInterPoint[] $transportInterPoints
  * @property UserEvent[] $userEvents
  */
 class Transport extends CActiveRecord
 {
-    
+        CONST INTER_TRANSPORT = 0;
+        CONST RUS_TRANSPORT = 1;
+        CONST INTER_PRICE_STEP = 50;
+        CONST RUS_PRICE_STEP = 200;
+        
         public function getDbConnection()
         {
             return Yii::app()->db_exch;
@@ -52,10 +58,10 @@ class Transport extends CActiveRecord
 		return array(
 			array('new_transport, rate_id, start_rate, status, type, currency', 'numerical', 'integerOnly'=>true),
 			array('t_id, user_id', 'length', 'max'=>64),
-			array('location_from, location_to, auto_info, description, date_from, date_to, date_published', 'safe'),
+			array('location_from, location_to, auto_info, description, date_close, date_from, date_to, date_published', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, t_id, new_transport, rate_id, start_rate, status, type, user_id, currency, location_from, location_to, auto_info, description, date_from, date_to, date_published', 'safe', 'on'=>'search'),
+			array('id, t_id, new_transport, rate_id, start_rate, status, type, user_id, currency, location_from, location_to, auto_info, description, date_close, date_from, date_to, date_published', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +75,7 @@ class Transport extends CActiveRecord
 		return array(
 			'rates' => array(self::HAS_MANY, 'Rate', 'transport_id'),
 			'transportFieldEqs' => array(self::HAS_MANY, 'TransportFieldEq', 'transport_id'),
+                        'transportInterPoints' => array(self::HAS_MANY, 'TransportInterPoint', 't_id'),
 			'userEvents' => array(self::HAS_MANY, 'UserEvent', 'transport_id'),
 		);
 	}
@@ -92,6 +99,7 @@ class Transport extends CActiveRecord
 			'location_to' => 'Location To',
 			'auto_info' => 'Auto Info',
 			'description' => 'Description',
+                        'date_close' => 'Время закрытия заявки',
 			'date_from' => 'Date From',
 			'date_to' => 'Date To',
 			'date_published' => 'Date Published',
@@ -129,6 +137,7 @@ class Transport extends CActiveRecord
 		$criteria->compare('location_to',$this->location_to,true);
 		$criteria->compare('auto_info',$this->auto_info,true);
 		$criteria->compare('description',$this->description,true);
+                $criteria->compare('date_close',$this->date_close,true);
 		$criteria->compare('date_from',$this->date_from,true);
 		$criteria->compare('date_to',$this->date_to,true);
 		$criteria->compare('date_published',$this->date_published,true);

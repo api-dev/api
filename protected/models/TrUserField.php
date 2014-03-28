@@ -12,6 +12,8 @@
  * @property boolean $mail_deadline
  * @property boolean $mail_before_deadline
  * @property boolean $with_nds
+ * @property boolean $show_intl
+ * @property boolean $show_regl
  *
  * The followings are the available model relations:
  * @property User $user
@@ -40,10 +42,10 @@ class TrUserField extends CActiveRecord
 		return array(
 			array('user_id', 'numerical', 'integerOnly'=>true),
 			//array('mail_transport_create_1, mail_transport_create_2, mail_kill_rate, mail_deadline, mail_before_deadline, site_transport_create_1, site_transport_create_2, site_kill_rate, site_deadline, site_before_deadline', 'safe'),
-			array('with_nds, mail_transport_create_1, mail_transport_create_2, mail_kill_rate, mail_deadline, mail_before_deadline', 'safe'),
+			array('with_nds, mail_transport_create_1, mail_transport_create_2, mail_kill_rate, mail_deadline, mail_before_deadline, show_intl, show_regl', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, with_nds, user_id, mail_transport_create_1, mail_transport_create_2, mail_kill_rate, mail_deadline, mail_before_deadline', 'safe', 'on'=>'search'),
+			array('id, with_nds, user_id, mail_transport_create_1, mail_transport_create_2, mail_kill_rate, mail_deadline, mail_before_deadline, show_intl, show_regl', 'safe', 'on'=>'search'),
 		        //array('new_confirm', 'compare', 'compareAttribute'=>'new_password', 'message'=>'Пароли не совпадают'),
                 );
 	}
@@ -74,6 +76,8 @@ class TrUserField extends CActiveRecord
 			'mail_deadline' => 'При закрытии перевозки',
 			'mail_before_deadline' => 'Mail Before Deadline',
 			'with_nds' => 'Показывать цену с НДС',
+                        'show_intl' => 'Показывать международные перевозки',
+                        'show_regl' => 'Показывать региональные перевозки',
 		);
 	}
 
@@ -102,6 +106,8 @@ class TrUserField extends CActiveRecord
 		$criteria->compare('mail_kill_rate',$this->mail_kill_rate);
 		$criteria->compare('mail_deadline',$this->mail_deadline);
 		$criteria->compare('mail_before_deadline',$this->mail_before_deadline);
+		$criteria->compare('show_intl',$this->show_intl);
+		$criteria->compare('show_regl',$this->show_regl);
 
 		return new CActiveDataProvider($this, array(
 	             'criteria'=>$criteria,

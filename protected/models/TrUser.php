@@ -18,6 +18,9 @@
  * @property string $login
  * @property string $password
  * @property integer $phone
+ * @property integer $phone2
+ * @property integer $parent
+ * @property integer $type_contact
  * @property string $email
  *
  * The followings are the available model relations:
@@ -31,6 +34,12 @@
  */
 class TrUser extends CActiveRecord
 {
+    const USER_NOT_CONFIRMED = 0;
+    const USER_ACTIVE = 1;
+    const USER_WARNING = 2;
+    const USER_TEMPORARY_BLOCKED = 3;
+    const USER_BLOCKED = 4;
+        
     public function getDbConnection()
     {
         return Yii::app()->db_exch;
@@ -51,13 +60,7 @@ class TrUser extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('status, phone', 'numerical', 'integerOnly'=>true),
-            array('inn, login', 'length', 'max'=>64),
-            array('email', 'email', 'message'=>'Неправильный Email адрес'),
-            array('company, country, region, city, district, name, secondname, surname, password, email', 'safe'),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
-            array('id, company, inn, status, country, region, city, district, name, secondname, surname, login, password, phone, email', 'safe', 'on'=>'search'),
+            array('company, inn, name, surname, secondname, password, status, country, region, city, district, phone, phone2, type_contact, parent, email', 'safe'),
         );
     }
 
@@ -86,7 +89,7 @@ class TrUser extends CActiveRecord
     {
         return array(
             'id' => 'ID',
-            'company' => 'Название комании',
+            'company' => 'Комания',
             'inn' => 'ИНН/УНП ',
             'status' => 'Статус',
             'country' => 'Страна',
@@ -96,10 +99,12 @@ class TrUser extends CActiveRecord
             'name' => 'Имя',
             'secondname' => 'Отчество',
             'surname' => 'Фамилия',
-            'login' => 'Логин',
             'password' => 'Пароль',
             'phone' => 'Телефон',
-            'email' => 'Электронная почта',
+            'phone2' => 'Телефон №2',
+            'parent' => 'Родитель',
+            'type_contact' => 'Тип',
+            'email' => 'Email',
         );
     }
 
@@ -135,10 +140,13 @@ class TrUser extends CActiveRecord
         $criteria->compare('login',$this->login,true);
         $criteria->compare('password',$this->password,true);
         $criteria->compare('phone',$this->phone);
+        $criteria->compare('phone2',$this->phone2);
+        $criteria->compare('parent',$this->parent);
+        $criteria->compare('type_contact',$this->type_contact);
         $criteria->compare('email',$this->email,true);
 
         return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+                'criteria'=>$criteria,
         ));
     }
 
@@ -151,5 +159,61 @@ class TrUser extends CActiveRecord
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
+    }
+    
+    protected function beforeSave() {
+        parent::beforeSave();
+        if($this->isNewRecord && isset($this->email))
+        {
+            $password = User::randomPassword();
+            $this->password = crypt($password, User::blowfishSalt());
+            
+            $email = new TEmail;
+            $email->from_email = 'help.ex@lbr.ru';
+            $email->from_name  = 'Биржа перевозок ЛБР АгроМаркет';
+            $email->to_email   = $this->email;
+            $email->to_name    = '';
+            $email->subject    = "Приглашение";
+            $email->type = 'text/html';
+            $email->body = "<h1>Уважаемый(ая) " . $this->name . ' ' . $this->secondname . ", </h1>" . 
+                "Приглашаем Вас воспользоваться биржей перевозок <a href='http://exchange.lbr.ru'>ЛБР АгроМаркет</a>" . "<br>" .
+                "Ваш логин: " . $this->email . "<br>" .
+                "Ваш пароль: " . $password . "<br>" .
+                "Изменить пароль Вы можете зайдя в кабинет пользователя с помощью указанных логина и пароля. " . 
+                "<hr><p>Это сообщение является автоматическим, на него не следует отвечать</p>"
+            ;
+            $email->sendMail();
+        }
+        return true;
+    }
+    
+    protected function afterSave() {
+        parent::afterSave();
+        if($this->isNewRecord)
+        {
+            $model = new TrUserField;
+            $model->user_id = $this->id;
+            $model->mail_transport_create_1 = false;
+            $model->mail_transport_create_2 = false;
+            $model->mail_kill_rate = false;
+            $model->mail_before_deadline = false;
+            $model->mail_deadline = true;
+            $model->with_nds = false;
+            $model->show_intl = true;
+            $model->show_regl = true;
+            if($model->save())
+                return $this->result('Дополнительные поля успешно сохранены.');
+        }
+    }
+
+    public function randomPassword() {
+        $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 16; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
     }
 }

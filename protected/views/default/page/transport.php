@@ -46,10 +46,10 @@
                     <li><span class="param">surname</span> <span class="type">(string)</span> <span class="info">Фамилия контактного лица</span> </li>
                     <li><span class="param">secondname</span> <span class="type">(string)</span> <span class="info">Отчество контактного лица</span> </li>
                     <li><span class="param">phone</span> <span class="type">(integer)</span> <span class="info">Номер телефона</span> </li>
+                    <li><span class="param">phone2</span> <span class="type">(integer)</span> <span class="info">Дополнительный номер телефона</span> </li>
                     <li><span class="param">persons</span> <span class="type">(array)</span> <span class="info">Дополнительные контактные лица:<ul class="table">
                                 <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
-                                <li><span class="param">c_id</span> <span class="type">(mixed)</span> <span class="info">Уникальный идентефикатор</span> </li>
-                                <li><span class="param">email</span> <span class="type">(mixed)</span> <span class="info">E-mail адрес. Уникальный</span> </li>
+                                <li><span class="param">email</span> <span class="type">(mixed)</span> <span class="info">E-mail адрес. Уникальный. Обязательный</span> </li>
                                 <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Имя контактного лица</span> </li>
                                 <li><span class="param">surname</span> <span class="type">(string)</span> <span class="info">Фамилия контактного лица</span> </li>
                                 <li><span class="param">secondname</span> <span class="type">(string)</span> <span class="info">Отчество контактного лица</span> </li>
@@ -91,6 +91,9 @@
     data[2][inn] = '234948756732'
     data[2][company] = 'ИП Жорик и Борик'
     data[2][country] = 'РФ'
+    data[2][persons][0][email] = 'email@mail.com'
+    data[2][persons][0][name] = 'Имя_контактного_лица'
+    data[2][persons][0][surname] = 'Фамилия_контактного_лица'
 </pre>Пример добавляет/редактирует одного перевозчика:
 <pre style='font-size: 11px;'>
     action = 'user'

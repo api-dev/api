@@ -1,36 +1,32 @@
 <?php
 
 /**
- * This is the model class for table "user_contact".
+ * This is the model class for table "rate".
  *
- * The followings are the available columns in table 'user_contact':
+ * The followings are the available columns in table 'rate':
  * @property integer $id
- * @property integer $u_id
- * @property string $c_id
- * @property string $password
- * @property string $name
- * @property string $surname
- * @property string $secondname
- * @property string $email
- * @property integer $status
- * @property integer $phone
- * @property integer $phone2
+ * @property integer $transport_id
+ * @property string $date
+ * @property double $price
+ * @property integer $user_id
  *
  * The followings are the available model relations:
- * @property User $u
+ * @property User $user
+ * @property Transport $transport
  */
-class TrUserContact extends CActiveRecord
+class Rate extends CActiveRecord
 {
         public function getDbConnection()
         {
             return Yii::app()->db_exch;
         }
+        
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'user_contact';
+		return 'rate';
 	}
 
 	/**
@@ -41,12 +37,12 @@ class TrUserContact extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('u_id, status, phone, phone2', 'numerical', 'integerOnly'=>true),
-			array('c_id', 'length', 'max'=>64),
-			array('password, name, surname, secondname, email', 'safe'),
+			array('transport_id, user_id', 'numerical', 'integerOnly'=>true),
+			array('price', 'numerical'),
+			array('date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, u_id, c_id, password, name, surname, secondname, email, status, phone, phone2', 'safe', 'on'=>'search'),
+			array('id, transport_id, date, price, user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,7 +54,8 @@ class TrUserContact extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'u' => array(self::BELONGS_TO, 'User', 'u_id'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'transport' => array(self::BELONGS_TO, 'Transport', 'transport_id'),
 		);
 	}
 
@@ -69,16 +66,10 @@ class TrUserContact extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'u_id' => 'U',
-			'c_id' => '1c id',
-			'password' => 'Password',
-			'name' => 'Name',
-			'surname' => 'Surname',
-			'secondname' => 'Secondname',
-			'email' => 'Email',
-			'status' => 'Status',
-			'phone' => 'Phone',
-			'phone2' => 'Phone2',
+			'transport_id' => 'ID перевозки',
+			'date' => 'Дата',
+			'price' => 'Размер ставки',
+			'user_id' => 'Пользователь',
 		);
 	}
 
@@ -101,16 +92,10 @@ class TrUserContact extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('u_id',$this->u_id);
-		$criteria->compare('c_id',$this->c_id,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('surname',$this->surname,true);
-		$criteria->compare('secondname',$this->secondname,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('status',$this->status);
-		$criteria->compare('phone',$this->phone);
-		$criteria->compare('phone2',$this->phone2);
+		$criteria->compare('transport_id',$this->transport_id);
+		$criteria->compare('date',$this->date,true);
+		$criteria->compare('price',$this->price);
+		$criteria->compare('user_id',$this->user_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -121,7 +106,7 @@ class TrUserContact extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return TrUserContact the static model class
+	 * @return Rate the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

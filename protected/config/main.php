@@ -106,5 +106,7 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmail' => 'webmaster@lbr.ru',
+        'timeToCloseInter' => 24,
+        'timeToCloseReg' => 8
     ),
 );

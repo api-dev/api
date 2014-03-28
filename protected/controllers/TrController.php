@@ -18,7 +18,18 @@ class TrController extends Controller
 
     public function actionTest()
     {
-        echo date('Y-m-d H:i:s', strtotime('2014-02-28 08:00:00'));
+//        $get = filter_input_array(INPUT_GET);
+        $tr = Transport::model()->findByAttributes(array('id'=>'13'));
+        var_dump($tr->date_from); exit();
+//        if(!empty($tr->rates))
+//            echo 'Loool';
+//        else
+//            echo 'Yoooo!!!';
+//        var_dump($rate);
+        $old = date('Y-m-d H:i:s', strtotime('2014-02-28 08:00:00'));
+        $m = strtotime($old);
+        $diff = 24 * 60 * 60;
+        echo (date('Y-m-d H:i:s',$m-$diff));
         exit();
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
@@ -31,159 +42,101 @@ class TrController extends Controller
 
     private function setTransport($request)
     {
-        $data = $request['data'];
-        if (!$data || empty($data))
-            return $this->result(' Ошибка. Нет данных о перевозке. Попробуйте еще раз.');
-
-        if (isset($data['t_id'])){
-            $id = $this->setOneItem('Transport', $data, 't_id');
-            if($id && $data['points'])
-                $this->setInterPoint((int)$id, $data['points']);
-        }else{
-            foreach ($data as $transport):
-                $id = $this->setOneItem('Transport', $transport, 't_id');
-                if($id && $transport['points'])
-                    $this->setInterPoint((int)$id, $transport['points']);
-            endforeach;
-            return $this->result('Выгрузка перевозок закончена.');
-        }
+        $this->setItems($request, 'Transport', 't_id');
     }
-
+    
     private function setUser($request)
     {
+        $this->setItems($request, 'User', 'inn');
+    }
+    
+    private function setItems($request, $method_name, $pk)
+    {
+        $method = 'setOne'.$method_name;
+        if(method_exists($this, $method))
+            return $this->result(' Системная ошибка. Метод не найден.');
+        
         $data = $request['data'];
         if (!$data || empty($data))
-            return $this->result('Ошибка. Нет данных о перевозчике. Попробуйте еще раз.');
+            return $this->result(' Ошибка. Нет данных. Попробуйте еще раз.');
 
-        if (isset($data['inn'])){
-            $id = $this->setOneItem('TrUser', $data, 'inn');
-            if($id){
-                $this->setUserField($id);
-                if($data['persons'])
-                    $this->setContactPersons((int)$id, $data['persons']);
-            }
+        if (isset($data[$pk])){
+            $this->$method($data);
         }else{
-            foreach ($data as $user):
-                $id = $this->setOneItem('TrUser', $user, 'inn');
-                if($id){
-                    $this->setUserField($id);
-                    if($data['persons'])
-                        $this->setContactPersons((int)$id, $data['persons']);
-                }
+            foreach ($data as $item):
+                $this->$method($item);
             endforeach;
-            return $this->result('Выгрузка перевозчиков закончена.');
+        }
+        return $this->result('Выгрузка закончена.');
+    }
+
+    private function setOneTransport($data)
+    {
+        $tr = Transport::model()->findByAttributes(array('t_id'=>$data['t_id']));
+       
+        if(!empty($tr->rates))
+            return $this->result(' Перевозка участвует в торгах. Изменение невозможно.');
+        
+        $id = $this->setOneItem('Transport', $data, 't_id');
+        
+        if($id && $data['points']){
+            $this->setInterPoint((int)$id, $data['points']);
         }
     }
     
-    private function setUserField($id)
+    private function setOneUser($data)
     {
-        $model = new TrUserField;
-        $model->user_id = $id;
-        $model->mail_transport_create_1 = false;
-        $model->mail_transport_create_2 = false;
-        $model->mail_kill_rate = false;
-        $model->mail_before_deadline = false;
-        $model->mail_deadline = true;
-        $model->with_nds = false;
-        if($model->save())
-            return $this->result('Дополнительные поля успешно сохранены.');
+        $id = $this->setOneItem('TrUser', $data, 'inn');
+        if($id){
+            if($data['persons'])
+                $this->setContactPersons((int)$id, $data['persons']);
+        } 
     }
+
     private function setContactPersons($id, $persons)
     {
         if(isset($id) && is_array($persons) && !empty($persons))
         {
+            $not_in = array();
             foreach ($persons as $p)
             {
                 if(!$p)
                     return $this->result('Неверные данные контактного лица');
                 
-                $contact = TrUserContact::model()->findByAttributes(array('u_id'=>$id, 'c_id'=>$p['c_id']));
+                $contact = TrUser::model()->findByAttributes(array('parent'=>$id, 'type'=>'1', 'email'=>$p[email]));
                 if(!$contact)
-                    $contact = new TrUserContact;
+                    $contact = new TrUser;
                 
-                $contact->u_id = $id;
-                $contact->status = 1;
+                if($contact->isNewRecord){
+                   $old = TrUser::model()->findByAttributes(array('email'=>$p[email]));
+                   if($old!==null){
+                        $this->result('Контактное лицо не сохранено. Не уникальный e-mail');
+                        continue;
+                   }
+                }
+                $company = TrUser::model()->findByPk($id);
+                if($company)
+                    $contact->company = 'Контактное лицо "'.$company->company.'" ('.$contact->surname.' '.$contact->name.')';
+                
+                $contact->parent = $id;
+                $contact->status = TrUser::USER_ACTIVE;
+                
                 foreach ($contact as $name => $v){
                     if (isset($p[$name]) || !empty($p[$name]))
                         $contact->$name = $p[$name];
                 }
                 
-                if(!$contact->validate() || !$contact->save())
-                    return $this->result('Контактное лицо не сохранено. Даные не сохранены.');
+                if($contact->validate() && $contact->save())
+                    array_push ($not_in, $contact->id);
+                else
+                    $this->result('Контактное лицо не сохранено. Даные не сохранены.');
                     
             }
+            if(!empty($not_in))
+                Yii::app()->db_exch->createCommand()->delete('user', array('and', 'parent='.$id, 'type=1', array('not in', 'id', $not_in)));
         }
         else
             return $this->result('Контактные лица не сохранены. Не найден перевозчик, либо не переданы данные о контактном лице.');
-    }
-
-
-    private function delTransport($request)
-    {
-        $data = $request['data'];
-        if (!$data || empty($data))
-            return $this->result('Ошибка. Нет данных о перевозке. Попробуйте еще раз.');
-
-        if (isset($data['t_id']))
-            Transport::model()->deleteAll('t_id=:tid', array(':tid' => $data['t_id']));
-        else{
-            foreach ($data as $user):
-                Transport::model()->deleteAll('t_id=:tid', array(':tid' => $user['t_id']));
-            endforeach;
-        }
-        return $this->result('Удаление прошло успешно.');
-    }
-
-    private function delUser($request)
-    {
-        $data = $request['data'];
-        if (!$data || empty($data))
-            return $this->result('Ошибка. Нет данных о перевозчике. Попробуйте еще раз.');
-
-        if (isset($data['inn']))
-            TrUser::model()->deleteAll('inn=:inn', array(':inn' => $data['inn']));
-        else{
-            foreach ($data as $user):
-                TrUser::model()->deleteAll('inn=:inn', array(':inn' => $user['inn']));
-            endforeach;
-        }
-        return $this->result('Удаление прошло успешно.');
-    }
-    private function addDefaultTransportCollum($data)
-    {
-        $data[new_transport] = 1;
-        $data[status] = 1;
-        $data[date_published] = date('Y-m-d H:i:s');
-
-        return $data;
-    }
-
-    private function addDefaultTrUserCollum($data)
-    {
-        $data[status] = 1;
-        return $data;
-    }
-
-    private function getRate($request)
-    {
-        $data = $request['data'];
-        if (!$data || empty($data))
-            return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
-
-
-//        if(is_array($data))
-//            $where = array('in', 'id', $data);
-//        else
-//            $where = 'id='.$data;
-//
-//        $app = Yii::app();
-//        $return = $app->db_exch->createCommand()
-//            ->select('transport.id, rate.*')
-//            ->from('transport')
-//            ->where($where)
-//            ->queryAll();
-//
-//        var_dump($return);
     }
 
     private function setOneItem($model_name, $attribute, $pk)
@@ -216,6 +169,72 @@ class TrController extends Controller
             $transaction->rollback();
             return $this->result("Исключение: " . $e->getMessage() . "\n");
         }
+    }
+    
+    private function addDefaultTransportCollum($data)
+    {
+        $app = Yii::app();
+        $data[new_transport] = 1;
+        $data[status] = 1;
+        $data[date_published] = date('Y-m-d H:i:s');
+        if($data[type]==Transport::INTER_TRANSPORT)
+            $data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_from])-($app->params['timeToCloseInter'] * 60 * 60));
+        elseif($data[type]==Transport::RUS_TRANSPORT)
+            $data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_from])-($app->params['timeToCloseReg'] * 60 * 60));
+
+        return $data;
+    }
+
+    private function addDefaultTrUserCollum($data)
+    {
+        $data[status] = 1;
+        return $data;
+    }
+    
+    
+    /*-------Start-DELETE-block--------*/
+    
+    private function delTransport($request)
+    {
+        $data = $request['data'];
+        if (!$data || empty($data))
+            return $this->result('Ошибка. Нет данных о перевозке. Попробуйте еще раз.');
+
+        if (isset($data['t_id']))
+            Transport::model()->deleteAll('t_id=:tid', array(':tid' => $data['t_id']));
+        else{
+            foreach ($data as $user):
+                Transport::model()->deleteAll('t_id=:tid', array(':tid' => $user['t_id']));
+            endforeach;
+        }
+        return $this->result('Удаление прошло успешно.');
+    }
+    
+    private function delUser($request)
+    {
+        $data = $request['data'];
+        if (!$data || empty($data))
+            return $this->result('Ошибка. Нет данных о перевозчике. Попробуйте еще раз.');
+
+        if (isset($data['inn']))
+            TrUser::model()->deleteAll('inn=:inn', array(':inn' => $data['inn']));
+        else{
+            foreach ($data as $user):
+                TrUser::model()->deleteAll('inn=:inn', array(':inn' => $user['inn']));
+            endforeach;
+        }
+        return $this->result('Удаление прошло успешно.');
+    }
+    
+    
+    
+    /*-------Start-GET-block--------*/
+    
+    private function getRate($request)
+    {
+        $data = $request['data'];
+        if (!$data || empty($data))
+            return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
     }
 
     private function result($text)
