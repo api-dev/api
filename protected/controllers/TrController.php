@@ -53,7 +53,7 @@ class TrController extends Controller
     private function setItems($request, $method_name, $pk)
     {
         $method = 'setOne'.$method_name;
-        if(method_exists($this, $method))
+        if(!method_exists($this, $method))
             return $this->result(' Системная ошибка. Метод не найден.');
         
         $data = $request['data'];
