@@ -103,7 +103,7 @@ class TrController extends Controller
                 if(!$p)
                     return $this->result('Неверные данные контактного лица');
                 
-                $contact = TrUser::model()->findByAttributes(array('parent'=>$id, 'type'=>'1', 'email'=>$p[email]));
+                $contact = TrUser::model()->findByAttributes(array('parent'=>$id, 'type_contact'=>'1', 'email'=>$p[email]));
                 if(!$contact)
                     $contact = new TrUser;
                 
@@ -126,7 +126,7 @@ class TrController extends Controller
                     
             }
             if(!empty($not_in))
-                Yii::app()->db_exch->createCommand()->delete('user', array('and', 'parent='.$id, 'type=1', array('not in', 'id', $not_in)));
+                Yii::app()->db_exch->createCommand()->delete('user', array('and', 'parent='.$id, 'type_contact=1', array('not in', 'id', $not_in)));
         }
         else
             return $this->result('Контактные лица не сохранены. Не найден перевозчик, либо не переданы данные о контактном лице.');
