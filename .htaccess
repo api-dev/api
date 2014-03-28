@@ -26,23 +26,23 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # otherwise forward it to index.php
 RewriteRule . index.php
 
-#<Limit POST>
-#AuthType Basic  
-#AuthName "Sorry, access denied."
-#AuthUserFile  /var/www/vhosts/lbr.ru/httpdocs/.htpasswd  
-#require valid-user
-#</Limit>
-#
-#<Limit GET>
-#SetEnvIf Request_URI "^/(us|tr)" NO_AUTH
-#
-#AuthType Basic  
-#AuthName "Sorry, access denied."
-#AuthUserFile  /var/www/vhosts/lbr.ru/httpdocs/.htpasswd  
-#require valid-user
-#
-#Order allow,deny
-#Allow from all
-#Deny from env=NO_AUTH
-#Satisfy any
-#</Limit>
+<Limit POST>
+AuthType Basic  
+AuthName "Sorry, access denied."
+AuthUserFile  /var/www/vhosts/lbr.ru/httpdocs/.htpasswd  
+require valid-user
+</Limit>
+
+<Limit GET>
+SetEnvIf Request_URI "^/(us|tr)" NO_AUTH
+
+AuthType Basic  
+AuthName "Sorry, access denied."
+AuthUserFile  /var/www/vhosts/lbr.ru/httpdocs/.htpasswd  
+require valid-user
+
+Order allow,deny
+Allow from all
+Deny from env=NO_AUTH
+Satisfy any
+</Limit>
