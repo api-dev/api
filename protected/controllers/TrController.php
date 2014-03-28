@@ -108,7 +108,7 @@ class TrController extends Controller
                     $contact = new TrUser;
                 
                 if($contact->isNewRecord){
-                   $old = TrUser::model()->findByAttributes(array('email'=>$p[email]));
+                   $old = TrUser::model()->findByAttributes(array('email'=>$p[email], 'parent'=>$id, 'type'=>'1'));
                    if($old!==null){
                         $this->result('Контактное лицо не сохранено. Не уникальный e-mail');
                         continue;
