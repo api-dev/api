@@ -202,7 +202,7 @@ class TrUser extends CActiveRecord
             $model->show_intl = true;
             $model->show_regl = true;
             if($model->save())
-                return $this->result('Дополнительные поля успешно сохранены.');
+                return true;
         }
     }
 

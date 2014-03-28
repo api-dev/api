@@ -113,7 +113,8 @@ class TrController extends Controller
                 
                 $contact->parent = $id;
                 $contact->status = TrUser::USER_ACTIVE;
-                $contact->type_contact = 1;
+                $contact->type_contact = '1';
+                
                 foreach ($contact as $name => $v){
                     if (isset($p[$name]) || !empty($p[$name]))
                         $contact->$name = $p[$name];
