@@ -2,6 +2,7 @@
 <p>
     Добро пожаловать на сайт документации по обмену данными с сайтом.
     <?php
+    $app = Yii::app();
     if(!$app->user->isGuest){
         echo CHtml::link('Выход', 'http://auth.lbr.ru/logout/', array('class'=>'logout'));
         if($app->user->checkAccess('readUser'))
