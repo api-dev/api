@@ -36,7 +36,11 @@ return array(
     'components' => array(
         'user' => array(
             // enable cookie-based authentication
+            'class' => 'WebUser',
             'allowAutoLogin' => true,
+        ),
+        'session' => array(
+            'class' => 'HttpSession',
         ),
         // uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
@@ -101,10 +105,15 @@ return array(
                 )
             ),
         ),
+        'authManager'=>array(
+            'class'=>'CDbAuthManager',
+            'connectionID'=>'db',
+        ),
     ),
 
     'params' => array(
         // this is used in contact page
+        'host' => 'lbr.ru',
         'adminEmail' => 'webmaster@lbr.ru',
         'timeToCloseInter' => 96,
         'timeToCloseReg' => 8
