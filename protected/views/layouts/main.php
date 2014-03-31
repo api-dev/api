@@ -16,6 +16,13 @@
         <li><a href="/?view=transport">Перевозки</a></li>
         <li><a href="/?view=kp">КП</a></li>
     </ul>
+    <?php
+    $app = Yii::app();
+    if(!$app->user->isGuest)
+        echo CHtml::link('Выход', 'http://auth.lbr.ru/logout/', array('class'=>'logout'));
+    else
+        echo CHtml::link('Вход', 'http://auth.lbr.ru/', array('class'=>'login'));
+    ?>
 </div>
 <div class="wrapper">
 <?php echo $content; ?>
