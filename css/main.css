@@ -38,23 +38,49 @@ a, a:link, a:active, a:visited
 .header .menu li
 {
     float: left;
+    position: relative;
 }
 .header .menu li img
 {
     margin-right: 40px;
+    width: 100px;
 }
-.header .menu li a
+.header .menu li a,
+.header .menu li span
 {
     text-transform: uppercase;
     display: block;
     color: white;
     padding: 0 15px;
-    line-height: 70px;
     text-decoration: none;
+    line-height: 40px;
+}
+.header .menu li ul.children
+{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    background: #5B5A50;;
+    list-style: none;
+    padding: 7px 0 7px 15px;
+    font-size: 12px;
+}
+.header .menu li ul.children li
+{
+    float: none;
+}
+.header .menu li ul.children li a
+{
 }
 .header .menu li a:hover
 {
     text-decoration: underline;
+}
+
+.header .menu > li:hover > ul.children
+{
+    display: block;
 }
 .wrapper
 {
