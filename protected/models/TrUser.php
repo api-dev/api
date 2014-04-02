@@ -20,6 +20,7 @@
  * @property integer $phone
  * @property integer $phone2
  * @property integer $parent
+ * @property integer $type
  * @property integer $type_contact
  * @property string $email
  *
@@ -60,7 +61,7 @@ class TrUser extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('company, inn, name, surname, secondname, password, status, country, region, city, district, phone, phone2, type_contact, parent, email', 'safe'),
+            array('company, inn, name, surname, secondname, password, status, country, region, city, district, phone, phone2, type_contact, type, parent, email', 'safe'),
         );
     }
 
@@ -103,6 +104,7 @@ class TrUser extends CActiveRecord
             'phone' => 'Телефон',
             'phone2' => 'Телефон №2',
             'parent' => 'Родитель',
+            'type' => 'Тип',
             'type_contact' => 'Тип',
             'email' => 'Email',
         );
@@ -142,6 +144,7 @@ class TrUser extends CActiveRecord
         $criteria->compare('phone',$this->phone);
         $criteria->compare('phone2',$this->phone2);
         $criteria->compare('parent',$this->parent);
+        $criteria->compare('type',$this->type);
         $criteria->compare('type_contact',$this->type_contact);
         $criteria->compare('email',$this->email,true);
 
@@ -193,14 +196,29 @@ class TrUser extends CActiveRecord
         {
             $model = new TrUserField;
             $model->user_id = $this->id;
-            $model->mail_transport_create_1 = false;
-            $model->mail_transport_create_2 = false;
+            $model->mail_transport_create_1 = true;
+            $model->mail_transport_create_2 = true;
             $model->mail_kill_rate = false;
             $model->mail_before_deadline = false;
             $model->mail_deadline = true;
             $model->with_nds = false;
-            $model->show_intl = true;
-            $model->show_regl = true;
+            switch($this->type)
+            {
+                case '0':
+                    $model->show_intl = true;
+                    $model->show_regl = true;
+                break;
+                case '1':
+                    $model->mail_transport_create_1 = false;
+                    $model->show_intl = false;
+                    $model->show_regl = true;
+                break;
+                case '2':
+                    $model->show_intl = true;
+                    $model->show_regl = false;
+                    $model->mail_transport_create_2 = false;
+                break;
+            }
             if($model->save())
                 return true;
         }
