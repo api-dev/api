@@ -121,8 +121,8 @@
 Пример вернет xml-файл с информацией о двух перевозках
 <pre style='font-size: 11px;'>
     action = 'transport'
-    data[1] = 'UPR-009041'
-    data[2] = '2U52'
+    data[1][t_id] = 'UPR-009041'
+    data[2][t_id] = '2U52'
 </pre>
 <br>Возвращаемый xml:
 <code>
