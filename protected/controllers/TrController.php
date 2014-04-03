@@ -224,11 +224,19 @@ class TrController extends Controller
     
     /*-------Start-GET-block--------*/
     
-    private function getRate($request)
+    private function getTransport($request)
     {
         $data = $request['data'];
         if (!$data || empty($data))
             return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
+        
+        $tr = Yii::app()->db_exch->createCommand()
+            ->select('*')
+            ->from('transport')
+            ->where(array('in', 't_id', $data))
+            ->queryAll();
+        
+        $this->renderPartial('trxml', array('data' => $tr));
     }
 
     private function result($text)

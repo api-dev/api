@@ -60,7 +60,8 @@
                         </ul></span> </li>
                 </ul>
             </li>
-        </ul><br>
+        </ul>
+        <div class="h2">Примеры:</div>
 <p>Пример добавляет/редактирует две перевозки:
 <pre style='font-size: 11px;'>
     action = 'transport'
@@ -107,9 +108,46 @@
     </div>
 </div>
 <div class="item">
-    <h4>Получение данных о пользователе</h4>
+    <h4>Получение данных о перевозке/перевозчике</h4>
     <div class="text">
         <p><b>URL:</b> api.lbr.ru/tr?m=get</p>
+        <p>Параметры:
+        <ul>
+            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>transport, user.</b></li>
+            <li><span class="param">data</span> - массив с идентефикаторами перевозок/перевозчиков.</li>
+        </ul>
+        <p>
+            <div class="h2">Примеры:</div>
+Пример вернет xml-файл с информацией о двух перевозках
+<pre style='font-size: 11px;'>
+    action = 'transport'
+    data[1] = 'UPR-009041'
+    data[2] = '2U52'
+</pre>
+<br>Возвращаемый xml:
+<code>
+<pre style='font-size:12px;'>
+&lt;transport t_id=&quot;UPR-009041&quot;&gt;
+    &lt;status&gt;0&lt;/status&gt;
+    &lt;datepublished&gt;2014-04-01 10:48:03&lt;/datepublished&gt;
+    &lt;dateclose&gt;2014-04-01 15:00:00&lt;/dateclose&gt;
+    &lt;win&gt;
+        &lt;inn&gt;300004425&lt;/inn&gt;
+        &lt;nds&gt;0&lt;/nds&gt;
+        &lt;price&gt;1600.0&lt;/price&gt;
+        &lt;currency&gt;2&lt;/currency&gt;
+        &lt;date&gt;2014-04-01 13:46:25&lt;/date&gt;
+    &lt;/win&gt;
+&lt;/transport&gt;
+&lt;transport t_id=&quot;2U52&quot;&gt;
+    &lt;status&gt;1&lt;/status&gt;
+    &lt;datepublished&gt;2014-04-01 10:48:03&lt;/datepublished&gt;
+    &lt;dateclose&gt;2014-04-15 15:00:00&lt;/dateclose&gt;
+&lt;/transport&gt;
+</pre>        
+</code>
+        </p>
+    </p>
     </div>
 </div>
 <div class="item">
@@ -135,6 +173,7 @@
                 </ul>
             </li>
         </ul>
+        <div class="h2">Примеры:</div>
 <p>Пример удаляет две перевозки
 <pre style='font-size: 11px;'>
     action = 'transport'

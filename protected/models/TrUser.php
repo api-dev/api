@@ -79,7 +79,7 @@ class TrUser extends CActiveRecord
             'nfySubscriptions' => array(self::HAS_MANY, 'NfySubscriptions', 'user_id'),
             'rates' => array(self::HAS_MANY, 'Rate', 'user_id'),
             'userEvents' => array(self::HAS_MANY, 'UserEvent', 'user_id'),
-            'userFields' => array(self::HAS_MANY, 'UserField', 'user_id'),
+            'userFields' => array(self::HAS_MANY, 'TrUserField', 'user_id'),
         );
     }
 
