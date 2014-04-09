@@ -1,5 +1,6 @@
 <?php
 $echo = '<?xml version="1.0" encoding="UTF-8" ?>';
+$echo .= '<data count="'.  count($data).'">';
 foreach ($data as $tr):
     $echo .= '<transport t_id="'.$tr[t_id].'">';
         $echo .= '<status>'.$tr[status].'</status>';
@@ -23,4 +24,5 @@ foreach ($data as $tr):
         }
     $echo .= '</transport>';
 endforeach;
+$echo .= '</data>';
 echo $echo;
