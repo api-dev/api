@@ -1,5 +1,5 @@
 <?php
-$echo = '<?xml version="1.1" encoding="UTF-8" ?>';
+$echo = '<?xml version="1.0" encoding="UTF-8" ?>';
 foreach ($data as $tr):
     $echo .= '<transport t_id="'.$tr[t_id].'">';
         $echo .= '<status>'.$tr[status].'</status>';
