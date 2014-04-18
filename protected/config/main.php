@@ -24,12 +24,12 @@ return array(
 
     'modules' => array(
         // uncomment the following to enable the Gii tool
-        'gii' => array(
-            'class' => 'system.gii.GiiModule',
-            'password' => 'loool',
-            // If removed, Gii defaults to localhost only. Edit carefully to taste.
-            'ipFilters' => array('127.0.0.1', '::1'),
-        ),
+//        'gii' => array(
+//            'class' => 'system.gii.GiiModule',
+//            'password' => 'admin',
+//            // If removed, Gii defaults to localhost only. Edit carefully to taste.
+//            'ipFilters' => array('127.0.0.1', '::1'),
+//        ),
     ),
 
     // application components
@@ -53,8 +53,16 @@ return array(
 			),
 		),
 
+        'db_kp' => array(
+            'class' => 'system.db.CDbConnection',
+            'connectionString' => 'sqlite:' . dirname(__FILE__) . '/../../../data/generator.db',
+            'initSQLs' => array(
+                'PRAGMA foreign_keys = ON',
+            ),
+        ),
+        
         'db_auth' => array(
-            'class' => 'CDbConnection',
+            'class' => 'system.db.CDbConnection',
             'connectionString' => 'sqlite:' . dirname(__FILE__) . '/../../../data/auth.db',
             'initSQLs' => array(
                 'PRAGMA foreign_keys = ON',
@@ -62,7 +70,7 @@ return array(
         ),
 
         'db_exch' => array(
-            'class' => 'CDbConnection',
+            'class' => 'system.db.CDbConnection',
             'connectionString' => 'sqlite:' . dirname(__FILE__) . '/../../../data/exchange.db',
             'initSQLs' => array(
                 'PRAGMA foreign_keys = ON',
@@ -70,7 +78,7 @@ return array(
         ),
 
         'db_lbr' => array(
-            'class' => 'CDbConnection',
+            'class' => 'system.db.CDbConnection',
             'connectionString' => 'sqlite:' . dirname(__FILE__) . '/../../../git-lbr/protected/data/lbr.db',
             'initSQLs' => array(
                 'PRAGMA foreign_keys = ON',
@@ -113,7 +121,7 @@ return array(
 
     'params' => array(
         // this is used in contact page
-        'host' => 'lbr.ru',
+        'host' => 'lbr.local',
         'adminEmail' => 'webmaster@lbr.ru',
         'timeToCloseInter' => 96,
         'timeToCloseReg' => 8

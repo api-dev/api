@@ -30,7 +30,7 @@ class User extends CActiveRecord
         {
             return Yii::app()->db_auth;
         }
-        
+
 	/**
 	 * @return string the associated database table name
 	 */

@@ -12,7 +12,7 @@
     <ul class="menu">
         <li><img src="/images/lbrlogo.png" title="white logo LBR"/></li>
         <li><a href="/">Главная</a></li>
-        <li><a href="/">Генератор КП</a></li>
+        <li><a href="/generator/">Генератор КП</a></li>
         <li><a href="/?view=user">Пользователи</a></li>
         <li><a href="/?view=transport">Перевозки</a></li>
         <li><a href="/?view=kp">КП</a></li>

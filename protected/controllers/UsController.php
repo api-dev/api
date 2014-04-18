@@ -122,10 +122,13 @@ class UsController extends Controller
         $image->dir = $dir;
         $return = $image->load($photo);
         
-        if(is_array($return) && !empty($return))
+        if(is_array($return) && !empty($return)){
+            $this->result('Фото пользователя '.$photo['login'].' успешно загружено');
             return $return[link];
-        else 
+        }
+        else{
             $this->result($return);
+        }
     }
 
     /**
