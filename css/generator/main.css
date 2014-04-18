@@ -1,0 +1,179 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800,300italic,400italic,600&subset=latin,cyrillic);
+.clr {
+  content: '';
+  clear: both;
+  float: none;
+  display: block;
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+}
+.panel {
+  height: 30px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+}
+.panel .bodyClassBut {
+  float: left;
+  padding: 0 10px;
+}
+.panel .bodyClassBut label {
+  width: 40px;
+  line-height: 30px;
+  padding: 3px 10px;
+  border: 1px solid transparent;
+}
+.panel .bodyClassBut label:first-child {
+  border-radius: 3px 0 0 3px;
+  border-right: 0;
+}
+.panel .bodyClassBut label:last-child {
+  border-radius: 0 3px 3px 0;
+}
+.panel .bodyClassBut > label > input {
+  display: none;
+}
+.panel .user-info {
+  float: left;
+}
+.panel .logout {
+  float: left;
+}
+.panel .logout a {
+  line-height: 30px;
+}
+.panel:after {
+  content: '';
+  clear: both;
+  float: none;
+  display: block;
+}
+/*--------dark-theme-------*/
+body.dark {
+  background: url('/images/generator/pic/bg-body.jpg') repeat;
+  color: white;
+}
+body.dark .panel {
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid #555555;
+}
+body.dark .bodyClassBut label {
+  background: #4A4A4A;
+  border-color: #555555;
+}
+body.dark .bodyClassBut label#label-bodyClass-dark {
+  background: #222222;
+}
+/*--------light-theme-------*/
+body.light {
+  background: url('/images/generator/pic/bg-body-white.jpg') repeat;
+  color: #333333;
+}
+body.light .panel {
+  background: rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #CCCCCC;
+}
+body.light .panel .bodyClassBut label {
+  background: #EFEFEF;
+  border-color: #cccccc;
+}
+body.light .panel .bodyClassBut label#label-bodyClass-light {
+  background: white;
+}
+/*---------List-kp----------*/
+.list-kp {
+  padding: 0;
+  margin: 5px;
+  border: 1px solid #CCC;
+  border-radius: 2px;
+}
+.list-kp .item {
+  border-bottom: 1px solid #CCC;
+  background: rgba(255, 255, 255, 0.2);
+}
+.list-kp .item > div {
+  float: left;
+  width: 11%;
+  padding: 5px 1%;
+  height: 40px;
+  border-left: 1px solid #CCC;
+  overflow: hidden;
+}
+.list-kp .item > div > a {
+  color: #333333;
+  height: 40px;
+  display: block;
+  width: 100%;
+  display: table-cell;
+  vertical-align: middle;
+}
+.list-kp .item > div:first-child,
+.list-kp .sorter > div:first-child {
+  border-left: 0;
+}
+.list-kp .item > div.name,
+.list-kp .sorter > div.name {
+  width: 20%;
+}
+.list-kp .item > div.auditor_status,
+.list-kp .item > div.status,
+.list-kp .sorter > div.auditor_status,
+.list-kp .sorter > div.status {
+  width: 3%;
+  text-align: center;
+}
+.list-kp .item > div.auditor_status > span,
+.list-kp .item > div.status > span {
+  display: block;
+  padding-top: 10px;
+}
+.list-kp .item:last-child {
+  border-bottom: 0;
+}
+.list-kp .item:after {
+  content: '';
+  clear: both;
+  float: none;
+  display: block;
+}
+.list-kp .sorter {
+  background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid #ccc;
+  font-weight: 600;
+  font-size: 13px;
+}
+.list-kp .sorter span {
+  cursor: pointer;
+}
+.list-kp .sorter > div {
+  float: left;
+  height: 20px;
+  width: 11%;
+  padding: 5px 1%;
+  border-left: 1px solid #CCC;
+}
+.list-kp .sorter > div:after {
+  content: '';
+  clear: both;
+  float: none;
+  display: block;
+}
+.list-kp .sorter:after {
+  content: '';
+  clear: both;
+  float: none;
+  display: block;
+}
+.list-kp:after {
+  content: '';
+  clear: both;
+  float: none;
+  display: block;
+}

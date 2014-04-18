@@ -1,0 +1,212 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800,300italic,400italic,600&subset=latin,cyrillic);
+
+.clr
+{
+    content: '';
+    clear: both;
+    float: none;
+    display: block;
+}
+html, body
+{
+
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+}
+.panel
+{
+    height: 30px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    .bodyClassBut
+    {
+        float: left;
+        padding: 0 10px;
+        label
+        {
+            width: 40px;
+            line-height: 30px;
+            padding: 3px 10px;
+            border: 1px solid transparent;
+        }
+        label:first-child
+            {
+            border-radius: 3px 0 0 3px;
+            border-right: 0;
+        }
+        label:last-child
+            {
+            border-radius: 0 3px 3px 0;
+        }
+    }
+    .bodyClassBut > label > input
+    {
+        display: none;
+    }
+    .user-info
+    {
+        float: left;
+    }
+    .logout
+    {
+        float: left;
+        a
+        {
+            line-height: 30px;
+        }
+    }
+}
+.panel:after
+{
+    .clr;
+}
+/*--------dark-theme-------*/
+body.dark
+{
+    background: url('/images/generator/pic/bg-body.jpg') repeat;
+    color: white;
+    .panel
+    {
+        background: rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid #555555;
+    }
+    .bodyClassBut
+    {
+        label
+        {
+            background: #4A4A4A;
+            border-color: #555555;
+        }
+        label#label-bodyClass-dark
+        {
+            background: #222222;
+        }
+    }
+}
+/*--------light-theme-------*/
+body.light
+{
+    background: url('/images/generator/pic/bg-body-white.jpg') repeat;
+    color: #333333;
+    .panel
+    {
+        background: rgba(0, 0, 0, 0.05);
+        border-bottom: 1px solid #CCCCCC;
+        .bodyClassBut 
+        {
+            label
+            {
+                background: #EFEFEF;
+                border-color: #cccccc;
+            }
+            label#label-bodyClass-light
+            {
+                background: white;
+            }
+        }
+    }
+}
+
+/*---------List-kp----------*/
+.list-kp
+{
+    padding: 0;
+    margin: 5px;
+    border: 1px solid #CCC;
+    border-radius: 2px;
+    .item
+    {
+        border-bottom: 1px solid #CCC;
+        background: rgba(255,255,255, .2);
+        > div
+        {
+            float: left;
+            width: 11%;
+            padding: 5px 1%;
+            height: 40px;
+            border-left: 1px solid #CCC;
+            overflow: hidden;
+            > a
+            {
+                color: #333333;
+                height: 40px;
+                display: block;
+                width: 100%;
+                display: table-cell;
+                vertical-align: middle;
+            }
+        }
+    }
+    
+    .item > div:first-child,
+    .sorter > div:first-child
+    {
+        border-left: 0;
+    }
+    .item > div.name,
+    .sorter > div.name
+    {
+        width: 20%;
+    }
+    .item > div.auditor_status,
+    .item > div.status,
+    .sorter > div.auditor_status,
+    .sorter > div.status
+    {
+        width: 3%;
+        text-align: center;
+    }
+    .item > div.auditor_status > span,
+    .item > div.status > span
+    {
+        display: block;
+        padding-top: 10px;
+    }
+    
+    .item:last-child
+    {
+        border-bottom: 0;
+    }
+    .item:after
+    {
+        .clr;
+    }
+    .sorter 
+    {
+        background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.4);
+        border-bottom: 1px solid #ccc;
+        font-weight: 600;
+        font-size: 13px;
+        span
+        {
+            cursor: pointer;
+        }
+        
+        > div
+        {
+            float: left;
+            height: 20px;
+            width: 11%;
+            padding: 5px 1%;
+            border-left: 1px solid #CCC;
+        }
+        > div:after
+        {
+            .clr;
+        }
+        
+    }
+    .sorter:after
+    {
+        .clr;
+    }
+}
+.list-kp:after
+{
+    .clr;
+}
