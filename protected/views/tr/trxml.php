@@ -17,6 +17,9 @@ foreach ($data as $tr):
             $echo .= '<win>';
                 $echo .= '<inn>'.$parent->inn.'</inn>';
                 $echo .= '<nds>'.$user->userFields[0]->with_nds.'</nds>';
+                if($user->userFields[0]->with_nds=='1'){
+                    $echo .= '<ndspercent>'.Yii::app()->params['nds'].'</ndspercent>';
+                }
                 $echo .= '<price>'.$rate->price.'</price>';
                 $echo .= '<currency>'.$tr[currency].'</currency>';
                 $echo .= '<date>'.$rate->date.'</date>';

@@ -124,6 +124,7 @@ return array(
         'host' => 'lbr.local',
         'adminEmail' => 'webmaster@lbr.ru',
         'timeToCloseInter' => 96,
-        'timeToCloseReg' => 8
+        'timeToCloseReg' => 8,
+        'nds'=>'10'
     ),
 );
