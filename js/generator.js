@@ -4,6 +4,7 @@
 
 var generator = angular.module('gApp', [
     'ngRoute',
+    'ngAnimate',
     'gBody',
     'gFilters',
     'gService'
@@ -35,6 +36,9 @@ gFilter.filter('checkmark', function() {
             case '1':
                 ret = '\u2713';
                 break;
+            case '2':
+                ret = '\u25D4';
+                break;
             default :
                 ret = '\u2715';
                 break;
@@ -54,29 +58,27 @@ gFilter.filter('normalDate', function($filter) {
 /* Controllers */
 var gController = angular.module('gBody', []);
 
-gController.controller('bodyStyleCtrl', ['$scope',
-    function($scope) {
+gController.controller('bodyStyleCtrl', ['$scope', 'Params',
+    function($scope, Params) {
+        
+        $scope.params = Params;
+        
         $scope.bodyClass = 'light';
+        
+        $scope.userDisplay = false;
+        
     }
 ]);
 
 gController.controller('KpListCtrl', ['$scope', 'Kp',
     function($scope, Kp) {
-        $scope.rowList = [
-            {val: 'name', label: 'Название'},
-            {val: 'status', label: 'Статус'},
-            {val: 'date_status', label: 'Дата публикации'},
-            {val: 'date_finish', label: 'Дата окончания'},
-            {val: 'auditor_status', label: 'Согл.'},
-            {val: 'auditor_date_status', label : 'Аудит'},
-            {val: 'date_create', label: 'Дата создания'},
-            {val: 'date_edit', label: 'Дата редактирования'}
-        ];
-        console.log($scope.rowList);
+       
+        $scope.rowList = $scope.params.rowList;
+        
         $scope.kpList = Kp.query();
-        
+
         $scope.orderProp = false;
-        
+
         $scope.setOrder = function(field)
         {
             $scope.orderProp = field;
@@ -85,18 +87,80 @@ gController.controller('KpListCtrl', ['$scope', 'Kp',
     }
 ]);
 
-//gController.controller('KpOneCtrl', ['$scope', '$routeParams', '$http',
-//    function($scope, $routeParams, $http) {
-//        $http.get('/generator/one?id=' + $routeParams.id).success(function(data) {
-//            $scope.kp = data;
-//        });
-//    }
-//]);
 gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp',
     function($scope, $routeParams, Kp) {
         $scope.kp = Kp.get({kpid: 'one', id: $routeParams.id});
+        
     }
 ]);
+
+gController.directive('pWindow', function() {
+    return {
+        restrict: 'EC',
+        replace: true,
+        transclude: true,
+        scope: 
+        {
+            pwtitle: '@'
+        },
+        templateUrl: "/tmpl?dir=default&f=pWindow",
+        link: function(scope, element, attrs) 
+        {
+            var title = angular.element(element.children()[0]),
+                opened = true;
+                
+            title.bind('click', toggle);
+
+            function toggle() {
+                opened = !opened;
+                element.removeClass(opened ? 'closed' : 'opened');
+                element.addClass(opened ? 'opened' : 'closed');
+            }
+        }
+    };
+});
+gController.directive('pPanel', function() {
+    return {
+        restrict: 'C',
+        replace: true,
+        transclude: true,
+        templateUrl: "/tmpl?dir=default&f=panel",
+        scope: 
+        {
+            position: '@'
+        },
+        link: function(scope, element, attrs) 
+        {
+            var childrens = angular.element(element.children()),
+                item;
+            for(item in childrens)
+            {
+                console.log(item);
+            }
+//            var handle;
+//            switch(scope.position)
+//            {
+//                case 'left':
+//                    handle = 'e';
+//                break;
+//                case 'right':
+//                    handle = 'w';
+//                break;
+//            }
+//            if(scope.position!=='center'){
+//                
+//                $(function() {
+//                    element.resizable({
+//                           handles: handle,
+//                           maxWidth: 450,
+//                           minWidth: 200,
+//                           distance: 10
+//                    });
+//                });
+//            }
+        }
+    };
+});
 
 /* Services */
 var gService = angular.module('gService', ['ngResource']);
@@ -106,7 +170,12 @@ gService.factory('Kp', ['$resource',
         var returns = $resource('/generator/:kpid', {}, {
             query: {method: 'GET', params: {kpid: 'list'}, isArray: true}
         });
-        return returns; 
+        return returns;
+    }
+]);
+gService.factory('Params', ['$resource',
+    function($resource) {
+        return $resource('/js/params.json', {}).get();
     }
 ]);
 

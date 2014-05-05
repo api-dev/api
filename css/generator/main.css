@@ -7,6 +7,7 @@
 }
 html,
 body {
+  height: 100%;
   padding: 0;
   margin: 0;
   border: 0;
@@ -21,7 +22,7 @@ body {
   font-size: 13px;
 }
 .panel .bodyClassBut {
-  float: left;
+  float: right;
   padding: 0 10px;
 }
 .panel .bodyClassBut label {
@@ -41,12 +42,81 @@ body {
   display: none;
 }
 .panel .user-info {
+  float: right;
+  position: relative;
+  margin: 0 10px;
+  z-index: 1;
+}
+.panel .user-info > span {
+  line-height: 30px;
+  border-bottom: 1px dashed #777777;
+  cursor: default;
+}
+.panel .user-info .user-drop {
+  border-radius: 2px;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  background: rgba(255, 255, 255, 0.9);
+  min-width: 400px;
+  padding: 15px;
+  z-index: 99;
+  box-shadow: 0 0 5px #c8c8c8;
+}
+.panel .user-info .user-drop .photo {
   float: left;
+  margin: 0 15px 0 0;
+}
+.panel .user-info .user-drop .photo img {
+  max-width: 150px;
+  max-height: 250px;
+}
+.panel .user-info .user-drop .u-field label {
+  margin-right: 15px;
+  width: 20%;
+  display: inline-block;
+  font-weight: 600;
+  text-align: right;
+}
+.panel .user-info .user-drop:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -5px;
+  right: 35px;
+  width: 0px;
+  height: 0px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 5px solid #FFF;
+}
+.panel .user-info .user-drop.ng-animate {
+  -webkit-transition: all .3s linear 0s;
+  /* Safari/Chrome */
+  -moz-transition: all .3s linear 0s;
+  /* Firefox */
+  -ms-transition: all .3s linear 0s;
+  /* IE10 */
+  -o-transition: all .3s linear 0s;
+  /* Opera */
+  transition: all .3s linear 0s;
+  /* Future Browsers */
+  opacity: 1;
+}
+.panel .user-info .user-drop.ng-animate.ng-leave,
+.panel .user-info .user-drop.ng-animate.ng-enter {
+  opacity: 0;
+}
+.panel .user-info .user-drop.ng-animate.ng-enter-active {
+  opacity: 1;
 }
 .panel .logout {
-  float: left;
+  float: right;
+  margin: 0 15px 0 5px;
 }
 .panel .logout a {
+  color: #555555;
   line-height: 30px;
 }
 .panel:after {
@@ -92,7 +162,9 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   padding: 0;
   margin: 5px;
   border: 1px solid #CCC;
-  border-radius: 2px;
+  border-radius: 3px;
+  overflow: hidden;
+  font-size: 13px;
 }
 .list-kp .item {
   border-bottom: 1px solid #CCC;
@@ -101,18 +173,22 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
 .list-kp .item > div {
   float: left;
   width: 11%;
-  padding: 5px 1%;
-  height: 40px;
+  padding: 3px 1%;
+  height: 37px;
   border-left: 1px solid #CCC;
   overflow: hidden;
 }
-.list-kp .item > div > a {
+.list-kp .item > div > a,
+.list-kp .item > div > span {
   color: #333333;
-  height: 40px;
+  height: 36px;
   display: block;
   width: 100%;
   display: table-cell;
   vertical-align: middle;
+}
+.list-kp .item > div > a {
+  line-height: 15px;
 }
 .list-kp .item > div:first-child,
 .list-kp .sorter > div:first-child {
@@ -132,7 +208,7 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
 .list-kp .item > div.auditor_status > span,
 .list-kp .item > div.status > span {
   display: block;
-  padding-top: 10px;
+  padding-top: 8px;
 }
 .list-kp .item:last-child {
   border-bottom: 0;
@@ -147,14 +223,45 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.4);
   border-bottom: 1px solid #ccc;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 12px;
 }
 .list-kp .sorter span {
   cursor: pointer;
+  position: relative;
+}
+.list-kp .sorter span.asc,
+.list-kp .sorter span.desc {
+  color: #FE6700;
+}
+.list-kp .sorter span.asc:after,
+.list-kp .sorter span.desc:after {
+  content: "";
+  position: relative;
+  top: 12px;
+  left: 3px;
+}
+.list-kp .sorter span.asc:after {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #FE6700;
+}
+.list-kp .sorter span.desc:after {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #FE6700;
+  bottom: 10px;
+  top: auto;
 }
 .list-kp .sorter > div {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   float: left;
-  height: 20px;
+  height: 17px;
   width: 11%;
   padding: 5px 1%;
   border-left: 1px solid #CCC;
@@ -172,6 +279,100 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   display: block;
 }
 .list-kp:after {
+  content: '';
+  clear: both;
+  float: none;
+  display: block;
+}
+/*--------One-KP-window---------*/
+.onePanel {
+  width: 30%;
+  position: relative;
+  padding: 2px 5px 5px 2px;
+  background: #ffffff;
+  background: rgba(255, 255, 255, 0.4);
+  float: left;
+}
+.onePanel .ppBody > * {
+  margin-top: 10px;
+}
+.onePanel .ppBody > *:first-child {
+  margin-top: 0;
+}
+.onePanel .ui-resizable-e,
+.onePanel .ui-resizable-w {
+  right: -1px;
+  width: 4px;
+  border-radius: 2px;
+}
+.onePanel .ui-resizable-w {
+  left: -1px;
+}
+.onePanel .ui-resizable-e:hover,
+.onePanel .ui-resizable-w:hover {
+  background: #64c8c8;
+}
+.ppPanel.center {
+  width: 39%;
+}
+.pwWindow {
+  width: 100%;
+  border: 1px solid #CCC;
+  background: #f0f0f0;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
+}
+.pwWindow .pwTitle {
+  padding: 2px 10px;
+  border-bottom: 1px solid #CCCCCC;
+  background: #E7E7E7;
+  background: rgba(0, 0, 0, 0.05);
+}
+.pwWindow .pwBody {
+  font-size: .9em;
+  padding: 5px 10px;
+}
+.pwWindow .pwBody .prop {
+  display: block;
+  padding: 3px 0;
+}
+.pwWindow .pwBody .prop .key,
+.pwWindow .pwBody .prop .val {
+  width: 55%;
+  float: left;
+  display: block;
+}
+.pwWindow .pwBody .prop .key {
+  width: 43%;
+  text-align: right;
+  font-weight: 600;
+}
+.pwWindow .pwBody .prop .val {
+  float: right;
+}
+.pwWindow .pwBody .prop .val > * {
+  width: 89%;
+  padding: 2% 5%;
+  margin: 0;
+}
+.pwWindow .pwBody .prop .val select {
+  width: 100%;
+  padding: 2px 2px 2px 7px;
+}
+.pwWindow .pwBody .prop:after {
+  content: '';
+  clear: both;
+  float: none;
+  display: block;
+}
+.pwWindow.closed .pwBody {
+  display: none;
+}
+.view {
+  height: 94%;
+}
+.pwWindow:after,
+.view:after {
   content: '';
   clear: both;
   float: none;

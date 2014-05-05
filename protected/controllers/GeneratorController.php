@@ -35,7 +35,8 @@ class GeneratorController extends Controller {
             'condition' => 'id=:id',
             'params' => array(':id' => $id),
         ));
-         echo CJavaScript::jsonEncode($kp);
+        $this->renderPartial('json', array('data' => $kp));
+//         echo CJavaScript::jsonEncode($kp);
     }
     
     /*

@@ -23,6 +23,7 @@
  * @property integer $type
  * @property integer $type_contact
  * @property string $email
+ * @property DateTime $created
  *
  * The followings are the available model relations:
  * @property Changes[] $changes
@@ -61,7 +62,7 @@ class TrUser extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('company, inn, name, surname, secondname, password, status, country, region, city, district, phone, phone2, type_contact, type, parent, email', 'safe'),
+            array('company, inn, name, surname, secondname, password, status, country, region, city, district, phone, phone2, type_contact, type, parent, email, created', 'safe'),
         );
     }
 
@@ -107,6 +108,7 @@ class TrUser extends CActiveRecord
             'type' => 'Тип',
             'type_contact' => 'Тип',
             'email' => 'Email',
+            'created' => 'Создан'
         );
     }
 
@@ -147,7 +149,8 @@ class TrUser extends CActiveRecord
         $criteria->compare('type',$this->type);
         $criteria->compare('type_contact',$this->type_contact);
         $criteria->compare('email',$this->email,true);
-
+        $criteria->compare('created',$this->created);
+        
         return new CActiveDataProvider($this, array(
                 'criteria'=>$criteria,
         ));
@@ -166,6 +169,7 @@ class TrUser extends CActiveRecord
     
     protected function beforeSave() {
         parent::beforeSave();
+        $this->created = date('Y-m-d H:i:s');
         if($this->isNewRecord && isset($this->email))
         {
             $password = User::randomPassword();

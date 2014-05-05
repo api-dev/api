@@ -1,0 +1,73 @@
+{
+    "rowList":[
+        {
+            "val":"name",
+            "label":"Название"
+        },
+        {
+            "val":"status",
+            "label":"Статус"
+        },
+        {
+            "val":"date_status",
+            "label":"Дата публикации"
+        },
+        {
+            "val":"date_finish",
+            "label":"Дата окончания"
+        },
+        {
+            "val":"auditor_status",
+            "label":"Согл."
+        },
+        {
+            "val":"auditor_date_status",
+            "label":"Аудит"
+        },
+        {
+            "val":"date_create",
+            "label":"Дата создания"
+        },
+        {
+            "val":"date_edit",
+            "label":"Дата редактирования"
+        }
+    ],
+    "status":[
+        {"value": "0", "label":"Неопубликовано"},
+        {"value": "1", "label":"Опубликовано"},
+        {"value": "2", "label":"В корзине"}
+    ],
+    "auditor_status":[
+        {"value": "0", "label":"Непроверено"},
+        {"value": "1", "label":"Проверено"},
+        {"value": "2", "label":"Отказано"}
+    ],
+    "pwindow":{
+        "pwKpProperty":{
+                    "title":"Свойства КП",
+                    "data":{
+                        "id":"ID",
+                        "name":"Название",
+                        "status":"Статус",
+                        
+                        "date_finish":"Дата закрытия",
+                        "date_create":"Дата создания",
+                        "date_edit":"Дата изменения",
+                        "date_status":"Дата публикации",
+                        
+                        "u_id_create":"Создатель",
+                        "u_id_edit":"Редактор",
+                        
+                        "auditor_id":"Аудитор",
+                        "auditor_status":"Статус аудитора",
+                        "auditor_date_status":"Дата аудита",
+                        "auditor_comment":"Комментарий аудитора"
+                    }
+                },
+        "itemCSS":
+                {
+                    "title":"CSS стили"
+                }
+    }
+}

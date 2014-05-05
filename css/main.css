@@ -73,6 +73,16 @@ a, a:link, a:active, a:visited
 .header .menu li ul.children li a
 {
 }
+.header .menu li ul.children
+{
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+.header .menu li ul.children li
+{
+    float: none;
+}
 .header .menu li a:hover
 {
     text-decoration: underline;

@@ -9,12 +9,13 @@
 }
 html, body
 {
-
+    height: 100%;
     padding: 0;
     margin: 0;
     border: 0;
     font-size: 14px;
     font-family: 'Open Sans', sans-serif;
+    
 }
 .panel
 {
@@ -25,7 +26,7 @@ html, body
     font-size: 13px;
     .bodyClassBut
     {
-        float: left;
+        float: right;
         padding: 0 10px;
         label
         {
@@ -50,13 +51,89 @@ html, body
     }
     .user-info
     {
-        float: left;
+        float: right;
+        position: relative;
+        margin: 0 10px;
+        z-index: 1;
+        > span
+        {
+            line-height: 30px;
+            border-bottom: 1px dashed #777777;
+            cursor: default;
+        }
+        .user-drop
+        {
+            border-radius: 2px;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            background: rgba(255,255,255, .9);
+            min-width: 400px;
+            padding: 15px;
+            z-index: 99;
+            box-shadow: 0 0 5px rgb(200,200,200);
+            .photo
+            {
+                float: left;
+                margin: 0 15px 0 0;
+                img
+                {
+                    max-width: 150px;
+                    max-height: 250px;
+                }
+            }
+            .u-field
+            {
+                label
+                {
+                    margin-right: 15px;
+                    width: 20%;
+                    display: inline-block;
+                    font-weight: 600;
+                    text-align: right;
+                }
+            }
+        }
+        .user-drop:after
+        {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -5px;
+            right: 35px;
+            width: 0px;
+            height: 0px;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 5px solid #FFF;
+        }
+        .user-drop.ng-animate
+        {
+            -webkit-transition: all .3s linear 0s; /* Safari/Chrome */
+            -moz-transition: all .3s linear 0s; /* Firefox */
+            -ms-transition: all .3s linear 0s; /* IE10 */
+            -o-transition: all .3s linear 0s; /* Opera */
+            transition: all .3s linear 0s; /* Future Browsers */
+            opacity: 1;
+        }
+        .user-drop.ng-animate.ng-leave,
+        .user-drop.ng-animate.ng-enter
+        {
+            opacity: 0;
+        }
+        .user-drop.ng-animate.ng-enter-active
+        {
+            opacity: 1;
+        }
     }
     .logout
     {
-        float: left;
+        float: right;
+        margin: 0 15px 0 5px;
         a
         {
+            color: #555555;
             line-height: 30px;
         }
     }
@@ -111,14 +188,15 @@ body.light
         }
     }
 }
-
 /*---------List-kp----------*/
 .list-kp
 {
     padding: 0;
     margin: 5px;
     border: 1px solid #CCC;
-    border-radius: 2px;
+    border-radius: 3px;
+    overflow: hidden;
+    font-size: 13px;
     .item
     {
         border-bottom: 1px solid #CCC;
@@ -127,22 +205,26 @@ body.light
         {
             float: left;
             width: 11%;
-            padding: 5px 1%;
-            height: 40px;
+            padding: 3px 1%;
+            height: 37px;
             border-left: 1px solid #CCC;
             overflow: hidden;
-            > a
+            > a, > span
             {
                 color: #333333;
-                height: 40px;
+                height: 36px;
                 display: block;
                 width: 100%;
                 display: table-cell;
                 vertical-align: middle;
             }
+            > a
+            {
+                line-height: 15px;
+            }
         }
     }
-    
+
     .item > div:first-child,
     .sorter > div:first-child
     {
@@ -165,15 +247,15 @@ body.light
     .item > div.status > span
     {
         display: block;
-        padding-top: 10px;
+        padding-top: 8px;
     }
-    
+
     .item:last-child
-    {
+        {
         border-bottom: 0;
     }
     .item:after
-    {
+        {
         .clr;
     }
     .sorter 
@@ -181,32 +263,184 @@ body.light
         background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.4);
         border-bottom: 1px solid #ccc;
         font-weight: 600;
-        font-size: 13px;
+        font-size: 12px;
         span
         {
             cursor: pointer;
+            position: relative;
         }
-        
+        span.asc,
+        span.desc
+        {
+            color: #FE6700;
+        }
+        span.asc:after,
+        span.desc:after
+        {
+            content: "";
+            position: relative;
+            top: 12px;
+            left: 3px;
+        }
+            
+        span.asc:after
+        {
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #FE6700;
+        }
+        span.desc:after
+        {
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid #FE6700;
+            bottom: 10px;
+            top: auto;
+        }
+
         > div
         {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
             float: left;
-            height: 20px;
+            height: 17px;
             width: 11%;
             padding: 5px 1%;
             border-left: 1px solid #CCC;
         }
         > div:after
-        {
+            {
             .clr;
         }
-        
+
     }
     .sorter:after
-    {
+        {
         .clr;
     }
 }
 .list-kp:after
+{
+    .clr;
+}
+/*--------One-KP-window---------*/
+.onePanel
+{
+    width: 30%;
+    position: relative;
+    padding: 2px 5px 5px 2px;
+    background: rgb(255,255,255);
+    background: rgba(255,255,255,.4);
+    float: left;
+    .ppBody
+    {
+    }
+    .ppBody >*
+    {
+        margin-top: 10px;
+    }
+    .ppBody >*:first-child
+    {
+        margin-top: 0;
+    }
+    .ui-resizable-e,
+    .ui-resizable-w
+    {
+        right: -1px;
+        width: 4px;
+        border-radius: 2px;
+    }
+    .ui-resizable-w
+    {
+        left: -1px;
+    }
+    .ui-resizable-e:hover,
+    .ui-resizable-w:hover
+    {
+        background: rgb(100, 200, 200);
+    }
+}
+.ppPanel.center
+{
+    width: 39%;
+}
+.ppPanel.right
+{
+}
+.pwWindow
+{
+    width: 100%;
+    border: 1px solid #CCC;
+    background: rgb(240,240,240);
+    background: rgba(255,255,255, .5);
+    border-radius: 3px;
+    .pwTitle
+    {
+        padding: 2px 10px;
+        border-bottom: 1px solid #CCCCCC;
+        background: #E7E7E7;
+        background: rgba(0, 0, 0, 0.05);
+    }
+    .pwBody
+    {
+        font-size: .9em;
+        padding: 5px 10px;
+        .prop
+        {
+            display: block;
+            padding: 3px 0;
+            .key, .val
+            {
+                width: 55%;
+                float: left;
+                display: block;
+            }
+            .key
+            {
+                width: 43%;
+                text-align: right;
+                font-weight: 600;
+            }
+            .val
+            {
+                float: right;
+                > *
+                {
+                    width: 89%;
+                    padding: 2% 5%;
+                    margin: 0;
+                }
+                select
+                {
+                    width: 100%;
+                    padding: 2px 2px 2px 7px;
+                }
+            }
+        }
+        .prop:after
+        {
+            .clr;
+        }
+    }
+}
+.pwWindow.closed 
+{
+    .pwBody
+    {
+        display: none;
+    }
+}
+.view
+{
+    height: 94%;
+}
+.pwWindow:after,
+.view:after
 {
     .clr;
 }
