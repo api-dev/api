@@ -285,88 +285,104 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   display: block;
 }
 /*--------One-KP-window---------*/
-.onePanel {
-  width: 30%;
-  position: relative;
-  padding: 2px 5px 5px 2px;
+.pPanel {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.pPanel .onePanel {
+  padding: 0;
+  margin: 0;
   background: #ffffff;
   background: rgba(255, 255, 255, 0.4);
+  display: block;
   float: left;
+  width: 23%;
 }
-.onePanel .ppBody > * {
+.pPanel .onePanel .ppBody > * {
   margin-top: 10px;
 }
-.onePanel .ppBody > *:first-child {
+.pPanel .onePanel .ppBody > *:first-child {
   margin-top: 0;
 }
-.onePanel .ui-resizable-e,
-.onePanel .ui-resizable-w {
-  right: -1px;
-  width: 4px;
-  border-radius: 2px;
-}
-.onePanel .ui-resizable-w {
-  left: -1px;
-}
-.onePanel .ui-resizable-e:hover,
-.onePanel .ui-resizable-w:hover {
-  background: #64c8c8;
-}
-.ppPanel.center {
-  width: 39%;
-}
-.pwWindow {
-  width: 100%;
+.pPanel .onePanel .pwWindow {
   border: 1px solid #CCC;
   background: #f0f0f0;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 3px;
+  position: relative;
 }
-.pwWindow .pwTitle {
+.pPanel .onePanel .pwWindow .pwTitle {
   padding: 2px 10px;
   border-bottom: 1px solid #CCCCCC;
   background: #E7E7E7;
   background: rgba(0, 0, 0, 0.05);
 }
-.pwWindow .pwBody {
+.pPanel .onePanel .pwWindow .pwTitle:after {
+  content: "-";
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-size: 15px;
+}
+.pPanel .onePanel .pwWindow .pwBody {
   font-size: .9em;
   padding: 5px 10px;
 }
-.pwWindow .pwBody .prop {
+.pPanel .onePanel .pwWindow .pwBody .prop {
   display: block;
   padding: 3px 0;
 }
-.pwWindow .pwBody .prop .key,
-.pwWindow .pwBody .prop .val {
+.pPanel .onePanel .pwWindow .pwBody .prop .key,
+.pPanel .onePanel .pwWindow .pwBody .prop .val {
   width: 55%;
   float: left;
   display: block;
 }
-.pwWindow .pwBody .prop .key {
+.pPanel .onePanel .pwWindow .pwBody .prop .key {
   width: 43%;
   text-align: right;
   font-weight: 600;
 }
-.pwWindow .pwBody .prop .val {
+.pPanel .onePanel .pwWindow .pwBody .prop .val {
   float: right;
 }
-.pwWindow .pwBody .prop .val > * {
+.pPanel .onePanel .pwWindow .pwBody .prop .val > * {
   width: 89%;
   padding: 2% 5%;
   margin: 0;
 }
-.pwWindow .pwBody .prop .val select {
+.pPanel .onePanel .pwWindow .pwBody .prop .val select {
   width: 100%;
   padding: 2px 2px 2px 7px;
 }
-.pwWindow .pwBody .prop:after {
+.pPanel .onePanel .pwWindow .pwBody .prop:after {
   content: '';
   clear: both;
   float: none;
   display: block;
 }
-.pwWindow.closed .pwBody {
+.pPanel .onePanel .pwWindow.closed .pwTitle {
+  border-bottom: 0;
+}
+.pPanel .onePanel .pwWindow.closed .pwTitle:after {
+  content: "+";
+  position: absolute;
+  top: 1px;
+  right: 10px;
+  font-size: 15px;
+}
+.pPanel .onePanel .pwWindow.closed .pwBody {
   display: none;
+}
+.pPanel .onePanel.center {
+  width: 55%;
+  min-height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+}
+.pPanel .onePanel.left {
+  width: 22%;
 }
 .view {
   height: 94%;
@@ -377,4 +393,69 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   clear: both;
   float: none;
   display: block;
+}
+.one-tool {
+  padding: 5px 10px;
+  display: block;
+  cursor: default;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid grey;
+  border-radius: 3px;
+  margin: 0 3px 3px 0;
+}
+.one-tool.select {
+  background: red;
+}
+.one-tool input {
+  display: none;
+}
+.activeCss {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.activeCss li {
+  margin: 3px 0;
+  padding: 0;
+  border: 0;
+}
+.activeCss li label {
+  margin: 0 3% 0 0;
+  padding: 1% 0;
+  border: 0;
+  width: 40%;
+  display: block;
+  text-align: right;
+  float: left;
+  font-weight: bold;
+}
+.activeCss li input {
+  width: 54%;
+  display: block;
+  float: left;
+  padding: 1%;
+  margin: 0;
+}
+.activeCss li:after {
+  content: '';
+  clear: both;
+  float: none;
+  display: block;
+}
+.block {
+  display: block;
+}
+.ui-hover-elem {
+  box-shadow: 0 0 5px #8FC6FC !important;
+  background: #8FC6FC !important;
+}
+/*----------EDITOR----------*/
+.pages {
+  width: 700px;
+  height: 990px;
+  background: white;
+  box-shadow: 0 0 5px #c8c8c8;
+  margin: 5px auto;
+  padding: 10px 15px;
 }

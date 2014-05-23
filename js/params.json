@@ -1,73 +1,188 @@
 {
-    "rowList":[
+    "rowList": [
         {
-            "val":"name",
-            "label":"Название"
+            "val": "name",
+            "label": "Название"
         },
         {
-            "val":"status",
-            "label":"Статус"
+            "val": "status",
+            "label": "Статус"
         },
         {
-            "val":"date_status",
-            "label":"Дата публикации"
+            "val": "date_status",
+            "label": "Дата публикации"
         },
         {
-            "val":"date_finish",
-            "label":"Дата окончания"
+            "val": "date_finish",
+            "label": "Дата окончания"
         },
         {
-            "val":"auditor_status",
-            "label":"Согл."
+            "val": "auditor_status",
+            "label": "Согл."
         },
         {
-            "val":"auditor_date_status",
-            "label":"Аудит"
+            "val": "auditor_date_status",
+            "label": "Аудит"
         },
         {
-            "val":"date_create",
-            "label":"Дата создания"
+            "val": "date_create",
+            "label": "Дата создания"
         },
         {
-            "val":"date_edit",
-            "label":"Дата редактирования"
+            "val": "date_edit",
+            "label": "Дата редактирования"
         }
     ],
-    "status":[
-        {"value": "0", "label":"Неопубликовано"},
-        {"value": "1", "label":"Опубликовано"},
-        {"value": "2", "label":"В корзине"}
+    "status": [
+        {
+            "value": "0",
+            "label": "Неопубликовано"
+        },
+        {
+            "value": "1",
+            "label": "Опубликовано"
+        },
+        {
+            "value": "2",
+            "label": "В корзине"
+        }
     ],
-    "auditor_status":[
-        {"value": "0", "label":"Непроверено"},
-        {"value": "1", "label":"Проверено"},
-        {"value": "2", "label":"Отказано"}
+    "auditor_status": [
+        {
+            "value": "0",
+            "label": "Непроверено"
+        },
+        {
+            "value": "1",
+            "label": "Проверено"
+        },
+        {
+            "value": "2",
+            "label": "Отказано"
+        }
     ],
-    "pwindow":{
-        "pwKpProperty":{
-                    "title":"Свойства КП",
-                    "data":{
-                        "id":"ID",
-                        "name":"Название",
-                        "status":"Статус",
-                        
-                        "date_finish":"Дата закрытия",
-                        "date_create":"Дата создания",
-                        "date_edit":"Дата изменения",
-                        "date_status":"Дата публикации",
-                        
-                        "u_id_create":"Создатель",
-                        "u_id_edit":"Редактор",
-                        
-                        "auditor_id":"Аудитор",
-                        "auditor_status":"Статус аудитора",
-                        "auditor_date_status":"Дата аудита",
-                        "auditor_comment":"Комментарий аудитора"
-                    }
-                },
-        "itemCSS":
+    "pwindow": {
+        "pwKpProperty": {
+            "title": "Свойства КП",
+            "data": {
+                "id": "ID",
+                "name": "Название",
+                "status": "Статус",
+                "date_finish": "Дата закрытия",
+                "date_create": "Дата создания",
+                "date_edit": "Дата изменения",
+                "date_status": "Дата публикации",
+                "u_id_create": "Создатель",
+                "u_id_edit": "Редактор",
+                "auditor_id": "Аудитор",
+                "auditor_status": "Статус аудитора",
+                "auditor_date_status": "Дата аудита",
+                "auditor_comment": "Комментарий аудитора"
+            }
+        },
+        "itemCSS": {
+            "title": "CSS стили"
+        },
+        "items": {
+            "title": "Элементы",
+            "data": [
                 {
-                    "title":"CSS стили"
+                    "title": "Select",
+                    "type": "select"
+                },
+                {
+                    "title": "Перемещение",
+                    "type": "move"
+                },
+                {
+                    "title": "TEXT",
+                    "type": "text",
+                    "style": {
+                        "color": "green"
+                    },
+                    "content": "Текстовый блок"
+                },
+                {
+                    "title": "Block",
+                    "type": "block",
+                    "style": {
+                    },
+                    "content": ""
                 }
-    }
+            ]
+        },
+        "templates": {
+            "title": "Шаблоны"
+        }
+    },
+    "body": [
+        {
+            "id": "1",
+            "type": "page",
+            "style": {},
+            "content": [
+                {
+                    "id": "2",
+                    "type": "block",
+                    "style": {
+                        "background": "red",
+                        "margin": "5px 0",
+                        "padding": "5px 15px",
+                        "border-radius": "10px",
+                        "box-shadow": "0 0 5px rgb(200,200,200)"
+                    },
+                    "content": [
+                        {
+                            "id": "3",
+                            "type": "block",
+                            "style": {
+                                "background": "black"
+                            },
+                            "content": [
+                                {
+                                    "id": "7",
+                                    "type": "string",
+                                    "style": {
+                                        "color": "white",
+                                        "font-weight": "bold"
+                                    },
+                                    "content": "Test text"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "4",
+                            "type": "string",
+                            "style": {
+                                "color": "white",
+                                "font-weight": "normal"
+                            },
+                            "content": "Test text 2 textsetkjhger"
+                        }
+                    ]
+                },
+                {
+                    "id": "5",
+                    "type": "block",
+                    "style": {
+                        "background": "rgba(255,255,255,.1)",
+                        "border-radius": "1px",
+                        "box-shadow": "0 0 5px rgb(200,200,200)",
+                        "padding": "5px"
+                    },
+                    "content": [
+                        {
+                            "id": "6",
+                            "type": "string",
+                            "style": {
+                                "color": "white",
+                                "font-weight": "bold"
+                            },
+                            "content": "Test text"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }
