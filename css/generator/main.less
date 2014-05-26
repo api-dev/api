@@ -1,5 +1,4 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800,300italic,400italic,600&subset=latin,cyrillic);
-
 .clr {
   content: '';
   clear: both;
@@ -20,9 +19,7 @@ html, body {
   border: 0;
   font-size: 14px;
   font-family: 'Open Sans', sans-serif;
-
 }
-
 .panel {
   height: 30px;
   width: 100%;
@@ -302,7 +299,7 @@ body.light {
     background: rgba(255, 255, 255, .4);
     display: block;
     float: left;
-    width: 23%;
+    width: 25%;
     .ppBody {
     }
     .ppBody > * {
@@ -322,6 +319,7 @@ body.light {
         border-bottom: 1px solid #CCCCCC;
         background: #E7E7E7;
         background: rgba(0, 0, 0, 0.05);
+        font-size: 13px;
       }
       .pwTitle:after {
         content: "-";
@@ -381,12 +379,12 @@ body.light {
     }
   }
   .onePanel.center {
-    width: 55%;
+    width: 62%;
     min-height: 100%;
     background: rgba(0, 0, 0, .1);
   }
   .onePanel.left {
-    width: 22%;
+    width: 13%;
   }
 }
 
@@ -399,24 +397,71 @@ body.light {
   .clr;
 }
 
-.one-tool {
-  padding: 5px 10px;
-  display: block;
-  cursor: default;
-  background: rgba(255, 255, 255, .1);
-  border: 1px solid grey;
-  border-radius: 3px;
-  margin: 0 3px 3px 0;
+
+/*----------Tools--------------*/
+.tools
+{
+  .one-tool {
+    padding: 5px 10px 5px 31px;
+    display: block;
+    cursor: default;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    margin: 0 3px 3px 0;
+    position: relative;
+    input {
+      display: none;
+    }
+  }
+  .one-tool.select {
+    background-color: rgba(0,0,0,.18);
+    border: 1px solid rgb(160,160,160);
+    box-shadow: 0 0 2px rgb(160,160,160) inset;
+  }
+  .one-tool:before{
+    content: '';
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    width: 20px;
+    height: 22px;
+    overflow: hidden;
+    background: url("/images/generator/editor/icons_tools_sprite.png") no-repeat top left;
+  }
+  .one-tool.move:before
+  {
+    background-position: left -22px;
+  }
+  .one-tool.text:before
+  {
+    background-position: left -44px;
+  }
+  .one-tool.block:before
+  {
+    background-position: left -65px;
+  }
+  .one-tool.image:before
+  {
+    background-position: left -87px;
+  }
+  .one-tool.header:before
+  {
+    background-position: left -110px;
+  }
+  /*--------hr-----------*/
+  .one-tool.hr
+  {
+    padding: 0;
+    border-bottom: 1px solid #555555;
+  }
+  .one-tool.hr:before{
+    display: none;
+  }
 }
 
-.one-tool.select {
-  background: red;
-}
 
-.one-tool input {
-  display: none;
-}
-
+/*---------Active CSS---------------*/
 .activeCss {
   list-style: none;
   .reset();
@@ -443,10 +488,7 @@ body.light {
     .clr;
   }
 }
-.block
-{
-  display: block;
-}
+
 .ui-hover-elem
 {
   box-shadow: 0 0 5px #8FC6FC !important;
@@ -461,4 +503,38 @@ body.light {
   box-shadow: 0 0 5px rgb(200,200,200);
   margin: 5px auto;
   padding: 10px 15px;
+  overflow: hidden;
+  *
+  {
+    display: block;
+    float: left;
+  }
+  .string
+  {
+    white-space: pre-wrap;
+  }
+  .ui-draggable
+  {
+    box-shadow: 0 0 5px #0297CD !important;
+    z-index: 99;
+  }
+}
+.pages.cursor-select,
+.pages.cursor-block,
+.pages.cursor-images
+{
+  cursor: default;
+}
+.pages.cursor-move
+{
+  cursor: move;
+}
+.pages.cursor-text
+{
+  cursor: text;
+}
+.block:after,
+.pages:after
+{
+  .clr();
 }

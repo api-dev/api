@@ -56,24 +56,6 @@ gFilter.filter('normalDate', function ($filter) {
 /* Controllers */
 var gController = angular.module('gBody', []);
 
-//angular.module('css', [], function($cssProvider) {
-//    $cssProvider.directive('css', function($css) {
-//        return function(scope, element, attrs) {
-//            scope.$watch(
-//                function (scope) {
-//                    return scope.$eval(attrs.link);
-//                },
-//                function (value) {
-//                    console.log(value[attrs.key]);
-//                    element.val(value[attrs.key]);
-//
-//                    $css(element.val())(scope);
-//                }
-//            );
-//        };
-//    })
-//});
-
 gController.controller('bodyStyleCtrl', ['$scope', 'Params',
     function ($scope, Params) {
 
@@ -109,109 +91,107 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
         $http.get('/generator/one?id=' + $routeParams.id).success(function (data) {
             $scope.kp = data;
             $scope.kp.json = JSON.parse(data.json);
-            angular.element('#eeditor').append($scope.parseFromJson($scope.kp.json, 'kp.json'));
-//            console.log($scope.kp.json);
         });
 
-        $scope.index = 0;
+        $scope.cursorClass = 'default';
+        $scope.index = 7;
 
         $scope.activeTool = 0;
         $scope.activeCss = {};
+        $scope.activeContentUrl = function(){
+            var file = $scope.activeCss.type||'block';
+
+            return '/tmpl?dir=content&f='+file;
+        }
 
         $scope.setActiveTool = function (key) {
+            $scope.cursorClass = $scope.params.pwindow.tools.data[key].type;
             $scope.activeTool = key;
         };
 
-        $scope.parseFromJson = function (data, root, parent) {
-            var item, returned = parent;
+        $scope.moveElem = function (drop, drag, droplink, draglink)
+        {
+            var _self = this;
 
-            if (!parent)
-                returned = angular.element('<div class="editor-wrapper"></div>');
-
-            if (data === 'undefined')
-                return false;
-
-            if (typeof data !== "object")
-                data = JSON.parse(data);
-
-            for (item in data) {
-                var elem, tag = '';
-                switch (data[item].type) {
-                    case "img":
-                        tag = '<img >';
-                        break;
-                    case "string":
-                        tag = '<elem></elem>';
-                        break;
-                    default:
-                        tag = '<div elem class="elem ' + data[item].type + '" type="' + data[item].type + '"></div>';
-                        break;
-                }
-                elem = angular.element(tag);
-                elem.css(data[item].style);
-                elem.attr('uid', data[item].id);
-                elem.attr('ulink', root + '[' + item + ']');
-                elem.attr("data-ng-model", root + '[' + item + ']');
-                elem.attr("loool", '{{kp.json[0].content[0].style.background}}');
-                if (typeof data[item].content === "object") {
-                    elem = $scope.parseFromJson(data[item].content, root + '[' + item + '].content', elem);
-                } else {
-                    elem.html(data[item].content);
-                }
-                elem.click(function (e) {
-                    $scope.onClickEvent(e);
-                    return false;
-                });
-                returned.append(elem);
-            }
-            return returned;
-        };
-        $scope.moveElem = function (drop, drag, droplink, draglink) {
-
-            var _self = this,
-                parentId,
-                childId = drag.elem.id;
-
-            if(drop.elem)
-                parentId = drop.elem.id;
-            else
-                parentId = drop.page.id;
-
-            this.init = function(){
-                var parent, child,
-                    item, nItem = {},
-                    dragIndex = draglink.slice( (draglink.lastIndexOf('[')+1), draglink.length-1),
-                    dragParent = draglink.slice(0, draglink.lastIndexOf('['));
-
-                console.log(dragIndex);
-                console.log(dragParent);
-                parent = $scope.$eval(droplink);
-                child = $scope.$eval(draglink);
-
-
-                for(item in child)
-                {
-                    nItem[item] = child[item];
-                }
-                var p = eval('$scope.'+dragParent);
-                p.splice(dragIndex, 1);
-//                eval('delete $scope.'+draglink);
-                parent.content.push(nItem);
-                $scope.$apply();
-            }
-
-            this.setElem = function()
+            this.init = function()
             {
+                var nItem = angular.copy($scope.$eval(draglink));
 
+                if($scope.addElem(nItem, droplink)){
+                    $scope.deleteElem(draglink);
+                }
             }
             return _self.init();
         }
-        $scope.onClickEvent = function (elem) {
 
+        $scope.deleteElem = function(link)
+        {
+            var elemIndex = link.slice( (link.lastIndexOf('[')+1), link.length-1),
+                elemParent = link.slice(0, link.lastIndexOf('[')),
+                parent = $scope.$eval(elemParent);
+
+            if(parent.splice(elemIndex, 1))
+            {
+                $scope.$apply();
+                return true;
+            }
+
+            return false;
+        }
+
+        $scope.addElem = function(elem, parentLink)
+        {
+            var parent = $scope.$eval(parentLink);
+
+            if(!parent || !parent.content || !elem){
+                console.log("Add FALED");
+                return false;
+            }
+
+            if(parent.content.push(elem)){
+                $scope.$apply();
+                return true;
+            }
+        }
+
+        $scope.createElem = function(type, parentLink)
+        {
+            var target = $scope.getParentBlock(parentLink),
+                elem, params = $scope.params.pwindow.templates.data[type];
+
+            if(!target)
+                return false;
+
+            elem = angular.copy(params);
+            elem.id = $scope.index;
+            if(target.style.width && type==="block")
+            {
+                elem.style.width = (parseInt(target.style.width) - 20) + 'px';
+            }
+            $scope.index++;
+
+            if(target.content.push(elem)){
+                $scope.$apply();
+            }
+
+        }
+
+        $scope.getParentBlock = function(link)
+        {
+            var target = $scope.$eval(link);
+
+            if(target.type!=="block" && target.type!=="page")
+                target = $scope.getParentBlock( link.slice(0, link.lastIndexOf('.')) );
+
+            return target;
+        }
+
+        $scope.onClickEvent = function (elem)
+        {
             if (!elem)
                 return false;
 
-            var params = $scope.params.pwindow.items.data,
+            var params = $scope.params.pwindow.tools.data,
                 activeTool = params[$scope.activeTool],
                 target = elem.target,
                 ulink = target.getAttribute('ulink'),
@@ -224,18 +204,23 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
                     $scope.$apply();
                     break;
                 case 'move':
+                    $('.ui-draggable').draggable("destroy");
                     if(activeCss.type!=='page'){
-                        var drop = $(target);
-                        drop.draggable({
+                        var drag = $(target);
+                        drag.draggable({
                             stop: function(event, ui) {
-                                drop.draggable("destroy");
+                                drag.draggable("destroy");
                             }
                         });
                     }
                     break;
+                default:
+                    $scope.createElem(activeTool.type, ulink);
+                    break;
             }
             return false;
         };
+
     }
 ]);
 
@@ -305,11 +290,13 @@ gController.directive('elem', function ($compile) {
 
             switch (scope.content.type) {
                 case 'string':
-//                        element = angular.element('<span></span>');
 //                    element.html(scope.content.content);
                     break;
-                case 'img':
-//                        element = angular.element('<img>');
+                case 'image':
+                    element.html(angular.element('<img ng-src="{{content.content.src}}" ' +
+                        'alt="{{content.content.alt}}" title="{{content.content.title}}" ulink="{{link}}" uid="{{content.id}}"' +
+                        'width="100%" height="100%" border="0">'));
+                    $compile(element.contents())(scope);
                     break;
                 default:
                     element.droppable({
@@ -326,7 +313,6 @@ gController.directive('elem', function ($compile) {
             element.addClass(scope.content.type);
 
             if (angular.isArray(scope.content.content)) {
-                var ind = scope.content.id;
                 element.html('<elem ng-repeat="(i, elem) in content.content" content="elem" link="{{link}}.content[{{i}}]" ng-style="elem.style"></elem>');
                 $compile(element.contents())(scope);
             }

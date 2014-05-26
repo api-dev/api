@@ -298,7 +298,7 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   background: rgba(255, 255, 255, 0.4);
   display: block;
   float: left;
-  width: 23%;
+  width: 25%;
 }
 .pPanel .onePanel .ppBody > * {
   margin-top: 10px;
@@ -318,6 +318,7 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   border-bottom: 1px solid #CCCCCC;
   background: #E7E7E7;
   background: rgba(0, 0, 0, 0.05);
+  font-size: 13px;
 }
 .pPanel .onePanel .pwWindow .pwTitle:after {
   content: "-";
@@ -377,12 +378,12 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   display: none;
 }
 .pPanel .onePanel.center {
-  width: 55%;
+  width: 62%;
   min-height: 100%;
   background: rgba(0, 0, 0, 0.1);
 }
 .pPanel .onePanel.left {
-  width: 22%;
+  width: 13%;
 }
 .view {
   height: 94%;
@@ -394,21 +395,61 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   float: none;
   display: block;
 }
-.one-tool {
-  padding: 5px 10px;
+/*----------Tools--------------*/
+.tools {
+  /*--------hr-----------*/
+}
+.tools .one-tool {
+  padding: 5px 10px 5px 31px;
   display: block;
   cursor: default;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid grey;
+  border: 1px solid transparent;
   border-radius: 3px;
   margin: 0 3px 3px 0;
+  position: relative;
 }
-.one-tool.select {
-  background: red;
-}
-.one-tool input {
+.tools .one-tool input {
   display: none;
 }
+.tools .one-tool.select {
+  background-color: rgba(0, 0, 0, 0.18);
+  border: 1px solid #a0a0a0;
+  box-shadow: 0 0 2px #a0a0a0 inset;
+}
+.tools .one-tool:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  width: 20px;
+  height: 22px;
+  overflow: hidden;
+  background: url("/images/generator/editor/icons_tools_sprite.png") no-repeat top left;
+}
+.tools .one-tool.move:before {
+  background-position: left -22px;
+}
+.tools .one-tool.text:before {
+  background-position: left -44px;
+}
+.tools .one-tool.block:before {
+  background-position: left -65px;
+}
+.tools .one-tool.image:before {
+  background-position: left -87px;
+}
+.tools .one-tool.header:before {
+  background-position: left -110px;
+}
+.tools .one-tool.hr {
+  padding: 0;
+  border-bottom: 1px solid #555555;
+}
+.tools .one-tool.hr:before {
+  display: none;
+}
+/*---------Active CSS---------------*/
 .activeCss {
   list-style: none;
   margin: 0;
@@ -443,9 +484,6 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   float: none;
   display: block;
 }
-.block {
-  display: block;
-}
 .ui-hover-elem {
   box-shadow: 0 0 5px #8FC6FC !important;
   background: #8FC6FC !important;
@@ -458,4 +496,34 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   box-shadow: 0 0 5px #c8c8c8;
   margin: 5px auto;
   padding: 10px 15px;
+  overflow: hidden;
+}
+.pages * {
+  display: block;
+  float: left;
+}
+.pages .string {
+  white-space: pre-wrap;
+}
+.pages .ui-draggable {
+  box-shadow: 0 0 5px #0297CD !important;
+  z-index: 99;
+}
+.pages.cursor-select,
+.pages.cursor-block,
+.pages.cursor-images {
+  cursor: default;
+}
+.pages.cursor-move {
+  cursor: move;
+}
+.pages.cursor-text {
+  cursor: text;
+}
+.block:after,
+.pages:after {
+  content: '';
+  clear: both;
+  float: none;
+  display: block;
 }

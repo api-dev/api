@@ -83,11 +83,11 @@
         "itemCSS": {
             "title": "CSS стили"
         },
-        "items": {
-            "title": "Элементы",
+        "tools": {
+            "title": "Инструменты",
             "data": [
                 {
-                    "title": "Select",
+                    "title": "Выделение",
                     "type": "select"
                 },
                 {
@@ -95,24 +95,102 @@
                     "type": "move"
                 },
                 {
-                    "title": "TEXT",
-                    "type": "text",
-                    "style": {
-                        "color": "green"
-                    },
-                    "content": "Текстовый блок"
+                    "title": "Текст",
+                    "type": "text"
                 },
                 {
-                    "title": "Block",
-                    "type": "block",
-                    "style": {
-                    },
-                    "content": ""
+                    "title": "Блок",
+                    "type": "block"
+                },
+                {
+                    "title": "Изображение",
+                    "type": "image"
+                },
+                {
+                    "title": "",
+                    "type": "hr"
+                },
+                {
+                    "title": "Шапка",
+                    "type": "header"
                 }
             ]
         },
         "templates": {
-            "title": "Шаблоны"
+            "title": "Шаблоны",
+            "data": {
+                "block": {
+                    "type": "block",
+                    "style": {
+                        "width": "680px",
+                        "background": "white",
+                        "border": "2px solid rgb(200,200,200)",
+                        "border-radius": "10px",
+                        "padding": "5px 10px"
+                    },
+                    "content": []
+                },
+                "text": {
+                    "type": "string",
+                    "style": {
+                        "color": "black",
+                        "font-size": "12px"
+                    },
+                    "content": "Введите текст"
+                },
+                "image": {
+                    "type": "image",
+                    "style": {
+                        "width": "150px",
+                        "height": "200px",
+                        "border": "0",
+                        "padding": "0"
+                    },
+                    "content": {
+                        "title": "Image title",
+                        "alt": "Image alt",
+                        "src": "http://api.lbr.ru/images/default.jpg"
+                    }
+                },
+                "header": {
+                    "type": "block",
+                    "style": {
+                        "width": "665px",
+                        "height": "auto",
+                        "border": "0",
+                        "padding": "15px 15px 18px 20px",
+                        "box-shadow": "0 0 5px rgb(150,150,150)",
+                        "background": "orange",
+                        "border-radius": "10px"
+                    },
+                    "content": [
+                        {
+                            "type": "string",
+                            "style": {
+                                "color": "#FFFFFF",
+                                "font-size": "15px",
+                                "font-style": "italic",
+                                "width" : "470px"
+                            },
+                            "content": "Уважаемые Петр Петрович"
+                        },
+                        {
+                            "type": "image",
+                            "style": {
+                                "width": "192px",
+                                "height": "70px",
+                                "border": "0",
+                                "padding": "0"
+                            },
+                            "content": {
+                                "title": "Image title",
+                                "alt": "Image alt",
+                                "src": "http://api.lbr.ru/images/lbrlogo.png"
+                            }
+                        }
+                    ]
+                }
+            }
         }
     },
     "body": [

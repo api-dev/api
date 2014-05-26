@@ -3,8 +3,60 @@
     <div class="onePanel" position="left">
         
         <pWindow
+            class="pWindow tools"
+            pwtitle="{{params.pwindow.tools.title}}"
+            >
+            <label ng-repeat="(tkey, tdata) in params.pwindow.tools.data" class="one-tool {{tdata.type}}" ng-class="{'select':activeTool===tkey}">
+                <input
+                    type="radio" 
+                    name="tools"
+                    id="tool-{{tdata.title}}" 
+                    ng-value="tkey"
+                    ng-click="setActiveTool(tkey)"
+                    ng-model="activeTool"
+                    >
+                {{tdata.title}}
+            </label>
+        </pWindow>
+        
+    </div>
+    <div id="center" class="onePanel" position="center">
+        <page ng-repeat="(i, page) in kp.json" link="{{i}}" content="page" class="cursor-{{cursorClass}}"></page>
+    </div>
+
+    <div class="onePanel" position="right" style="overflow: hidden;">
+        <pWindow
+            class="pWindow"
+            pwtitle="{{params.pwindow.itemCSS.title}}"
+            >
+            <ul class="activeCss">
+                <li ng-repeat="(key, prop) in activeCss.style">
+                    <label for="prop-{{key}}">{{key}}:</label>
+                    <input id="prop-{{key}}" type="text" value="{{prop}}" ng-model="activeCss.style[key]">
+                </li>
+                <li ng-show="!activeCss.style">Нет стилей. Выберите элемент.</li>
+            </ul>
+        </pWindow>
+        <pWindow
+            class="pWindow"
+            pwtitle="Основные параметры"
+            >
+            <div ng-include="activeContentUrl()"></div>
+        </pWindow>
+
+        <pWindow
             class="pWindow" 
-            pwtitle="{{params.pwindow.pwKpProperty.title}}" 
+            pwtitle="Json" 
+            >
+            {{kp.json[0].content}}
+        </pWindow>
+        <pWindow
+            class="pWindow" 
+            pwtitle="HTML" 
+            >{{kp.html}}</pWindow>
+        <pWindow
+            class="pWindow"
+            pwtitle="{{params.pwindow.pwKpProperty.title}}"
             >
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.id}}:</label>
@@ -67,50 +119,5 @@
                 <span class="val"><textarea ng-model="kp.auditor_comment"></textarea></span>
             </div>
         </pWindow>
-        <pWindow
-            class="pWindow" 
-            pwtitle="{{params.pwindow.items.title}}" 
-            >
-            <label ng-repeat="(tkey, tdata) in params.pwindow.items.data" class="one-tool" ng-class="{'select':activeTool===tkey}">
-                <input
-                    type="radio" 
-                    name="tools"
-                    id="tool-{{tdata.title}}" 
-                    ng-value="tkey"
-                    ng-click="setActiveTool(tkey)"
-                    ng-model="activeTool"
-                    >
-                {{tdata.title}}
-            </label>
-        </pWindow>
-        
-    </div>
-    <div id="center" class="onePanel" position="center">
-        <page ng-repeat="(i, page) in kp.json" link="{{i}}" content="page"></page>
-    </div>
-
-    <div class="onePanel" position="right" style="overflow: hidden;">
-        <pWindow
-            class="pWindow"
-            pwtitle="{{params.pwindow.itemCSS.title}}"
-            >
-            <ul class="activeCss">
-                <li ng-repeat="(key, prop) in activeCss.style">
-                    <label for="prop-{{key}}">{{key}}:</label>
-                    <input id="prop-{{key}}" type="text" value="{{prop}}" ng-model="activeCss.style[key]">
-                </li>
-                <li ng-show="!activeCss.id">Нет стилей. Выберите элемент.</li>
-            </ul>
-            </pWindow>
-        <pWindow
-            class="pWindow" 
-            pwtitle="Json" 
-            >
-            {{kp.json[0].content}}
-        </pWindow>
-        <pWindow
-            class="pWindow" 
-            pwtitle="HTML" 
-            >{{kp.html}}</pWindow>
     </div>
 </div>
