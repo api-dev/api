@@ -1,4 +1,4 @@
-
+<div ng-include="'/tmpl?dir=default&f=templates'"></div>
 <div class="pPanel">
     <div class="onePanel" position="left">
         
@@ -45,15 +45,14 @@
         </pWindow>
 
         <pWindow
-            class="pWindow" 
-            pwtitle="Json" 
+            class="pWindow structure"
+            pwtitle="Структура"
             >
-            {{kp.json[0].content}}
+            <ul class="tree" >
+                <treeitem level="1" class="tree-item level-0 type-page" ulink="kp.json[{{$index}}]" content="item" ng-repeat="item in kp.json" parent="kp.json" index="$index"></treeitem>
+            </ul>
         </pWindow>
-        <pWindow
-            class="pWindow" 
-            pwtitle="HTML" 
-            >{{kp.html}}</pWindow>
+
         <pWindow
             class="pWindow"
             pwtitle="{{params.pwindow.pwKpProperty.title}}"

@@ -107,6 +107,10 @@
                     "type": "image"
                 },
                 {
+                    "title": "Переменная",
+                    "type": "varible"
+                },
+                {
                     "title": "",
                     "type": "hr"
                 },
@@ -121,6 +125,7 @@
             "data": {
                 "block": {
                     "type": "block",
+                    "title": "Block №",
                     "style": {
                         "width": "680px",
                         "background": "white",
@@ -132,6 +137,7 @@
                 },
                 "text": {
                     "type": "string",
+                    "title": "Введите текст №",
                     "style": {
                         "color": "black",
                         "font-size": "12px"
@@ -140,6 +146,7 @@
                 },
                 "image": {
                     "type": "image",
+                    "title": "Изображение №",
                     "style": {
                         "width": "150px",
                         "height": "200px",
@@ -152,8 +159,19 @@
                         "src": "http://api.lbr.ru/images/default.jpg"
                     }
                 },
+                "varible": {
+                    "type": "varible",
+                    "title": "Переменная ",
+                    "style": {
+                        "color": "red",
+                        "font-size": "15px",
+                        "font-weight": "bold"
+                    },
+                    "content": "$price1"
+                },
                 "header": {
                     "type": "block",
+                    "title": "Шапка ",
                     "style": {
                         "width": "665px",
                         "height": "auto",
@@ -166,16 +184,18 @@
                     "content": [
                         {
                             "type": "string",
+                            "title": "Приветствие",
                             "style": {
                                 "color": "#FFFFFF",
                                 "font-size": "15px",
                                 "font-style": "italic",
-                                "width" : "470px"
+                                "width": "470px"
                             },
                             "content": "Уважаемые Петр Петрович"
                         },
                         {
                             "type": "image",
+                            "title": "Логотип",
                             "style": {
                                 "width": "192px",
                                 "height": "70px",
@@ -196,22 +216,26 @@
     "body": [
         {
             "id": "1",
+            "title": "Страница 1",
             "type": "page",
             "style": {},
             "content": [
                 {
                     "id": "2",
+                    "title": "Блок №2",
                     "type": "block",
                     "style": {
                         "background": "red",
                         "margin": "5px 0",
                         "padding": "5px 15px",
                         "border-radius": "10px",
-                        "box-shadow": "0 0 5px rgb(200,200,200)"
+                        "box-shadow": "0 0 5px rgb(200,200,200)",
+                        "width": "670px"
                     },
                     "content": [
                         {
                             "id": "3",
+                            "title": "Блок №3",
                             "type": "block",
                             "style": {
                                 "background": "black"
@@ -219,6 +243,7 @@
                             "content": [
                                 {
                                     "id": "7",
+                                    "title": "Test text №7",
                                     "type": "string",
                                     "style": {
                                         "color": "white",
@@ -230,6 +255,7 @@
                         },
                         {
                             "id": "4",
+                            "title": "Test text №4",
                             "type": "string",
                             "style": {
                                 "color": "white",
@@ -241,9 +267,10 @@
                 },
                 {
                     "id": "5",
+                    "title": "Блок №5",
                     "type": "block",
                     "style": {
-                        "background": "rgba(255,255,255,.1)",
+                        "background": "rgb(225,255,255)",
                         "border-radius": "1px",
                         "box-shadow": "0 0 5px rgb(200,200,200)",
                         "padding": "5px"
@@ -251,6 +278,7 @@
                     "content": [
                         {
                             "id": "6",
+                            "title": "Test text №6",
                             "type": "string",
                             "style": {
                                 "color": "white",

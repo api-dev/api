@@ -98,10 +98,19 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
 
         $scope.activeTool = 0;
         $scope.activeCss = {};
-        $scope.activeContentUrl = function(){
-            var file = $scope.activeCss.type||'block';
 
-            return '/tmpl?dir=content&f='+file;
+        $scope.activeContentUrl = function(){
+            var file = $scope.activeCss.type;
+
+            if(file)
+                return file+'.html';
+            else
+                return '/tmpl?dir=default&f=empty';
+        }
+
+        $scope.jsonDelete = function(event)
+        {
+            console.log(event);
         }
 
         $scope.setActiveTool = function (key) {
@@ -118,7 +127,8 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
                 var nItem = angular.copy($scope.$eval(draglink));
 
                 if($scope.addElem(nItem, droplink)){
-                    $scope.deleteElem(draglink);
+                    if($scope.deleteElem(draglink))
+                        $scope.$apply();
                 }
             }
             return _self.init();
@@ -132,11 +142,15 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
 
             if(parent.splice(elemIndex, 1))
             {
-                $scope.$apply();
                 return true;
             }
 
             return false;
+        }
+
+        $scope.onDel = function(a){
+            console.log('wewerwer');
+            console.log(a);
         }
 
         $scope.addElem = function(elem, parentLink)
@@ -164,6 +178,12 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
 
             elem = angular.copy(params);
             elem.id = $scope.index;
+            elem.title += elem.id;
+            elem.link = target.link+'.content['+target.content.length+']';
+
+            if(angular.isArray(elem.content))
+                $scope.setRecId(elem);
+
             if(target.style.width && type==="block")
             {
                 elem.style.width = (parseInt(target.style.width) - 20) + 'px';
@@ -174,6 +194,18 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
                 $scope.$apply();
             }
 
+        }
+
+        $scope.setRecId = function(elem)
+        {
+            var e;
+            for(e in elem.content)
+            {
+                elem.content[e].id = $scope.index;
+                $scope.index++;
+                if(angular.isArray(elem.content[e].content))
+                    $scope.setRecId(elem.content[e]);
+            }
         }
 
         $scope.getParentBlock = function(link)
@@ -220,6 +252,17 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
             }
             return false;
         };
+
+        $scope.treeClick = function(e)
+        {
+            var target = $(e.target),
+                link = target.parent().attr('link');
+
+            if(target.hasClass('delete'))
+                $scope.deleteElem(link);
+
+            return false;
+        }
 
     }
 ]);
@@ -298,6 +341,9 @@ gController.directive('elem', function ($compile) {
                         'width="100%" height="100%" border="0">'));
                     $compile(element.contents())(scope);
                     break;
+                case 'varible':
+
+                    break;
                 default:
                     element.droppable({
                         greedy: true,
@@ -319,6 +365,74 @@ gController.directive('elem', function ($compile) {
             return false;
         }
     };
+});
+
+
+gController.directive('treeitem', function ($compile) {
+    return {
+        restrict: 'E',
+        replace: true,
+        transclude: true,
+        scope: {
+            content: '=',
+            link: '@ulink',
+            onDel: '&',
+            level: '=',
+            parent: '=',
+            index: '='
+        },
+        template: function (elem, attrs) {
+            return  '<li link="{{link}}">' +
+                        '<span class="icon"></span>'+
+                        '<input ng-model="content.title" type="text">'+
+                        '<span class="delete" ng-click="delete(parent, index)"></span>'+
+                        '<span class="up" ng-if="showUp(parent, index)"></span>'+
+                        '<span class="down" ng-if="showDown(parent, index)"></span>'+
+                    '</li>';
+        },
+        link: function (scope, element, attrs, parentCtrl) {
+
+            var input = angular.element(element.children()[1]);
+
+                input.bind('focus', function(){
+                    input.addClass('focused');
+                });
+                input.bind('blur', function(){
+                    input.removeClass('focused')
+                });
+
+            if (angular.isArray(scope.content.content)) {
+                element.append('<ul class="child">' +
+                    '<treeitem ng-repeat="elem in content.content" parent="content" level="level+1" class="tree-item level-{{level}} type-{{elem.type}}" content="elem" ulink="{{link}}.content[{{$index}}]" index="$index"></treeitem>' +
+                    '</ul>');
+                $compile(element.contents())(scope);
+            }
+            return false;
+        },
+        controller: function($scope, $element)
+        {
+            $scope.showUp = function(parent, index)
+            {
+                if(!angular.isArray(parent))
+                {
+                    if(parent.content.length > 1 && index>0)
+                        return true;
+                }
+                return false
+            }
+
+            $scope.showDown = function(parent, index)
+            {
+                if(!angular.isArray(parent))
+                {
+                    if(parent.content.length > 1 && index<(parent.content.length-1))
+                        return true;
+                }
+                return false
+
+            }
+        }
+    }
 });
 
 gController.directive('pWindow', function () {
