@@ -139,6 +139,18 @@ class Kp extends CActiveRecord
             {
                 $this->u_id_create = $u_id;
                 $this->date_create = $date;
+                $this->json =   '[
+                                    {
+                                        "id": "1",
+                                        "title": "Страница 1",
+                                        "type": "page",
+                                        "style": {},
+                                        "content": []
+                                    }
+                                ]';
+                $this->name = 'Новое КП';
+                $this->status = '0';
+                $this->auditor_status = '0';
             }
             
             if($old->status !== $this->status){

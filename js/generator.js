@@ -6,7 +6,8 @@ var generator = angular.module('gApp', [
     'gBody',
     'gFilters',
     'gService',
-    'ngSanitize'
+    'ngSanitize',
+    'ui.date'
 ]);
 generator.config(['$routeProvider',
     function ($routeProvider) {
@@ -35,10 +36,11 @@ gFilter.filter('checkmark', function () {
                 ret = '\u2713';
                 break;
             case '2':
-                ret = '\u25D4';
+//                ret = '\u25D4';
+                ret = '\u2298';
                 break;
             default :
-                ret = '\u2715';
+                ret = '\u2298';
                 break;
         }
         return ret;
@@ -47,8 +49,14 @@ gFilter.filter('checkmark', function () {
 
 gFilter.filter('normalDate', function ($filter) {
     return function (text) {
-        var date_r = new Date(text.replace(' ', 'T'));
-        return $filter('date')(date_r, "dd.MM.yyyy hh:mm");
+        if(text)
+        {
+            var date_r = new Date(text.replace(' ', 'T'));
+            return $filter('date')(date_r, "dd.MM.yyyy hh:mm");
+        }else{
+            return 'Нет даты';
+        }
+
     };
 });
 
@@ -68,14 +76,32 @@ gController.controller('bodyStyleCtrl', ['$scope', 'Params',
     }
 ]);
 
-gController.controller('KpListCtrl', ['$scope', 'Kp',
-    function ($scope, Kp) {
+gController.controller('KpListCtrl', ['$scope', '$location', 'Kp',
+    function ($scope, $location, Kp) {
+
 
         $scope.rowList = $scope.params.rowList;
 
-        $scope.kpList = Kp.query();
+        $scope.kpList = Kp.findAll();
 
         $scope.orderProp = false;
+
+        $scope.create = function()
+        {
+            Kp.createKp();
+        }
+        $scope.delete = function(id)
+        {
+            Kp.deleteKp(id);
+        }
+
+        $scope.trash = function(id, index)
+        {
+            if(Kp.trashKp(id))
+            {
+                $scope.kpList.splice(index, 1);
+            }
+        }
 
         $scope.setOrder = function (field) {
             $scope.orderProp = field;
@@ -84,14 +110,26 @@ gController.controller('KpListCtrl', ['$scope', 'Kp',
     }
 ]);
 
-gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$sce',
-    function ($scope, $routeParams, Kp, $http, $sce) {
-        $scope.kp = false;
-        $scope.html = false;
-        $http.get('/generator/one?id=' + $routeParams.id).success(function (data) {
-            $scope.kp = data;
-            $scope.kp.json = JSON.parse(data.json);
-        });
+gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$sce', '$location',
+    function ($scope, $routeParams, Kp, $http, $sce, $location) {
+
+        $scope.dateOptions = {
+            changeYear: true,
+            changeMonth: true,
+            dateFormat: 'yy-mm-dd'
+        };
+
+        $scope.kp = Kp.findById($routeParams.id);
+
+        $scope.save = function()
+        {
+            Kp.saveKp($scope.kp, $routeParams.id);
+        }
+
+        $scope.close = function()
+        {
+            $location.path('/list');
+        }
 
         $scope.cursorClass = 'default';
         $scope.index = 7;
@@ -106,11 +144,6 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
                 return file+'.html';
             else
                 return '/tmpl?dir=default&f=empty';
-        }
-
-        $scope.jsonDelete = function(event)
-        {
-            console.log(event);
         }
 
         $scope.setActiveTool = function (key) {
@@ -146,11 +179,6 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
             }
 
             return false;
-        }
-
-        $scope.onDel = function(a){
-            console.log('wewerwer');
-            console.log(a);
         }
 
         $scope.addElem = function(elem, parentLink)
@@ -252,18 +280,6 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
             }
             return false;
         };
-
-        $scope.treeClick = function(e)
-        {
-            var target = $(e.target),
-                link = target.parent().attr('link');
-
-            if(target.hasClass('delete'))
-                $scope.deleteElem(link);
-
-            return false;
-        }
-
     }
 ]);
 
@@ -333,7 +349,8 @@ gController.directive('elem', function ($compile) {
 
             switch (scope.content.type) {
                 case 'string':
-//                    element.html(scope.content.content);
+//                    element.html(angular.element('<span ulink="{{link}}" uid="{{content.id}}">{{content.content}}</span>'));
+//                    $compile(element.contents())(scope);
                     break;
                 case 'image':
                     element.html(angular.element('<img ng-src="{{content.content.src}}" ' +
@@ -385,9 +402,9 @@ gController.directive('treeitem', function ($compile) {
             return  '<li link="{{link}}">' +
                         '<span class="icon"></span>'+
                         '<input ng-model="content.title" type="text">'+
-                        '<span class="delete" ng-click="delete(parent, index)"></span>'+
-                        '<span class="up" ng-if="showUp(parent, index)"></span>'+
-                        '<span class="down" ng-if="showDown(parent, index)"></span>'+
+                        '<span class="delete" title="Удалить элемент" ng-if="(index!==\'0\' && content.type!==\'page\')" ng-click="delete(parent, index)"></span>'+
+                        '<span class="up" title="Переместить вверх" ng-click="moveUp(parent, index)" ng-if="showUp(parent, index)"></span>'+
+                        '<span class="down" title="Переместить вниз" ng-click="moveDown(parent, index)" ng-if="showDown(parent, index)"></span>'+
                     '</li>';
         },
         link: function (scope, element, attrs, parentCtrl) {
@@ -430,6 +447,27 @@ gController.directive('treeitem', function ($compile) {
                 }
                 return false
 
+            }
+
+            $scope.delete = function(parent, index)
+            {
+                if(parent.content)
+                    parent.content.splice(index, 1);
+            }
+
+            $scope.moveUp = function(parent, index)
+            {
+                $scope.move(parent, index, -1)
+            }
+            $scope.moveDown = function(parent, index)
+            {
+                $scope.move(parent, index, 1);
+            }
+
+            $scope.move = function(parent, index, dif)
+            {
+                var e_move = parent.content.splice(index, 1);
+                parent.content.splice(index+dif, 0, e_move[0]);
             }
         }
     }
@@ -485,12 +523,64 @@ gController.directive('pPanel', function () {
 /* Services */
 var gService = angular.module('gService', ['ngResource']);
 
-gService.factory('Kp', ['$resource',
-    function ($resource) {
-        var returns = $resource('/generator/:kpid', {}, {
-            query: {method: 'GET', params: {kpid: 'list'}, isArray: true}
-        });
-        return returns;
+gService.factory('Kp', ['$resource', '$location',
+    function ($resource, $location) {
+        var kp = $resource('/generator/:kpid', {kpid: 'list'}, {});
+
+        kp.createKp = function(){
+            var k = kp.get({
+                kpid : 'one',
+                id: 'new'
+            }, function(res){
+                $location.path('/list/'+ res.id);
+            });
+
+            return k;
+        }
+
+        kp.trashKp = function(id)
+        {
+            var k = kp.get({
+                    kpid: 'trash',
+                    id: id
+                });
+            if(k)
+                return true;
+
+            return false;
+        }
+
+        kp.deleteKp = function(id)
+        {
+
+        }
+
+        kp.findAll = function() {
+            return kp.query();
+        };
+
+        kp.findById = function(id) {
+            var k = kp.get({
+                kpid : 'one',
+                id: id
+            }, function(){k.json = JSON.parse(k.json);});
+
+            return k;
+        };
+
+        kp.saveKp = function(k) {
+            return kp.save({
+                kpid : 'one',
+                id: k.id
+            }, k, function(){
+                console.log('Complete!')
+            }, function(){
+                console.log('Error!')
+            });
+        }
+
+        return kp;
+
     }
 ]);
 gService.factory('Params', ['$resource',

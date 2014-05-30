@@ -20,17 +20,13 @@ $app = Yii::app();
     <script src="<?php echo $app->request->baseUrl; ?>/js/angularjs/angular-1.2.9/angular-resource.js"></script>
     <script src="<?php echo $app->request->baseUrl; ?>/js/angularjs/angular-1.2.9/angular-animate.js"></script>
     <script src="<?php echo $app->request->baseUrl; ?>/js/angularjs/angular-1.2.9/angular-sanitize.min.js"></script>
-    <script src="<?php echo $app->request->baseUrl; ?>/js/angularjs/angular-1.2.9/angular-dragdrop.min.js"></script>
-
-    <!--        <script src="--><?php //echo $app->request->baseUrl; ?><!--/js/dnd/DragObject.js"></script>-->
-    <!--        <script src="--><?php //echo $app->request->baseUrl; ?><!--/js/dnd/DropTarget.js"></script>-->
-    <!--        <script src="--><?php //echo $app->request->baseUrl; ?><!--/js/dnd/dragMaster.js"></script>-->
-    <!--        <script src="--><?php //echo $app->request->baseUrl; ?><!--/js/dnd/helpers.js"></script>-->
+    <script src="<?php echo $app->request->baseUrl; ?>/js/angularjs/angular-1.2.9/angular-date.js"></script>
 
     <script src="<?php echo $app->request->baseUrl; ?>/js/generator.js"></script>
 </head>
 <body class="{{bodyClass}}" ng-controller="bodyStyleCtrl">
 <div class="panel">
+    <div style="float: left"></div>
     <div class="logout"><a href="http://auth.<?php echo $app->params['host'] ?>/logout/">Выход</a></div>
     <div class="bodyClassBut">
         <label for="bodyClass-light" id="label-bodyClass-light">

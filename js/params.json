@@ -31,6 +31,10 @@
         {
             "val": "date_edit",
             "label": "Дата редактирования"
+        },
+        {
+            "val": "trash",
+            "label": ""
         }
     ],
     "status": [
@@ -127,11 +131,24 @@
                     "type": "block",
                     "title": "Block №",
                     "style": {
-                        "width": "680px",
-                        "background": "white",
-                        "border": "2px solid rgb(200,200,200)",
-                        "border-radius": "10px",
-                        "padding": "5px 10px"
+                        "margin" : "0",
+                        "padding" : "0",
+                        "float":"left",
+
+                        "border-left" : "0",
+                        "border-right" : "0",
+                        "border-top" : "0",
+                        "border-bottom" : "0",
+
+                        "background" : "grey",
+                        "box-shadow" : "none",
+                        "border-radius" : "0",
+
+                        "opacity" : "1",
+                        "z-index" : "1",
+
+                        "width" : "100%",
+                        "height" : "20px"
                     },
                     "content": []
                 },
@@ -139,8 +156,31 @@
                     "type": "string",
                     "title": "Введите текст №",
                     "style": {
+
+                        "float":"none",
+                        "background" : "none",
+
+                        "font-size": "12px",
+                        "font-weight":"normal",
+                        "font-style":"normal",
+                        "font-variant": "normal",
+                        "font-family": "'Trebuchet MS', sans-serif",
+
                         "color": "black",
-                        "font-size": "12px"
+                        "line-height": "normal",
+                        "letter-spacing": "normal",
+                        "text-transform" : "none",
+                        "text-align" : "left",
+                        "text-shadow": "none",
+
+                        "margin" : "0",
+                        "padding" : "0",
+
+                        "opacity" : "1",
+                        "z-index" : "1",
+
+                        "width" : "auto",
+                        "height" : "auto"
                     },
                     "content": "Введите текст"
                 },
@@ -148,10 +188,20 @@
                     "type": "image",
                     "title": "Изображение №",
                     "style": {
+                        "margin" : "0",
+                        "padding" : "0",
+                        "float" : "left",
+
+                        "border" : "0",
+                        "background" : "none",
+                        "box-shadow" : "none",
+                        "border-radius" : "0",
+
+                        "opacity" : "1",
+                        "z-index" : "1",
+
                         "width": "150px",
-                        "height": "200px",
-                        "border": "0",
-                        "padding": "0"
+                        "height": "200px"
                     },
                     "content": {
                         "title": "Image title",
@@ -165,7 +215,8 @@
                     "style": {
                         "color": "red",
                         "font-size": "15px",
-                        "font-weight": "bold"
+                        "font-weight": "bold",
+                        "background" : "none"
                     },
                     "content": "$price1"
                 },
@@ -173,23 +224,51 @@
                     "type": "block",
                     "title": "Шапка ",
                     "style": {
-                        "width": "665px",
-                        "height": "auto",
-                        "border": "0",
-                        "padding": "15px 15px 18px 20px",
-                        "box-shadow": "0 0 5px rgb(150,150,150)",
-                        "background": "orange",
-                        "border-radius": "10px"
+                        "margin" : "0",
+                        "padding" : "15px 15px 18px 20px",
+                        "float": "none",
+
+                        "border" : "0",
+                        "background" : "orange",
+                        "box-shadow" : "0 0 5px rgb(150,150,150)",
+                        "border-radius" : "10px",
+
+                        "opacity" : "1",
+                        "z-index" : "1",
+
+                        "width" : "665px",
+                        "height" : "auto"
+
                     },
                     "content": [
                         {
                             "type": "string",
                             "title": "Приветствие",
                             "style": {
-                                "color": "#FFFFFF",
+                                "float": "left",
+
                                 "font-size": "15px",
-                                "font-style": "italic",
-                                "width": "470px"
+                                "font-weight":"normal",
+                                "font-style":"italic",
+                                "font-variant": "normal",
+                                "font-family": "'Trebuchet MS', sans-serif",
+
+                                "color": "white",
+                                "line-height": "normal",
+                                "letter-spacing": "normal",
+                                "text-transform" : "none",
+                                "text-align" : "left",
+                                "text-shadow": "none",
+
+                                "background" : "none",
+                                "margin" : "0",
+                                "padding" : "0",
+
+                                "opacity" : "1",
+                                "z-index" : "1",
+
+                                "width" : "470px",
+                                "height" : "auto"
                             },
                             "content": "Уважаемые Петр Петрович"
                         },
@@ -197,10 +276,24 @@
                             "type": "image",
                             "title": "Логотип",
                             "style": {
+                                "margin" : "0",
+                                "padding" : "0",
+                                "float" : "right",
+
+                                "border-left" : "0",
+                                "border-right" : "0",
+                                "border-top" : "0",
+                                "border-bottom" : "0",
+
+                                "background" : "none",
+                                "box-shadow" : "none",
+                                "border-radius" : "0",
+
+                                "opacity" : "1",
+                                "z-index" : "1",
+
                                 "width": "192px",
-                                "height": "70px",
-                                "border": "0",
-                                "padding": "0"
+                                "height": "70px"
                             },
                             "content": {
                                 "title": "Image title",

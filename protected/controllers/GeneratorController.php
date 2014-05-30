@@ -23,22 +23,75 @@ class GeneratorController extends Controller {
 
         $dependency = new CDbCacheDependency('SELECT MAX(date_edit) FROM kp');
         $dependency->connectionID = 'db_kp';
-        
-        $kp = Kp::model()->cache(1000, $dependency)->findAll();
-        
+
+        $kp = Kp::model()->cache(1000, $dependency)->findAll('status<2');
+
         $this->renderPartial('json', array('data' => $kp));
     }
 
     public function actionOne($id) {
-        
-        $kp = Kp::model()->find(array(
-            'condition' => 'id=:id',
-            'params' => array(':id' => $id),
-        ));
-        $this->renderPartial('json', array('data' => $kp));
-//         echo CJavaScript::jsonEncode($kp);
+
+        $result = array();
+
+        if($id === 'new')
+        {
+            $kp = new Kp();
+            $kp->save();
+            echo '{"id":"'.$kp->id.'"}';
+            return true;
+        }else{
+            $kp = Kp::model()->find(array(
+                'condition' => 'id=:id',
+                'params' => array(':id' => $id),
+            ));
+        }
+
+        $rawBody = Yii::app()->request->rawBody;
+
+        if(is_null( $result = json_decode($rawBody, true))){
+            if(function_exists('mb_parse_str')) {
+                mb_parse_str(Yii::app()->request->rawBody, $result);
+            } else {
+                parse_str(Yii::app()->request->rawBody, $result);
+            }
+        }
+
+        if(!is_array($result)){
+            $result = $_POST;
+        }
+
+        if($result)
+        {
+            unset($result['id']);
+            $kp->attributes = $result;
+
+            $kp->u_id_create = $result['u_id_create']['id'];
+            $kp->auditor_id = $result['auditor_id']['id'];
+            $kp->u_id_edit = $result['u_id_edit']['id'];
+
+            $kp->json = CJSON::encode($result['json']);
+
+            if($kp->save())
+                Yii::log($kp->json, 'info');
+            else
+                Yii::log(serialize($kp->getErrors()), 'info');
+
+        }else{
+            $this->renderPartial('json', array('data' => $kp));
+        }
     }
-    
+
+    public function actionTrash($id)
+    {
+        $kp = Kp::model()->findByPk($id);
+        if($kp)
+        {
+            $kp->status = 2;
+            if($kp->save()){
+                echo true;
+            }
+        }
+    }
     /*
      * Генерирует рандомный идентификатор
      * @return string Возвращает 8 знаковый, уникальный идентификатор

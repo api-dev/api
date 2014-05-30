@@ -1,7 +1,10 @@
 <div ng-include="'/tmpl?dir=default&f=templates'"></div>
 <div class="pPanel">
     <div class="onePanel" position="left">
-        
+        <div class="group-button">
+            <button class="button save w-50" ng-click="save()">Сохранить</button>
+            <button class="button w-50" ng-click="close()">Закрыть</button>
+        </div>
         <pWindow
             class="pWindow tools"
             pwtitle="{{params.pwindow.tools.title}}"
@@ -48,7 +51,7 @@
             class="pWindow structure"
             pwtitle="Структура"
             >
-            <ul class="tree" >
+            <ul class="tree">
                 <treeitem level="1" class="tree-item level-0 type-page" ulink="kp.json[{{$index}}]" content="item" ng-repeat="item in kp.json" parent="kp.json" index="$index"></treeitem>
             </ul>
         </pWindow>
@@ -74,12 +77,14 @@
 
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.date_status}}:</label>
-                <span class="val"><input ng-model="kp.date_status" name="date_status" type="datetime"></span>
+                <span class="val"><input ng-model="kp.date_status" ui-date-format="yy-mm-dd" ui-date="dateOptions"></span>
             </div>
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.date_finish}}:</label>
-                <span class="val"><input ng-model="kp.date_finish" name="date_finish" type="datetime"></span>
+                <span class="val"><input ng-model="kp.date_finish" ui-date-format="yy-mm-dd" ui-date="dateOptions" ></span>
             </div>
+
+            <div class="hr"></div>
 
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.u_id_create}}:</label>
@@ -87,7 +92,7 @@
             </div>
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.date_create}}:</label>
-                <span class="val">{{kp.date_create}}</span>
+                <span class="val">{{kp.date_create | normalDate}}</span>
             </div>
 
             <div class="prop">
@@ -96,8 +101,10 @@
             </div>
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.date_edit}}:</label>
-                <span class="val">{{kp.date_edit}}</span>
+                <span class="val">{{kp.date_edit | normalDate}}</span>
             </div>
+
+            <div class="hr"></div>
 
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.auditor_id}}:</label>
@@ -111,7 +118,7 @@
             </div>
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.auditor_date_status}}:</label>
-                <span class="val">{{kp.auditor_date_status}}</span>
+                <span class="val">{{kp.auditor_date_status | normalDate}}</span>
             </div>
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.auditor_comment}}:</label>

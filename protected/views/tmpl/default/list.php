@@ -1,3 +1,6 @@
+<div class="list-but-panel">
+    <button ng-click="create()" class="button save">Создать</button>
+</div>
 <div class="list-kp">
     <div class="sorter">
         <div ng_repeat="row in rowList" class="{{row.val}}">
@@ -54,5 +57,8 @@
             </div>
         </div>
 
+        <div class="trash">
+            <button class="button trash" title="Удалить" ng-click="trash(kp.id, $index)"></button>
+        </div>
     </div>
 </div>

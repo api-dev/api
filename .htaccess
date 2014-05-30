@@ -27,10 +27,17 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php
 
 <Limit POST>
+SetEnvIf Request_URI "^/(us|tr|kp)" NO_AUTH
+
 AuthType Basic  
 AuthName "Sorry, access denied."
 AuthUserFile  /var/www/vhosts/lbr.ru/httpdocs/.htpasswd  
 require valid-user
+
+Order allow,deny
+Allow from all
+Deny from env=NO_AUTH
+Satisfy any
 </Limit>
 
 <Limit GET>
