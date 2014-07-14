@@ -71,12 +71,8 @@ class TrController extends Controller {
         
         if($tr) {
             return $this->result('Перевозка участвует в торгах. Изменение невозможно.');
-        } else return $this->result('Тест'); //Yii::log(' test ------- No', 'info');
-                /*****/
-        
-        $d = $request['data'];
-        Yii::log(' test for date_close333 = '.$d['date_close'], 'info');
-        /****/
+        } else return $this->result('Тест');
+
         //if (!empty($tr->rates))
         //    return $this->result(' Перевозка участвует в торгах. Изменение невозможно.');
 
