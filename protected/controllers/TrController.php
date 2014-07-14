@@ -69,9 +69,9 @@ class TrController extends Controller {
         $tr = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
         Yii::log(' test ------- '.$tr->id, 'info');
         
-        if($tr) {
-            return $this->result('Перевозка участвует в торгах. Изменение невозможно.');
-        } else return $this->result('Тест');
+        //if($tr) {
+            //return $this->result('Перевозка участвует в торгах. Изменение невозможно.');
+        //} else return $this->result('Тест');
 
         //if (!empty($tr->rates))
         //    return $this->result(' Перевозка участвует в торгах. Изменение невозможно.');
