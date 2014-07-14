@@ -7,6 +7,11 @@ class TrController extends Controller {
         $get = filter_input_array(INPUT_GET);
         $request = $post ? array_merge_recursive($post, $get) : $get;
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
+        /*****/
+        Yii::log(' test for date_close333 = '.$d['date_close'], 'info');
+        $d = $request['data'];
+        
+        /****/
         if (method_exists($this, $method)) {
             $this->$method($request);
         } else
@@ -182,8 +187,8 @@ class TrController extends Controller {
         elseif ($data[type] == Transport::RUS_TRANSPORT)
             $data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_from]) - ($app->params['timeToCloseReg'] * 60 * 60));
         */
-        Yii::log(' test for date_close = '.$data[date_close], 'info');
-        $data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_close]));
+        //Yii::log(' test for date_close = '.$data[date_close], 'info');
+        //$data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_close]));
         return $data;
     }
 
