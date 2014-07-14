@@ -7,11 +7,7 @@ class TrController extends Controller {
         $get = filter_input_array(INPUT_GET);
         $request = $post ? array_merge_recursive($post, $get) : $get;
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
-        /*****/
-        
-        $d = $request['data'];
-        Yii::log(' test for date_close333 = '.$d['date_close'], 'info');
-        /****/
+
         if (method_exists($this, $method)) {
             $this->$method($request);
         } else
@@ -71,13 +67,16 @@ class TrController extends Controller {
 
     private function setOneTransport($data) {
         $tr = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
-        if(!empty($tr))
-            return $this->result(' Перевозка участвует в торгах. Изменение невозможно.');
-        //$rates = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
-
-        //if (!empty($tr->rates))
-            //return $this->result(' Перевозка участвует в торгах. Изменение невозможно.');
+        Yii::log(' test ------- '.$tr->id, 'info');
         
+        if($tr) {
+            return $this->result('Перевозка участвует в торгах. Изменение невозможно.');
+        } else return $this->result('Тест'); //Yii::log(' test ------- No', 'info');
+                /*****/
+        
+        $d = $request['data'];
+        Yii::log(' test for date_close333 = '.$d['date_close'], 'info');
+        /****/
         //if (!empty($tr->rates))
         //    return $this->result(' Перевозка участвует в торгах. Изменение невозможно.');
 
