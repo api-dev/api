@@ -176,7 +176,8 @@ class TrController extends Controller {
         $data[new_transport] = 1;
         $data[status] = 1;
         $data[date_published] = date('Y-m-d H:i:s');
-        /*if ($data[type] == Transport::INTER_TRANSPORT)
+        /*
+        if ($data[type] == Transport::INTER_TRANSPORT)
             $data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_from]) - ($app->params['timeToCloseInter'] * 60 * 60));
         elseif ($data[type] == Transport::RUS_TRANSPORT)
             $data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_from]) - ($app->params['timeToCloseReg'] * 60 * 60));
