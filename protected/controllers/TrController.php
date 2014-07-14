@@ -181,6 +181,7 @@ class TrController extends Controller {
         elseif ($data[type] == Transport::RUS_TRANSPORT)
             $data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_from]) - ($app->params['timeToCloseReg'] * 60 * 60));
         */
+        Yii::log(' test for date_close = '.$data[date_close], 'info');
         $data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_close]));
         return $data;
     }
