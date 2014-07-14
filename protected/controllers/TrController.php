@@ -153,7 +153,7 @@ class TrController extends Controller {
                 $method = 'addDefault' . $model_name . 'Collum';
                 $attribute = $this->$method($attribute);
             }
-
+            Yii::log(' test for date_close2 = '.$attribute['date_close'], 'info');
             foreach ($model as $name => $v) {
                 if (isset($attribute[$name]) || !empty($attribute[$name]))
                     $model->$name = $attribute[$name];
