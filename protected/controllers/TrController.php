@@ -158,6 +158,7 @@ class TrController extends Controller {
                 if (isset($attribute[$name]) || !empty($attribute[$name]))
                     $model->$name = $attribute[$name];
             }
+            
             if ($model->validate() && $model->save()) {
                 $transaction->commit();
                 return $model->id;
@@ -179,7 +180,8 @@ class TrController extends Controller {
             $data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_from]) - ($app->params['timeToCloseInter'] * 60 * 60));
         elseif ($data[type] == Transport::RUS_TRANSPORT)
             $data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_from]) - ($app->params['timeToCloseReg'] * 60 * 60));
-*/
+        */
+        $data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_close]));
         return $data;
     }
 
