@@ -71,9 +71,15 @@ class TrController extends Controller {
 
     private function setOneTransport($data) {
         $tr = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
-
-        if (!empty($tr->rates))
+        if(!empty($tr))
             return $this->result(' Перевозка участвует в торгах. Изменение невозможно.');
+        //$rates = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
+
+        //if (!empty($tr->rates))
+            //return $this->result(' Перевозка участвует в торгах. Изменение невозможно.');
+        
+        //if (!empty($tr->rates))
+        //    return $this->result(' Перевозка участвует в торгах. Изменение невозможно.');
 
         $id = $this->setOneItem('Transport', $data, 't_id');
 
@@ -83,7 +89,6 @@ class TrController extends Controller {
     }
 
     private function setInterPoint($id, $point) {
-
         if (isset($id) && is_array($point) && !empty($point)) {
             TransportInterPoint::model()->deleteAll('t_id=:tid', array(':tid' => $id));
             foreach ($point as $i => $p) {
