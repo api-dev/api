@@ -8,9 +8,9 @@ class TrController extends Controller {
         $request = $post ? array_merge_recursive($post, $get) : $get;
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
         /*****/
-        Yii::log(' test for date_close333 = '.$d['date_close'], 'info');
-        $d = $request['data'];
         
+        $d = $request['data'];
+        Yii::log(' test for date_close333 = '.$d['date_close'], 'info');
         /****/
         if (method_exists($this, $method)) {
             $this->$method($request);
