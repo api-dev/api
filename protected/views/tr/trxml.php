@@ -6,6 +6,7 @@ foreach ($data as $tr):
         $echo .= '<status>'.$tr[status].'</status>';
         $echo .= '<datepublished>'.$tr[date_published].'</datepublished>';
         $echo .= '<dateclose>'.$tr[date_close].'</dateclose>';
+        $echo .= '<editstatus>'.$tr[edit_status].'</editstatus>';
         if($tr[status]=='0')
         {
             $rate = Rate::model()->findByPk($tr[rate_id]);
