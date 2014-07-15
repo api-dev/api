@@ -67,11 +67,13 @@ class TrController extends Controller {
 
     private function setOneTransport($data) {
         $tr = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
-        Yii::log(' test ------- '.$tr->id, 'info');
+        //Yii::log(' test ------- '.$tr->id, 'info');
         
-        //if($tr) {
-            //return $this->result('Перевозка участвует в торгах. Изменение невозможно.');
-        //} else return $this->result('Тест');
+        if(!empty($tr)) {
+            Yii::log(' eeee ---------- exists ', 'info');
+            
+            return $this->result('Перевозка участвует в торгах. Изменение невозможно.');
+        } else Yii::log(' eeee ---------- no ', 'info');
 
         //if (!empty($tr->rates))
         //    return $this->result(' Перевозка участвует в торгах. Изменение невозможно.');
@@ -181,6 +183,7 @@ class TrController extends Controller {
         $data[new_transport] = 1;
         $data[status] = 1;
         $data[date_published] = date('Y-m-d H:i:s');
+        
         /*
         if ($data[type] == Transport::INTER_TRANSPORT)
             $data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_from]) - ($app->params['timeToCloseInter'] * 60 * 60));
