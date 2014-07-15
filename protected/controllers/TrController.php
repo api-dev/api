@@ -67,13 +67,11 @@ class TrController extends Controller {
 
     private function setOneTransport($data) {
         $tr = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
-        //Yii::log(' test ------- '.$tr->id, 'info');
-        
         if(!empty($tr)) {
-            Yii::log(' eeee ---------- exists ', 'info');
-            
+            $tr->edit_status = 'Перевозка участвует в торгах. Изменение невозможно.';
+            $tr->save();
             return $this->result('Перевозка участвует в торгах. Изменение невозможно.');
-        } else Yii::log(' eeee ---------- no ', 'info');
+        }
 
         //if (!empty($tr->rates))
         //    return $this->result(' Перевозка участвует в торгах. Изменение невозможно.');
