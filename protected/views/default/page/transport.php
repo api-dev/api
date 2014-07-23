@@ -19,6 +19,7 @@
                     <li><span class="param">currency</span> <span class="type">(integer)</span> <span class="info">Валюта. 0 - рубли(руб), 1 - доллары($), 2 - евро(€)</span> </li>
                     <li><span class="param">location_from</span> <span class="type">(string)</span> <span class="info">Место загрузки</span> </li>
                     <li><span class="param">location_to</span> <span class="type">(string)</span> <span class="info">Место разгрузки</span> </li>
+                    <li><span class="param">date_close</span> <span class="type">(date)</span> <span class="info">Дата и время закрытия заявки. Формат - YYYY-MM-DD H:i:s</span> </li>
                     <li><span class="param">date_from</span> <span class="type">(date)</span> <span class="info">Дата загрузки. Формат - YYYY-MM-DD</span> </li>
                     <li><span class="param">date_to</span> <span class="type">(date)</span> <span class="info">Дата разгрузки. Формат - YYYY-MM-DD</span> </li>
                     <li><span class="param">auto_info</span> <span class="type">(string)</span> <span class="info">Информация об автомобиле</span> </li>
