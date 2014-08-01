@@ -1,11 +1,26 @@
 <?php
-/*$echo = '<?xml version="1.0" encoding="UTF-8" ?>';
+$echo = '<?xml version="1.0" encoding="UTF-8" ?>';
 $echo .= '<data count="'.  count($data).'">';
 foreach ($data as $tr):
+    $ratesCount = Rate::model()->countByAttributes(array(
+        'transport_id'=> $tr[id]
+    ));
+    $users = Yii::app()->db->createCommand(array(
+        'select'   => 'user_id',
+        'distinct' => 'true',
+        'from'     => 'rate',
+        'where'    => 'transport_id = ' . $tr[id],
+    ))->queryAll();
+    $membersCount = count($users);
+    
     $echo .= '<transport t_id="'.$tr[t_id].'">';
         $echo .= '<status>'.$tr[status].'</status>';
         $echo .= '<datepublished>'.$tr[date_published].'</datepublished>';
         $echo .= '<dateclose>'.$tr[date_close].'</dateclose>';
+        $echo .= '<editstatus>'.$tr[edit_status].'</editstatus>';
+        $echo .= '<startrate>'.$tr[start_rate].'</startrate>';
+        $echo .= '<ratescount>'.$ratesCount.'</ratescount>';
+        $echo .= '<memberscount>'.$membersCount.'</memberscount>';
         if($tr[status]=='0')
         {
             $rate = Rate::model()->findByPk($tr[rate_id]);
@@ -28,4 +43,4 @@ foreach ($data as $tr):
     $echo .= '</transport>';
 endforeach;
 $echo .= '</data>';
-echo $echo;*/
+echo $echo;
