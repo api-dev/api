@@ -218,7 +218,7 @@
             <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>statistics.</b></li>
         </ul>
         <div class="h2">Примеры:</div>
-        Пример вернет xml-файл с информацией обо всех перевозках
+        Пример вернет xml-файл с информацией о всех архивных перевозках
         <pre style='font-size: 11px;'>
             action = 'statistics'
         </pre>
