@@ -249,6 +249,26 @@ class TrController extends Controller {
 
         $this->renderPartial('trxml', array('data' => $tr));
     }
+    
+    private function getStatistics() {
+        /*
+        $data = $request['data'];
+        if (!$data || empty($data))
+            return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
+
+        $in = array();
+        foreach ($data as $item)
+            array_push($in, $item[t_id]);
+
+        $tr = Yii::app()->db_exch->createCommand()
+                ->select('*')
+                ->from('transport')
+                ->where(array('in', 't_id', $in))
+                ->queryAll();
+
+        $this->renderPartial('trxml', array('data' => $tr));
+        */
+    }
 
     private function result($text) {
         $this->renderPartial('index', array('text' => $text));
