@@ -17,7 +17,7 @@ html, body
     border: 0;
     list-style: none;
 }
-h1, h2, h3, h4, h5, h6
+h1, h2, h3, h4, h5, h6, h4 > a
 {
     font-family: Arial;
     font-weight: 900;
@@ -116,7 +116,7 @@ a, a:link, a:active, a:visited
     list-style: none;
     padding-left: 1em;
 }
-.item .text .param
+.item .text .param, p.list
 {
     font-weight: bold;
 }
@@ -161,11 +161,14 @@ a, a:link, a:active, a:visited
 {
     width: 82%
 }
-.item h4
+.item h4, .item h4 > a
 {
     padding: 10px 20px;
     background: #5B5A50;
     color: white;
+}
+.item h4 > a{
+    padding: 0;
 }
 .footer
 {
@@ -208,4 +211,10 @@ a, a:link, a:active, a:visited
 .example p
 {
     margin: 10px 0;
+}
+
+.api-tr-list a{
+    display: block;
+    margin-left: 30px;
+    text-decoration: none;
 }
