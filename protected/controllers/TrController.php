@@ -67,6 +67,7 @@ class TrController extends Controller {
 
     private function setOneTransport($data) {
         $tr = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
+        
         if(!empty($tr)) {
             $tr->edit_status = 'Перевозка участвует в торгах. Изменение невозможно.';
             $tr->save();
