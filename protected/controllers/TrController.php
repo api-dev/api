@@ -233,7 +233,8 @@ class TrController extends Controller {
 
     /* -------Start-GET-block-------- */
 
-    private function getTransport($request) {
+    private function getTransport($request) 
+    {
         $data = $request['data'];
         if (!$data || empty($data))
             return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
@@ -251,15 +252,17 @@ class TrController extends Controller {
         $this->renderPartial('trxml', array('data' => $tr));
     }
     
-    private function getStatistics() 
+    //public function actionStat()
+    private function getStatistics()
     {
         $tr = Yii::app()->db_exch->createCommand()
-                ->select('*')
-                ->from('transport')
-                ->queryAll();
+            ->select('*')
+            ->from('transport')
+            ->where('status = 0')
+            ->queryAll()
+        ;
 
         $this->renderPartial('statisticsxml', array('data' => $tr));
-        
     }
 
     private function result($text) {
