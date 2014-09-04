@@ -105,6 +105,8 @@ class TrController extends Controller {
 
     private function setOneUser($data) {
         $id = $this->setOneItem('TrUser', $data, 'inn');
+        Yii::log('====== '.$data['email'], 'info');
+        Yii::log('====== '.$data['persons']['email'], 'info');
         if ($id) {
             if ($data['persons'])
                 $this->setContactPersons((int) $id, $data['persons']);
