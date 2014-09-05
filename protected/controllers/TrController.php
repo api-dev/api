@@ -105,8 +105,7 @@ class TrController extends Controller {
 
     private function setOneUser($data) {
         $id = $this->setOneItem('TrUser', $data, 'inn');
-        Yii::log('====== '.$data['email'], 'info');
-        Yii::log('====== '.$data['persons']['email'], 'info');
+        Yii::log('====== inn = '.$data['inn'].'; email = '.$data['email'].'; persons_email = '.$data['persons'][0]['email'], 'info');
         if ($id) {
             if ($data['persons'])
                 $this->setContactPersons((int) $id, $data['persons']);
@@ -161,7 +160,7 @@ class TrController extends Controller {
                 $method = 'addDefault' . $model_name . 'Collum';
                 $attribute = $this->$method($attribute);
             }
-            Yii::log(' test for date_close2 = '.$attribute['date_close'], 'info');
+            
             foreach ($model as $name => $v) {
                 if (isset($attribute[$name]) || !empty($attribute[$name]))
                     $model->$name = $attribute[$name];
