@@ -7,7 +7,7 @@ class TrController extends Controller {
         $get = filter_input_array(INPUT_GET);
         $request = $post ? array_merge_recursive($post, $get) : $get;
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
-
+        Yii::log('====== method = '.$method, 'info');
         if (method_exists($this, $method)) {
             $this->$method($request);
         } else
