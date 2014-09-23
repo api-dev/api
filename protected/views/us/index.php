@@ -9,12 +9,12 @@ if(is_array($text))
                 Yii::log($m, 'info');
                 echo $m;
             endforeach;
-        }else{
+        } else {
             Yii::log($e[0], 'info');
             echo $e[0];
         }
     }
-}elseif($text){
+} elseif($text) {
     Yii::log($text, 'info');
     echo $text.'; ';
 }
