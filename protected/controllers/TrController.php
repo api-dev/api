@@ -7,7 +7,6 @@ class TrController extends Controller {
         $get = filter_input_array(INPUT_GET);
         $request = $post ? array_merge_recursive($post, $get) : $get;
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
-        Yii::log('====== method = '.$method, 'info');
         if (method_exists($this, $method)) {
             $this->$method($request);
         } else
@@ -105,7 +104,6 @@ class TrController extends Controller {
 
     private function setOneUser($data) {
         $id = $this->setOneItem('TrUser', $data, 'inn');
-        Yii::log('====== inn = '.$data['inn'].'; email = '.$data['email'].'; persons_email = '.$data['persons'][0]['email'], 'info');
         if ($id) {
             if ($data['persons'])
                 $this->setContactPersons((int) $id, $data['persons']);
