@@ -69,23 +69,22 @@ class TrController extends Controller {
 
     private function setOneTransport($data) {
         $tr = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
-        Yii::log('Обработка перевозки с t_id = '.$data['t_id'], 'info');
+        Yii::log(' Выгрузка перевозки с t_id = '.$data['t_id'], 'info');
         Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
         Yii::log('(входящее) date_to ='.$data['date_to'], 'info');
         Yii::log('(входящее) date_close ='.$data['date_close'], 'info');
         
-        /*if(!empty($tr)) {
+        if(!empty($tr)) {
             $tr->edit_status = 'Перевозка участвует в торгах. Изменение невозможно.';
             $tr->save();
             return $this->result('Перевозка участвует в торгах. Изменение невозможно.');
-        } else {*/
-
+        } else {
             $id = $this->setOneItem('Transport', $data, 't_id');
 
             if ($id && $data['points']) {
                 $this->setInterPoint((int) $id, $data['points']);
             }
-        //}
+        }
     }
 
     private function setInterPoint($id, $point) {
