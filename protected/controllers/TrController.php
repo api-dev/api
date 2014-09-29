@@ -53,7 +53,7 @@ class TrController extends Controller {
 
         $data = $request['data'];
         if (!$data || empty($data)){
-            if($method_name == 'Transport') $label = '(t_id = '.$data['t_id'].')';
+            if($method_name == 'Transport') $label = '(t_id = '.$data[0]['t_id'].')';
             return $this->result(' Ошибка. Нет данных. Попробуйте еще раз '.$label);
         }
 
@@ -65,7 +65,7 @@ class TrController extends Controller {
             endforeach;
         }
         
-        if($method_name == 'Transport') $label = '(t_id = '.$data['t_id'].')';
+        if($method_name == 'Transport') $label = '(t_id = '.$data[0]['t_id'].')';
         return $this->result('Выгрузка закончена '.$label);
     }
 
