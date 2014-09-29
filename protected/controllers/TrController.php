@@ -73,20 +73,19 @@ class TrController extends Controller {
         Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
         Yii::log('(входящее) date_to ='.$data['date_to'], 'info');
         Yii::log('(входящее) date_close ='.$data['date_close'], 'info');
-        if(!empty($tr)) {
+        
+        /*if(!empty($tr)) {
             $tr->edit_status = 'Перевозка участвует в торгах. Изменение невозможно.';
             $tr->save();
             return $this->result('Перевозка участвует в торгах. Изменение невозможно.');
-        }
+        } else {*/
 
-        //if (!empty($tr->rates))
-        //    return $this->result(' Перевозка участвует в торгах. Изменение невозможно.');
+            $id = $this->setOneItem('Transport', $data, 't_id');
 
-        $id = $this->setOneItem('Transport', $data, 't_id');
-
-        if ($id && $data['points']) {
-            $this->setInterPoint((int) $id, $data['points']);
-        }
+            if ($id && $data['points']) {
+                $this->setInterPoint((int) $id, $data['points']);
+            }
+        //}
     }
 
     private function setInterPoint($id, $point) {
