@@ -46,15 +46,13 @@ class TrController extends Controller {
     }
 
     private function setItems($request, $method_name, $pk) {
-        $label = '';
         $method = 'setOne' . $method_name;
         if (!method_exists($this, $method))
-            return $this->result(' Системная ошибка. Метод не найден.');
+            return $this->result(' Системная ошибка. Метод "'.$method.'" не найден.');
 
         $data = $request['data'];
         if (!$data || empty($data)){
-            if($method_name == 'Transport') $label = '(t_id = '.$data['t_id'].')';
-            return $this->result(' Ошибка. Нет данных. Попробуйте еще раз '.$label);
+            return $this->result(' Ошибка. Нет данных при вызове метода "'.$method.'". Попробуйте еще раз.');
         }
 
         if (isset($data[$pk])) {
@@ -65,8 +63,7 @@ class TrController extends Controller {
             endforeach;
         }
         
-        if($method_name == 'Transport') $label = '(t_id = '.$data['t_id'].')';
-        return $this->result('Выгрузка закончена '.$label);
+        return $this->result('Выгрузка закончена.');
     }
 
     private function setOneTransport($data) {
