@@ -1,4 +1,3 @@
-<body>
 <div ng-include="'/tmpl?dir=default&f=templates'"></div>
 <div class="pPanel">
     <div class="onePanel" position="left">
@@ -9,8 +8,8 @@
         <pWindow
             class="pWindow tools"
             pwtitle="{{params.pwindow.tools.title}}"
-            ng-show="print">
-            <label ng-repeat="(tkey, tdata) in params.pwindow.tools.data" class="one-tool {{tdata.type}}" ng-class="{'select':activeTool === tkey}">
+            >
+            <label ng-repeat="(tkey, tdata) in params.pwindow.tools.data" class="one-tool {{tdata.type}}" ng-class="{'select':activeTool===tkey}">
                 <input
                     type="radio" 
                     name="tools"
@@ -22,21 +21,17 @@
                 {{tdata.title}}
             </label>
         </pWindow>
-        <div class="group-button">
-            <button class="button w-50" ng-click="switch('p');" ng-class="{active:print}">Для печати</button>
-            <button class="button w-50 {{style_e}}" ng-click="switch('e');" ng-class="{active:!print}">Для email</button>
-        </div>
+        
     </div>
     <div id="center" class="onePanel" position="center">
-        <page ng-repeat="(i, page) in kp.json" link="{{i}}" content="page" class="cursor-{{cursorClass}}" ng-show="print"></page>
-        <div ng-bind-html="codehtml" ng-show="!print"></div>
+        <page ng-repeat="(i, page) in kp.json" link="{{i}}" content="page" class="cursor-{{cursorClass}}"></page>
     </div>
 
     <div class="onePanel" position="right" style="overflow: hidden;">
         <pWindow
             class="pWindow"
             pwtitle="{{params.pwindow.itemCSS.title}}"
-            ng-show="print">
+            >
             <ul class="activeCss">
                 <li ng-repeat="(key, prop) in activeCss.style">
                     <label for="prop-{{key}}">{{key}}:</label>
@@ -48,14 +43,14 @@
         <pWindow
             class="pWindow"
             pwtitle="Основные параметры"
-            ng-show="print">
+            >
             <div ng-include="activeContentUrl()"></div>
         </pWindow>
 
         <pWindow
             class="pWindow structure"
             pwtitle="Структура"
-            ng-show="print">
+            >
             <ul class="tree">
                 <treeitem level="1" class="tree-item level-0 type-page" ulink="kp.json[{{$index}}]" content="item" ng-repeat="item in kp.json" parent="kp.json" index="$index"></treeitem>
             </ul>
@@ -97,7 +92,7 @@
             </div>
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.date_create}}:</label>
-                <span class="val">{{kp.date_create| normalDate}}</span>
+                <span class="val">{{kp.date_create | normalDate}}</span>
             </div>
 
             <div class="prop">
@@ -106,7 +101,7 @@
             </div>
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.date_edit}}:</label>
-                <span class="val">{{kp.date_edit| normalDate}}</span>
+                <span class="val">{{kp.date_edit | normalDate}}</span>
             </div>
 
             <div class="hr"></div>
@@ -123,7 +118,7 @@
             </div>
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.auditor_date_status}}:</label>
-                <span class="val">{{kp.auditor_date_status| normalDate}}</span>
+                <span class="val">{{kp.auditor_date_status | normalDate}}</span>
             </div>
             <div class="prop">
                 <label class="key">{{params.pwindow.pwKpProperty.data.auditor_comment}}:</label>
