@@ -89,7 +89,7 @@ function jsonToHTML(json) {
             ;
 
             this.html = this.html.replace(regexp_cont, templ);
-            console.log(this.html);
+            
             return this;
 
         },
