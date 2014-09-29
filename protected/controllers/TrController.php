@@ -51,6 +51,7 @@ class TrController extends Controller {
             return $this->result(' Системная ошибка. Метод "'.$method.'" не найден.');
 
         $data = $request['data'];
+
         if (!$data || empty($data)){
             return $this->result(' Ошибка. Нет данных при вызове метода "'.$method.'". Попробуйте еще раз.');
         }
