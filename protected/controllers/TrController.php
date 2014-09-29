@@ -70,9 +70,9 @@ class TrController extends Controller {
     private function setOneTransport($data) {
         $tr = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
         Yii::log('Обработка перевозки с t_id = '.$data['t_id'], 'info');
-        Yii::log('date_from ='.$data['date_from'], 'info');
-        Yii::log('date_to ='.$data['date_to'], 'info');
-        Yii::log('date_close ='.$data['date_close'], 'info');
+        Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
+        Yii::log('(входящее) date_to ='.$data['date_to'], 'info');
+        Yii::log('(входящее) date_close ='.$data['date_close'], 'info');
         if(!empty($tr)) {
             $tr->edit_status = 'Перевозка участвует в торгах. Изменение невозможно.';
             $tr->save();
@@ -98,6 +98,7 @@ class TrController extends Controller {
                     $new = new TransportInterPoint;
                     $new->t_id = $id;
                     $new->point = $p['point'];
+                    Yii::log('inner_point_name = '.$new->point, 'info');
                     $new->date = date('Y-m-d H:i:s', strtotime($p['date'] . ' 08:00:00'));
                     Yii::log('inner_point = '.$new->date, 'info');
                     $new->sort = $i;
@@ -167,8 +168,10 @@ class TrController extends Controller {
             }
             
             foreach ($model as $name => $v) {
-                if (isset($attribute[$name]) || !empty($attribute[$name]))
+                if (isset($attribute[$name]) || !empty($attribute[$name])){
                     $model->$name = $attribute[$name];
+                    Yii::log($model->$name.' = '.$attribute[$name], 'info');
+                }
             }
             
             if ($model->validate() && $model->save()) {
