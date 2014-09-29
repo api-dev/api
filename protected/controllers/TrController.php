@@ -53,7 +53,7 @@ class TrController extends Controller {
 
         $data = $request['data'];
         if (!$data || empty($data)){
-            if($method_name == 'Transport') $label = '(t_id = '.$data[0]['t_id'].')';
+            if($method_name == 'Transport') $label = '(t_id = '.$data['t_id'].')';
             return $this->result(' Ошибка. Нет данных. Попробуйте еще раз '.$label);
         }
 
@@ -65,13 +65,16 @@ class TrController extends Controller {
             endforeach;
         }
         
-        if($method_name == 'Transport') $label = '(t_id = '.$data[0]['t_id'].')';
+        if($method_name == 'Transport') $label = '(t_id = '.$data['t_id'].')';
         return $this->result('Выгрузка закончена '.$label);
     }
 
     private function setOneTransport($data) {
         $tr = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
-        
+        Yii::log('Обработка перевозки с t_id = '.$data['t_id'], 'info');
+        Yii::log('date_from ='.$data['date_from'], 'info');
+        Yii::log('date_to ='.$data['date_to'], 'info');
+        Yii::log('date_close ='.$data['date_close'], 'info');
         if(!empty($tr)) {
             $tr->edit_status = 'Перевозка участвует в торгах. Изменение невозможно.';
             $tr->save();
@@ -98,6 +101,7 @@ class TrController extends Controller {
                     $new->t_id = $id;
                     $new->point = $p['point'];
                     $new->date = date('Y-m-d H:i:s', strtotime($p['date'] . ' 08:00:00'));
+                    Yii::log('inner_point = '.$new->date, 'info');
                     $new->sort = $i;
 
                     if (!$new->validate() || !$new->save())
