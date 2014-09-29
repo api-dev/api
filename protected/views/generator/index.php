@@ -2,6 +2,7 @@
 <?php
 $app = Yii::app();
 ?>
+<!--  -->
 <html ng-app="gApp">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -23,9 +24,8 @@ $app = Yii::app();
     <script src="<?php echo $app->request->baseUrl; ?>/js/angularjs/angular-1.2.9/angular-date.js"></script>
 
     <script src="<?php echo $app->request->baseUrl; ?>/js/generator.js"></script>
-    <script src="<?php echo $app->request->baseUrl; ?>/js/jsonToHTML.js"></script>
 </head>
-<body class="{{bodyClass}}" ng-controller="bodyStyleCtrl">
+<body class="{{bodyClass}}" ng-controller="bodyStyleCtrl">    
 <div class="panel">
     <div style="float: left"></div>
     <div class="logout"><a href="http://auth.<?php echo $app->params['host'] ?>/logout/">Выход</a></div>
