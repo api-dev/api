@@ -7,6 +7,9 @@ class TrController extends Controller {
         $get = filter_input_array(INPUT_GET);
         $request = $post ? array_merge_recursive($post, $get) : $get;
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
+        foreach($request['data'] as $k=>$v){
+            Yii::log('(input) '.$k.' = '.$v, 'info');
+        }
         if (method_exists($this, $method)) {
             $this->$method($request);
         } else
@@ -48,12 +51,12 @@ class TrController extends Controller {
     private function setItems($request, $method_name, $pk) {
         $method = 'setOne' . $method_name;
         if (!method_exists($this, $method))
-            return $this->result(' Системная ошибка. Метод "'.$method.'" не найден.');
+            return $this->result('Системная ошибка. Метод "'.$method.'" не найден.');
 
         $data = $request['data'];
 
         if (!$data || empty($data)){
-            return $this->result(' Ошибка. Нет данных при вызове метода "'.$method.'". Попробуйте еще раз.');
+            return $this->result('Ошибка. Нет данных при вызове метода "'.$method.'". Попробуйте еще раз.');
         }
 
         if (isset($data[$pk])) {
