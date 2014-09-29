@@ -46,16 +46,20 @@ class TrController extends Controller {
     }
 
     private function setItems($request, $method_name, $pk) {
-        $label = '';
         $method = 'setOne' . $method_name;
         if (!method_exists($this, $method))
             return $this->result(' Системная ошибка. Метод не найден.');
 
         $data = $request['data'];
+<<<<<<< .merge_file_a02856
         if (!$data || empty($data)){
             if($method_name == 'Transport') $label = '(t_id = '.$data['t_id'].')';
             return $this->result(' Ошибка. Нет данных. Попробуйте еще раз '.$label);
         }
+=======
+        if (!$data || empty($data))
+            return $this->result(' Ошибка. Нет данных. Попробуйте еще раз.');
+>>>>>>> .merge_file_a06892
 
         if (isset($data[$pk])) {
             $this->$method($data);
@@ -64,9 +68,13 @@ class TrController extends Controller {
                 $this->$method($item);
             endforeach;
         }
+<<<<<<< .merge_file_a02856
         
         if($method_name == 'Transport') $label = '(t_id = '.$data['t_id'].')';
         return $this->result('Выгрузка закончена '.$label);
+=======
+        return $this->result('Выгрузка закончена.');
+>>>>>>> .merge_file_a06892
     }
 
     private function setOneTransport($data) {

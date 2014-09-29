@@ -121,7 +121,7 @@ return array(
 
     'params' => array(
         // this is used in contact page
-        'host' => 'lbr.ru',
+        'host' => 'lbr.test',
         'adminEmail' => 'webmaster@lbr.ru',
         'timeToCloseInter' => 96,
         'timeToCloseReg' => 8,

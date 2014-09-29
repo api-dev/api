@@ -324,6 +324,7 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   display: block;
   float: left;
   width: 25%;
+    border-color: #0297CD;
 }
 .pPanel .onePanel .ppBody > * {
   margin-top: 10px;
@@ -719,10 +720,6 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   background: #60B044;
   color: white;
   border-color: #64B745;
-}
-.button.active {
-  background: grey;
-  color: white;
 }
 /*------Button-group-style-------*/
 .group-button {
