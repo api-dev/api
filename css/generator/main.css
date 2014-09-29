@@ -721,6 +721,10 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   color: white;
   border-color: #64B745;
 }
+.button.active {
+  background: grey;
+  color: white;
+}
 /*------Button-group-style-------*/
 .group-button {
   margin: 5px;

@@ -24,6 +24,7 @@ $app = Yii::app();
     <script src="<?php echo $app->request->baseUrl; ?>/js/angularjs/angular-1.2.9/angular-date.js"></script>
 
     <script src="<?php echo $app->request->baseUrl; ?>/js/generator.js"></script>
+    <script src="<?php echo $app->request->baseUrl; ?>/js/jsonToHTML.js"></script>
 </head>
 <body class="{{bodyClass}}" ng-controller="bodyStyleCtrl">    
 <div class="panel">
