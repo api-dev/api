@@ -7,37 +7,15 @@ class TrController extends Controller {
         $get = filter_input_array(INPUT_GET);
         $request = $post ? array_merge_recursive($post, $get) : $get;
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
-        foreach($request['data'] as $k=>$v){
-            Yii::log('(input) '.$k.' = '.$v, 'info');
+        foreach($request['data'] as $v){
+            foreach($v as $k=>$v2){
+                Yii::log('(input) '.$k.' = '.$v2, 'info');
+            }
         }
         if (method_exists($this, $method)) {
             $this->$method($request);
         } else
             return $this->result('Неверные параметры. Допустимые: m - set/get; action - transport/rate/user. Полученые: m=' . $request['m'] . ', action=' . $request['action']);
-    }
-
-    public function actionTest() {
-//        $get = filter_input_array(INPUT_GET);
-        $tr = Transport::model()->findByAttributes(array('id' => '13'));
-        var_dump($tr->date_from);
-        exit();
-//        if(!empty($tr->rates))
-//            echo 'Loool';
-//        else
-//            echo 'Yoooo!!!';
-//        var_dump($rate);
-        $old = date('Y-m-d H:i:s', strtotime('2014-02-28 08:00:00'));
-        $m = strtotime($old);
-        $diff = 24 * 60 * 60;
-        echo (date('Y-m-d H:i:s', $m - $diff));
-        exit();
-        $post = filter_input_array(INPUT_POST);
-        $get = filter_input_array(INPUT_GET);
-        $request = $post ? array_merge_recursive($post, $get) : $get;
-        echo '<pre>';
-        var_dump($request);
-        echo '</pre>';
-        exit();
     }
 
     private function setTransport($request) {
