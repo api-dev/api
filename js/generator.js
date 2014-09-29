@@ -261,7 +261,7 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
 
                 $scope.$apply();
             }
-
+        }
         }
 
         $scope.setRecId = function(elem)
@@ -285,13 +285,10 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
 
             return target;
         }
-<<<<<<< HEAD
+
         $scope.activeLink = '';
         $scope.onClickEvent = function (elem)
-=======
 
-        $scope.onClickEvent = function(elem)
->>>>>>> test
         {
             if (!elem)
                 return false;
@@ -447,7 +444,7 @@ gController.directive('treeitem', function($compile) {
             parent: '=',
             index: '='
         },
-<<<<<<< HEAD
+
         template: function (elem, attrs) {
             return  '<li ng-class="{active: activeLink == link}" link="{{link}}">' +
                         '<span class="icon"></span>'+
@@ -455,15 +452,7 @@ gController.directive('treeitem', function($compile) {
                         '<span class="delete" title="Удалить элемент" ng-if="(index!==\'0\' && content.type!==\'page\')" ng-click="delete(parent, index)"></span>'+
                         '<span class="up" title="Переместить вверх" ng-click="moveUp(parent, index)" ng-if="showUp(parent, index)"></span>'+
                         '<span class="down" title="Переместить вниз" ng-click="moveDown(parent, index)" ng-if="showDown(parent, index)"></span>'+
-=======
-        template: function(elem, attrs) {
-            return  '<li link="{{link}}">' +
-                    '<span class="icon"></span>' +
-                    '<input ng-model="content.title" type="text">' +
-                    '<span class="delete" title="Удалить элемент" ng-if="(index!==\'0\' && content.type!==\'page\')" ng-click="delete(parent, index)"></span>' +
-                    '<span class="up" title="Переместить вверх" ng-click="moveUp(parent, index)" ng-if="showUp(parent, index)"></span>' +
-                    '<span class="down" title="Переместить вниз" ng-click="moveDown(parent, index)" ng-if="showDown(parent, index)"></span>' +
->>>>>>> test
+
                     '</li>';
         },
         link: function(scope, element, attrs, parentCtrl) {
