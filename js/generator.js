@@ -255,13 +255,8 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
                 $scope.kp.json.push(elem);
                 $scope.$apply();
             } else if(target.content.push(elem)){
-
-
-            if (target.content.push(elem)) {
-
                 $scope.$apply();
             }
-        }
         }
 
         $scope.setRecId = function(elem)
