@@ -331,17 +331,13 @@
                     ]
                 },
                 "footer": {
-                    "type": "block",
+                    "type": "text",
                     "title": "Подвал ",
                     "style": {
                         "margin" : "0",
                         "padding" : "15px 15px 18px 20px",
                         "float": "none",
-
-                        "border" : "0",
-                        "box-shadow" : "0 0 5px rgb(150,150,150)",
-                        "border-radius" : "10px",
-
+                        
                         "opacity" : "1",
                         "z-index" : "1",
 
@@ -352,7 +348,7 @@
                     "content": [
                         {
                             "type": "string",
-                            "title": "Всю подробную информацию по заинтересовавшим Вас моделям техники, а также опыт эксплуатации и отзывы потребителей Вы сможете получить у Вашего персонального менеджера.",
+                            "title": "ИНформация",
                             "style": {
                                 "float": "left",
 
