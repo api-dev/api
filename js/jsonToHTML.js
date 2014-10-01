@@ -25,14 +25,16 @@ function jsonToHTML(json) {
                     regexp_cont = new RegExp("\{content " + obj.id + "\}", "g");
 
             for (property in obj.style) {
-                if (obj.type === "block" || "page") {
+                if ((obj.type === "block") || (obj.type === "page")) {
                    if (this.ok_properties.indexOf(property) >= 0) {
+                       
                         if ((property === "width") && (obj.type === "block") && (obj.style[property].indexOf("%") !== -1)) {
                             style += property + ":100%;";
                         }
                         else {
+                            
                             style += property + ":" + obj.style[property] + ";";
-                        }
+                       }
                  }
                    
                 }
@@ -43,7 +45,7 @@ function jsonToHTML(json) {
 
             switch (obj.type) {
                 case "page":
-                    templ = "<table width=\"800\" bgcolor=\"#eeeeee\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" style=\"border: 0; border-collapse: collapse;\">";
+                    templ = "<table width=\"800\" bgcolor=\"white\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" style=\"border: 0; border-collapse: collapse;\">";
                     for (var i = 0; i < obj.content.length; i++) {
                         templ += "<tr valign=\"top\"><td style=\"padding:0px 20px;\" width=\"" + obj.content[i].style['width'] + "\">{content " + obj.content[i].id + "}</td></tr>";
                     }
@@ -78,6 +80,9 @@ function jsonToHTML(json) {
                 case "string":
                     templ = "<p style=\"margin:0; padding: 0;" + style + "\">" + obj.content + "</p>";
                     break
+                case "string_link":
+                    templ = "<a href=\""+obj.href+"\"><p style=\"margin:0; padding: 0;" + style + "\">" + obj.content + "</p></a>";
+                    break
                 case "image":
                     img_src = obj.content.src;
                     templ = "<img src=\"" + img_src + "\" style=\"" + style + "\">";
@@ -102,6 +107,7 @@ function jsonToHTML(json) {
             }
             else {
                 return this.html;
+                console.log(this.html);
             }
 
         }
