@@ -136,21 +136,17 @@
             "title": "Шаблоны",
             "data": {
                 "page" : {
-                    "title": "Страница 2",
+                    "title": "Страница",
                     "type": "page",
-                    "style": {},
+                    "style": {
+                        "padding": "0 20px",
+                        "width": "800px"
+                        },
                     "content": [
                         {
                             "title": "Блок №2",
                             "type": "block",
-                            "style": {
-                                "background": "red",
-                                "margin": "5px 0",
-                                "padding": "5px 15px",
-                                "border-radius": "10px",
-                                "box-shadow": "0 0 5px rgb(200,200,200)",
-                                "width": "670px"
-                            },
+                            "style": {},
                             "content": []
                         }]
                     },
@@ -331,24 +327,24 @@
                     ]
                 },
                 "footer": {
-                    "type": "text",
+                    "type": "block",
                     "title": "Подвал ",
                     "style": {
                         "margin" : "0",
-                        "padding" : "15px 15px 18px 20px",
-                        "float": "none",
-                        
+                        "padding" : "15px 20px 10px 20px",
+                        "float": "none",                     
+
                         "opacity" : "1",
                         "z-index" : "1",
 
-                        "width" : "665px",
+                        "width" : "760px",
                         "height" : "auto"
 
                     },
                     "content": [
                         {
                             "type": "string",
-                            "title": "ИНформация",
+                            "title": "Информация",
                             "style": {
                                 "float": "left",
 
@@ -362,7 +358,7 @@
                                 "line-height": "normal",
                                 "letter-spacing": "normal",
                                 "text-transform" : "none",
-                                "text-align" : "center",
+                                "text-align" : "justify",
                                 "text-shadow": "none",
 
                                 "background" : "none",
@@ -372,44 +368,14 @@
                                 "opacity" : "1",
                                 "z-index" : "1",
 
-                                "width" : "470px",
+                                "width" : "760px",
                                 "height" : "auto"
                             },
-                            "content": "Ждем Вас в филиале ЛБР-АгроМаркет (Барнаул)!"
-                        },
-                        {
-                            "type": "image",
-                            "title": "Логотип",
-                            "style": {
-                                "margin" : "0",
-                                "padding" : "0",
-                                "float" : "right",
-
-                                "border-left" : "0",
-                                "border-right" : "0",
-                                "border-top" : "0",
-                                "border-bottom" : "0",
-
-                                "background" : "none",
-                                "box-shadow" : "none",
-                                "border-radius" : "0",
-
-                                "opacity" : "1",
-                                "z-index" : "1",
-
-                                "width": "192px",
-                                "height": "70px"
-                            },
                             "content": {
-                                "title": "Image title",
-                                "alt": "Image alt",
-                                "src": "http://api.lbr.ru/images/lbrlogo.png"
                             }
-                        }
+                        }                        
                     ]
-                }
-                
-                
+                }  
             }
         }
     },
@@ -430,7 +396,7 @@
                         "padding": "5px 15px",
                         "border-radius": "10px",
                         "box-shadow": "0 0 5px rgb(200,200,200)",
-                        "width": "670px"
+                        "width": "800px"
                     },
                     "content": [
                         {

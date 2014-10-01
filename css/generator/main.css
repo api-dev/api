@@ -652,8 +652,8 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
 }
 /*----------EDITOR----------*/
 .pages {
-  width: 700px;
-  height: 990px;
+  width: 800px;
+  height: 1080px;
   background: white;
   box-shadow: 0 0 5px #c8c8c8;
   margin: 5px auto;
