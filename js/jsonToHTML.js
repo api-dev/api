@@ -83,7 +83,7 @@ function jsonToHTML(json) {
                     templ = "<img src=\"" + img_src + "\" style=\"" + style + "\">";
                     break
                 case "varible":
-                    templ = "<span style=\"" + style + "\">$data['" + obj.content.substr(1,obj.content.length-1) + "'];</span>";
+                    templ = "<span style=\"" + style + "\"><?php echo " + obj.content.substr(1,obj.content.length-1) + ";?></span>";
                     break
             }
             ;
