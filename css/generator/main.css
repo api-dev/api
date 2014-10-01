@@ -471,7 +471,7 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
 .tools .one-tool.move:before {
   background-position: left -22px;
 }
-.tools .one-tool.text:before {
+.tools .one-tool.string:before {
   background-position: left -44px;
 }
 .tools .one-tool.block:before {
