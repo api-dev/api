@@ -21,22 +21,25 @@ function jsonToHTML(json) {
         replace: function(obj) {
             var style = "",
                     templ = "",
+                    width_temp = 0,
+                    width_total = 0,
                     img_src = "",
+                    regexp_number = new RegExp("^[0-9]+", ""),
                     regexp_cont = new RegExp("\{content " + obj.id + "\}", "g");
 
             for (property in obj.style) {
                 if ((obj.type === "block") || (obj.type === "page")) {
-                   if (this.ok_properties.indexOf(property) >= 0) {
-                       
+                    if (this.ok_properties.indexOf(property) >= 0) {
+
                         if ((property === "width") && (obj.type === "block") && (obj.style[property].indexOf("%") !== -1)) {
                             style += property + ":100%;";
                         }
                         else {
-                            
+
                             style += property + ":" + obj.style[property] + ";";
-                       }
-                 }
-                   
+                        }
+                    }
+
                 }
                 else {
                     style += property + ":" + obj.style[property] + ";";
@@ -53,24 +56,34 @@ function jsonToHTML(json) {
                     break
                 case "block":
                     templ = "<table cellspacing=\"0\" cellpadding=\"0\" style=\"" + style + "\"><tr valign=\"top\">";
+                    width_total = parseInt(regexp_number.exec(obj.style.width));
+                    
                     if (obj.content.length !== 0) {
                         // if contains structure of blocks
                         if (obj.content[0].type === "block") {
-                            total_size = 0;
-                            temp_size = 0;
+                            width_temp = 0;
                             for (var i = 0; i < obj.content.length; i++) {
-                                templ += "<td>{content " + obj.content[i].id + "}</td>";
+                                width_temp+= parseInt(regexp_number.exec(obj.content[i].style.width));
+                                if (width_temp <= width_total) {
+                                    templ += "<td>{content " + obj.content[i].id + "}</td>";
+                                }
+                                else{
+                                    width_temp=parseInt(regexp_number.exec(obj.content[i].style.width));
+                                    templ += "</tr></table><table cellspacing=\"0\" cellpadding=\"0\" style=\"" + style + "\"><tr valign=\"top\"><td>{content " + obj.content[i].id + "}</td>";
+                                }
                             }
                         }
                         //if contains image or text (content)
                         else {
                             
+                            templ+="<td style=\"text-align:left;\">";
                             for (var i = 0; i < obj.content.length; i++) {
-                                templ += "<td valign=\"top\" width=\""+obj.content[i].style.width+"\">{content " + obj.content[i].id + "}</td>";
+                                templ += "{content " + obj.content[i].id + "}";
                             }
-                            
+                            templ+="</td>";
+
                         }
-                        
+
                     }
                     else {
                         templ += "<td></td>";
@@ -78,23 +91,23 @@ function jsonToHTML(json) {
                     templ += "</tr></table>";
                     break
                 case "string":
-                    templ = "<p style=\"margin:0; padding: 0;" + style + "\">" + obj.content + "</p>";
+                    templ = "<span style=\"margin:0; padding: 0;" + style + "\">" + obj.content + "</span>";
                     break
                 case "string_link":
-                    templ = "<a href=\""+obj.href+"\"><p style=\"margin:0; padding: 0;" + style + "\">" + obj.content + "</p></a>";
+                    templ = "<a href=\"" + obj.href + "\"><p style=\"margin:0; padding: 0;" + style + "\">" + obj.content + "</p></a>";
                     break
                 case "image":
                     img_src = obj.content.src;
                     templ = "<img src=\"" + img_src + "\" style=\"" + style + "\">";
                     break
                 case "varible":
-                    templ = "<span style=\"" + style + "\"><?php echo " + obj.content.substr(1,obj.content.length-1) + ";?></span>";
+                    templ = "<span style=\"" + style + "\"><?php echo " + obj.content.substr(1, obj.content.length - 1) + ";?></span>";
                     break
             }
             ;
 
             this.html = this.html.replace(regexp_cont, templ);
-            
+
             return this;
 
         },
