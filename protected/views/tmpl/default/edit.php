@@ -24,7 +24,7 @@
         </pWindow>
         <div class="group-button">
             <button class="button w-50" ng-click="switch('p');" ng-class="{active:print}">Для печати</button>
-            <button class="button w-50 {{style_e}}" ng-click="switch('e');" ng-class="{active:!print}">Для email</button>
+            <button class="button w-50" ng-click="switch('e');" ng-class="{active:!print}">Для email</button>
         </div>
     </div>
     <div id="center" class="onePanel" position="center">
