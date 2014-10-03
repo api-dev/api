@@ -147,14 +147,10 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
                     $scope.codehtml = $sce.trustAsHtml($scope.kp.email);
                     console.log("html_code:" + html_code);
                     $scope.print = !$scope.print;
-                    $scope.style_p="";
-                    $scope.style_e="active";
                 }
             }
             else{
                 if (key==='p'){
-                  $scope.style_p="active";
-                  $scope.style_e="";
                   $scope.print = !$scope.print;  
                 }
             }
