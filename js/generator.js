@@ -154,17 +154,28 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
                   $scope.print = !$scope.print;  
                 }
             }
-            
-            
 
-        }
+        };
 
         $scope.cursorClass = 'default';
-        $scope.index = 7;
-
+        $scope.index = 0;
+        
         $scope.activeTool = 0;
         $scope.activeCss = {};
-
+        $scope.index=0;
+        
+        
+        $scope.findIndex=function(obj){
+            if (obj.id>$scope.index){
+                $scope.index=obj.id;
+            }
+            if ((Object.prototype.toString.call([obj.content]) === '[object Array]') && (typeof obj.content !== 'string') && (obj.content.length > 0)) {
+                for (var i = 0; i < obj.content.length; i++) {
+                    $scope.findIndex(obj.content[i]);
+                }
+            }
+        };
+        
         $scope.activeContentUrl = function() {
             var file = $scope.activeCss.type;
 
@@ -227,26 +238,32 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
         $scope.createElem = function(type, parentLink)
         {
             var target = $scope.getParentBlock(parentLink),
-                    elem, params = $scope.params.pwindow.templates.data[type];
+                    elem, json, params = $scope.params.pwindow.templates.data[type];
 
             if (!target)
                 return false;
 
             elem = angular.copy(params);
+            console.log($scope.kp.json);
+            
+            json=$scope.kp.json;
+            for (var i = 0; i < json.length; i++) {
+                $scope.findIndex(json[i]);
+            }
+            $scope.index++;
             elem.id = $scope.index;
             elem.title += elem.id;
             elem.link = target.link + '.content[' + target.content.length + ']';
 
-            if (angular.isArray(elem.content))
-                $scope.setRecId(elem);
+            if (angular.isArray(elem.content)){
+                $scope.setRecId(elem)
+            };
 
             if (target.style.width && type === "block")
             {
                 elem.style.width = (parseInt(target.style.width) - 20) + 'px';
             }
-            $scope.index++;
-
-            
+ 
             if(type==="page") {
                 $scope.kp.json.push(elem);
                 $scope.$apply();
@@ -260,8 +277,8 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
             var e;
             for (e in elem.content)
             {
-                elem.content[e].id = $scope.index;
                 $scope.index++;
+                elem.content[e].id = $scope.index;
                 if (angular.isArray(elem.content[e].content))
                     $scope.setRecId(elem.content[e]);
             }
@@ -291,6 +308,7 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
                     // Стремная реализация, eval() нужно бы заменить
                     activeCss = $scope.$eval(ulink);
 
+            
             switch (activeTool.type) {
                 case 'select':
                     $scope.activeCss = activeCss;
@@ -377,10 +395,7 @@ gController.directive('elem', function($compile) {
             return '<span ulink="{{link}}" uid="{{content.id}}">{{content.content}}</span>';
         },
         link: function(scope, element, attrs, parentCtrl) {
-
-            if (!scope.content)
-                return false;
-
+          
             switch (scope.content.type) {
                 case 'string':
                     element.html(angular.element('<span ulink="{{link}}" uid="{{content.id}}">{{content.content}}</span>'));
@@ -416,6 +431,7 @@ gController.directive('elem', function($compile) {
                 element.html('<elem ng-repeat="(i, elem) in content.content" content="elem" link="{{link}}.content[{{i}}]" ng-style="elem.style"></elem>');
                 $compile(element.contents())(scope);
             }
+            
             return false;
         }
     };
@@ -559,16 +575,7 @@ gController.directive('pPanel', function() {
     };
 });
 
-gController.directive('kpemail', function() {
-    return{
-        restrict: 'E',
-        scope: {},
-        link: function($scope, $ele, $attrs) {
 
-        }
-
-    };
-});
 
 /* Services */
 var gService = angular.module('gService', ['ngResource']);
