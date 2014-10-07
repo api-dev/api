@@ -12,7 +12,7 @@ function jsonToHTML(json) {
                 this.data[i] = json[i];
                 content += "{content " + this.data[i].id + "}";
             }
-            this.html = "<html><head></head><body style=\"margin:auto\">" + content + "</body></html>";
+            this.html = "<html><head></head><body style=\"margin:auto\;\">" + content + "</body></html>";
             for (var i = 0; i < json.length; i++) {
                 this.go(this.data[i]);
             }
@@ -48,11 +48,11 @@ function jsonToHTML(json) {
 
             switch (obj.type) {
                 case "page":
-                    templ = "<table width=\"800\" bgcolor=\"white\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" style=\"border: 0; border-collapse: collapse;\">";
+                    templ = "<table width=\"800\" bgcolor=\"#eeeeee\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" style=\"border: 0; border-collapse: collapse;\"><tr><td style=\"padding-top: 15px;\"><img src=\"http://www.lbr.ru/images/kp/default/mail-top-line.jpg\" width=\"800\" height=\"10\" style=\"border: 0; float: left;\" alt=\"Логотип ЛБР-Агромаркет\"></td></tr><tr><td><table width=\"800\" bgcolor=\"white\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" style=\"border: 0; border-collapse: collapse;\">";
                     for (var i = 0; i < obj.content.length; i++) {
                         templ += "<tr valign=\"top\"><td style=\"padding:0px 20px;\" width=\"" + obj.content[i].style['width'] + "\">{content " + obj.content[i].id + "}</td></tr>";
                     }
-                    templ += "</table>";
+                    templ += "</table></td></tr><tr><td><img src=\"http://www.lbr.ru/images/kp/default/mail-bot-line.jpg\" width=\"800\" height=\"10\" style=\"border: 0; float: left;\" alt=\"Картинки не отображаются\"></td></tr></table>";
                     break
                 case "block":
                     templ = "<table cellspacing=\"0\" cellpadding=\"0\" style=\"" + style + "\"><tr valign=\"top\">";
