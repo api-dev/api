@@ -22,6 +22,13 @@
     </ul>
 </script>
 
+<script type="text/ng-template" id="string_link.html">
+    <label class="params-label">Содержание:</label>
+    <textarea ng-model="activeCss.content" class="params-input"></textarea>
+    <label for="active-text-href" class="params-label">Cсылка:</label><br>
+    <input type="text" ng-model="activeCss.href" id="active-text-href" class="params-input">
+</script>
+
 <script type="text/ng-template" id="string.html">
     <label class="params-label">Содержание:</label>
     <textarea ng-model="activeCss.content" class="params-input"></textarea>

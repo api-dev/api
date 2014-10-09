@@ -7,37 +7,15 @@ class TrController extends Controller {
         $get = filter_input_array(INPUT_GET);
         $request = $post ? array_merge_recursive($post, $get) : $get;
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
-        foreach($request['data'] as $k=>$v){
-            Yii::log('(input) '.$k.' = '.$v, 'info');
-        }
+        /*foreach($request['data'] as $v){
+            foreach($v as $k=>$v2){
+                Yii::log('(input) '.$k.' = '.$v2, 'info');
+            }
+        }*/
         if (method_exists($this, $method)) {
             $this->$method($request);
         } else
             return $this->result('Неверные параметры. Допустимые: m - set/get; action - transport/rate/user. Полученые: m=' . $request['m'] . ', action=' . $request['action']);
-    }
-
-    public function actionTest() {
-//        $get = filter_input_array(INPUT_GET);
-        $tr = Transport::model()->findByAttributes(array('id' => '13'));
-        var_dump($tr->date_from);
-        exit();
-//        if(!empty($tr->rates))
-//            echo 'Loool';
-//        else
-//            echo 'Yoooo!!!';
-//        var_dump($rate);
-        $old = date('Y-m-d H:i:s', strtotime('2014-02-28 08:00:00'));
-        $m = strtotime($old);
-        $diff = 24 * 60 * 60;
-        echo (date('Y-m-d H:i:s', $m - $diff));
-        exit();
-        $post = filter_input_array(INPUT_POST);
-        $get = filter_input_array(INPUT_GET);
-        $request = $post ? array_merge_recursive($post, $get) : $get;
-        echo '<pre>';
-        var_dump($request);
-        echo '</pre>';
-        exit();
     }
 
     private function setTransport($request) {
@@ -60,10 +38,10 @@ class TrController extends Controller {
         }
 
         if (isset($data[$pk])) {
-            Yii::log('--- Одномерный', 'info');
+            //Yii::log('--- Одномерный', 'info');
             $this->$method($data);
         } else {
-            Yii::log('--- Многомерный', 'info');
+            //Yii::log('--- Многомерный', 'info');
             foreach ($data as $item):
                 $this->$method($item);
             endforeach;
@@ -75,9 +53,9 @@ class TrController extends Controller {
     private function setOneTransport($data) {
         $tr = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
         Yii::log('Выгрузка перевозки с t_id = '.$data['t_id'], 'info');
-        Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
+        /*Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
         Yii::log('(входящее) date_to ='.$data['date_to'], 'info');
-        Yii::log('(входящее) date_close ='.$data['date_close'], 'info');
+        Yii::log('(входящее) date_close ='.$data['date_close'], 'info');*/
         
         /*if(!empty($tr)) {
             $tr->edit_status = 'Перевозка участвует в торгах. Изменение невозможно.';
@@ -101,9 +79,9 @@ class TrController extends Controller {
                     $new = new TransportInterPoint;
                     $new->t_id = $id;
                     $new->point = $p['point'];
-                    Yii::log('inner_point_name = '.$new->point, 'info');
+                    //Yii::log('inner_point_name = '.$new->point, 'info');
                     $new->date = date('Y-m-d H:i:s', strtotime($p['date'] . ' 08:00:00'));
-                    Yii::log('inner_point = '.$new->date, 'info');
+                    //Yii::log('inner_point = '.$new->date, 'info');
                     $new->sort = $i;
 
                     if (!$new->validate() || !$new->save())
@@ -173,7 +151,7 @@ class TrController extends Controller {
             foreach ($model as $name => $v) {
                 if (isset($attribute[$name]) || !empty($attribute[$name])){
                     $model->$name = $attribute[$name];
-                    Yii::log($name.' = '.$attribute[$name], 'info');
+                    //Yii::log($name.' = '.$attribute[$name], 'info');
                 }
             }
             
