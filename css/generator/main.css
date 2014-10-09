@@ -469,22 +469,31 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   background: url("/images/generator/editor/icons_tools_sprite.png") no-repeat top left;
 }
 .tools .one-tool.move:before {
-  background-position: left -22px;
+  background-position: left -25px;
 }
 .tools .one-tool.string:before {
-  background-position: left -44px;
+  background-position: left -47px;
 }
 .tools .one-tool.block:before {
-  background-position: left -65px;
+  background-position: left -69px;
 }
 .tools .one-tool.image:before {
-  background-position: left -87px;
+  background-position: left -90px;
 }
 .tools .one-tool.varible:before {
-  background-position: left -110px;
+  background-position: left -112px;
 }
 .tools .one-tool.header:before {
-  background-position: left -132px;
+  background-position: left -133px;
+}
+.tools .one-tool.title_product:before {
+  background-position: left -149px;
+}
+.tools .one-tool.footer:before {
+  background-position: left -171px;
+}
+.tools .one-tool.page:before {
+  background-position: left -198px;
 }
 .tools .one-tool.hr {
   padding: 0;
