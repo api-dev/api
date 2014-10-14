@@ -31,6 +31,8 @@
                     <li><span class="param">date_to</span> <span class="type">(date)</span> <span class="info">Дата разгрузки. Формат - YYYY-MM-DD</span> </li>
                     <li><span class="param">auto_info</span> <span class="type">(string)</span> <span class="info">Информация об автомобиле</span> </li>
                     <li><span class="param">description</span> <span class="type">(string)</span> <span class="info">Описание</span> </li>
+                    <li><span class="param">new_transport</span> <span class="type">(int)</span> <span class="info">Произвести рассылку писем о появлении перевозки</span> </li>
+                    <li><span class="param">pto</span> <span class="type">(string)</span> <span class="info">Экспорт ПТО</span> </li>
                     <li><span class="param">points</span> <span class="type">(array)</span> <span class="info">Массив с промежуточными точками:<ul class="table">
                                 <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
                                 <li><span class="param">point</span> <span class="type">(string)</span> <span class="info">Название/место</span> </li>
@@ -123,8 +125,15 @@
             <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>transport, user.</b></li>
             <li><span class="param">data</span> - массив с идентефикаторами перевозок/перевозчиков.</li>
         </ul>
+        <p>Статус перевозок может быть следующим:</p>
+        <ul>
+            <li><span class="param">0</span> - перевозка закрыта</li>
+            <li><span class="param">1</span> - перевозка активна</li>
+            <li><span class="param">2</span> - перевозка переведена в черновики</li>
+            <li><span class="param">3</span> - перевозка удалена (причина удаления указана в поле <b>deletereason</b>)</li>
+        </ul>
         <p>
-            <div class="h2">Примеры:</div>
+        <div class="h2">Примеры:</div>
         Пример вернет xml-файл с информацией о двух перевозках
         <pre style='font-size: 11px;'>
             action = 'transport'
@@ -135,7 +144,8 @@
         <code>
             <pre style='font-size:12px;'>
             &lt;transport t_id=&quot;UPR-009041&quot;&gt;
-                &lt;status&gt;0&lt;/status&gt;
+                &lt;status&gt;3&lt;/status&gt;
+                &lt;deletereason&gt;Удалена за необходимостью&lt;/deletereason&gt;
                 &lt;datepublished&gt;2014-04-01 10:48:03&lt;/datepublished&gt;
                 &lt;dateclose&gt;2014-04-01 15:00:00&lt;/dateclose&gt;
                 &lt;editstatus&gt;Перевозка участвует в торгах. Изменение невозможно.&lt;/editstatus&gt;
@@ -152,6 +162,7 @@
             &lt;/transport&gt;
             &lt;transport t_id=&quot;2U52&quot;&gt;
                 &lt;status&gt;1&lt;/status&gt;
+                &lt;deletereason&gt;&lt;/deletereason&gt;
                 &lt;datepublished&gt;2014-04-01 10:48:03&lt;/datepublished&gt;
                 &lt;dateclose&gt;2014-04-15 15:00:00&lt;/dateclose&gt;
                 &lt;editstatus&gt;&lt;/editstatus&gt;
