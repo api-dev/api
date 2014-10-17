@@ -169,7 +169,7 @@ class TrController extends Controller {
     private function addDefaultTransportCollum($data) {
         $app = Yii::app();
         //$data[new_transport] = 1;
-        $data[status] = 1;
+        //$data[status] = 1;
         $data[date_published] = date('Y-m-d H:i:s');
         
         /*
