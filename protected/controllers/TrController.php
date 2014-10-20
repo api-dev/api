@@ -153,7 +153,7 @@ class TrController extends Controller {
             foreach ($model as $name => $v) {
                 if (isset($attribute[$name]) || !empty($attribute[$name])){
                     $model->$name = $attribute[$name];
-                    Yii::log($name.' = '.$attribute[$name], 'info');
+                    //Yii::log($name.' = '.$attribute[$name], 'info');
                 }
             }
             
