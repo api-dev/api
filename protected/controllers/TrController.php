@@ -145,12 +145,15 @@ class TrController extends Controller {
                 $model = new $model_name;
                 $method = 'addDefault' . $model_name . 'Collum';
                 $attribute = $this->$method($attribute);
+            } else {
+                $model->status = 1;
+                $model->del_reason = null;
             }
             
             foreach ($model as $name => $v) {
                 if (isset($attribute[$name]) || !empty($attribute[$name])){
                     $model->$name = $attribute[$name];
-                    //Yii::log($name.' = '.$attribute[$name], 'info');
+                    Yii::log($name.' = '.$attribute[$name], 'info');
                 }
             }
             
@@ -171,6 +174,7 @@ class TrController extends Controller {
         //$data[new_transport] = 1;
         $data[status] = 1;
         $data[date_published] = date('Y-m-d H:i:s');
+        //$data[del_reason] = null;
         
         /*
         if ($data[type] == Transport::INTER_TRANSPORT)
@@ -180,6 +184,7 @@ class TrController extends Controller {
         */
         //Yii::log(' test for date_close = '.$data[date_close], 'info');
         //$data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_close]));
+        
         return $data;
     }
 
