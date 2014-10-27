@@ -15,6 +15,7 @@ foreach ($data as $tr):
     
     $echo .= '<transport t_id="'.$tr[t_id].'">';
         $echo .= '<status>'.$tr[status].'</status>';
+        $echo .= '<deletereason>'.$tr[del_reason].'</deletereason>';
         $echo .= '<datepublished>'.$tr[date_published].'</datepublished>';
         $echo .= '<dateclose>'.$tr[date_close].'</dateclose>';
         $echo .= '<editstatus>'.$tr[edit_status].'</editstatus>';

@@ -38,10 +38,8 @@ class TrController extends Controller {
         }
 
         if (isset($data[$pk])) {
-            //Yii::log('--- Одномерный', 'info');
             $this->$method($data);
         } else {
-            //Yii::log('--- Многомерный', 'info');
             foreach ($data as $item):
                 $this->$method($item);
             endforeach;
@@ -53,7 +51,7 @@ class TrController extends Controller {
     private function setOneTransport($data) {
         $tr = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
         Yii::log('Выгрузка перевозки с t_id = '.$data['t_id'], 'info');
-        //Yii::log('(входящее) new_transport ='.$data['new_transport'], 'info');
+        Yii::log('(входящее) new_transport ='.$data['new_transport'], 'info');
         /*Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
         Yii::log('(входящее) date_to ='.$data['date_to'], 'info');
         Yii::log('(входящее) date_close ='.$data['date_close'], 'info');*/
@@ -147,6 +145,9 @@ class TrController extends Controller {
                 $model = new $model_name;
                 $method = 'addDefault' . $model_name . 'Collum';
                 $attribute = $this->$method($attribute);
+            } else {
+                $model->status = 1;
+                $model->del_reason = null;
             }
             
             foreach ($model as $name => $v) {
@@ -173,6 +174,7 @@ class TrController extends Controller {
         //$data[new_transport] = 1;
         $data[status] = 1;
         $data[date_published] = date('Y-m-d H:i:s');
+        //$data[del_reason] = null;
         
         /*
         if ($data[type] == Transport::INTER_TRANSPORT)
@@ -182,6 +184,7 @@ class TrController extends Controller {
         */
         //Yii::log(' test for date_close = '.$data[date_close], 'info');
         //$data[date_close] = date('Y-m-d H:i:s', strtotime($data[date_close]));
+        
         return $data;
     }
 
