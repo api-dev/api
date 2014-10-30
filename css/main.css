@@ -8,6 +8,7 @@ html, body
     font-family: Calibri;
     font-size: 12pt;
     color: #5B5A50;
+    cursor: default;
 }
 .wrapper, .footer, .header,
 .header .menu
@@ -217,4 +218,8 @@ a, a:link, a:active, a:visited
     display: block;
     margin-left: 30px;
     text-decoration: none;
+}
+
+.api-tr-list a:hover{
+    text-decoration: underline;
 }

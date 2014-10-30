@@ -1,6 +1,7 @@
 <?php
 
-class TrController extends Controller {
+class TrController extends Controller
+{
 
     public function actionIndex() {
         $post = filter_input_array(INPUT_POST);
