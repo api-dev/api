@@ -76,6 +76,14 @@ return array(
                 'PRAGMA foreign_keys = ON',
             ),
         ),
+        
+        'db_shop' => array(
+            'class' => 'system.db.CDbConnection',
+            'connectionString' => 'sqlite:' . dirname(__FILE__) . '/../../../data/shop.db',
+            'initSQLs' => array(
+                'PRAGMA foreign_keys = ON',
+            ),
+        ),
 
         'db_lbr' => array(
             'class' => 'system.db.CDbConnection',
