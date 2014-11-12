@@ -52,6 +52,7 @@ class TrController extends Controller
     private function setOneTransport($data) {
         $tr = Transport::model()->findByAttributes(array('t_id' => $data['t_id']));
         Yii::log('Выгрузка перевозки с t_id = '.$data['t_id'], 'info');
+        Yii::log('(входящее) создатель ='.$data['user_id'], 'info');
         Yii::log('(входящее) new_transport ='.$data['new_transport'], 'info');
         Yii::log('(входящее) date_close ='.$data['date_close'], 'info');
         
@@ -155,7 +156,8 @@ class TrController extends Controller
             
             foreach ($model as $name => $v) {
                 if (isset($attribute[$name]) || !empty($attribute[$name])){
-                    $model->$name = $attribute[$name];
+                    if($name == 'date_close') $model->$name = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+                    else $model->$name = $attribute[$name];
                     //Yii::log($name.' = '.$attribute[$name], 'info');
                 }
             }
