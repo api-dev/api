@@ -201,7 +201,7 @@
                         "width" : "auto",
                         "height" : "auto"
                     },
-                    "content": "Введите текст"
+                    "content": " Введите текст "
                 },
                 "image": {
                     "type": "image",

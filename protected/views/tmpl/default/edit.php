@@ -1,5 +1,7 @@
 <body>
 <div ng-include="'/tmpl?dir=default&f=templates'"></div>
+<pop-up-save></pop-up-save>
+<pop-up-close></pop-up-close>
 <div class="pPanel">
     <div class="onePanel" position="left">
         <div class="group-button">
@@ -30,7 +32,10 @@
     <div id="center" class="onePanel" position="center">
         <page ng-repeat="(i, page) in kp.json" link="{{i}}" content="page" class="cursor-{{cursorClass}}" ng-show="print"></page>
         <div ng-bind-html="codehtml" ng-show="!print"></div>
+        
     </div>
+    
+    
 
     <div class="onePanel" position="right" style="overflow: hidden;">
         <pWindow
