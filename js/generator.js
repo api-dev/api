@@ -51,8 +51,9 @@ gFilter.filter('normalDate', function($filter) {
     return function(text) {
         if (text)
         {
-            var date_r = new Date(text.replace(' ', 'T'));
-            return $filter('date')(date_r, "dd.MM.yyyy hh:mm");
+//          var date_r = new Date(text.replace(' ', '\t'));
+            var date_r=new Date(text);
+            return $filter('date')(date_r, "dd.MM.yyyy HH:mm");
         } else {
             return 'Нет даты';
         }
