@@ -51,8 +51,9 @@ gFilter.filter('normalDate', function($filter) {
     return function(text) {
         if (text)
         {
-            var date_r = new Date(text.replace(' ', 'T'));
-            return $filter('date')(date_r, "dd.MM.yyyy hh:mm");
+//          var date_r = new Date(text.replace(' ', '\t'));
+            var date_r=new Date(text);
+            return $filter('date')(date_r, "dd.MM.yyyy HH:mm");
         } else {
             return 'Нет даты';
         }
@@ -121,20 +122,45 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
 
         $scope.print = true;
         
+        $scope.edit=false;
+        
+        $scope.cl=false;
+        
         $scope.style_p="active";
         
         $scope.style_e="";
-
+        
+        $scope.showPopUpSave = false;
+        $scope.showPopUpClose = false;
+        
+        $scope.openPopUpSave = function() {
+            $scope.showPopUpSave = true;
+        }
+        
+        $scope.openPopUpClose = function() {
+            $scope.showPopUpClose = true;
+            
+        }
+        
         $scope.kp = Kp.findById($routeParams.id);
 
         $scope.save = function()
         {
-            Kp.saveKp($scope.kp, $routeParams.id);
+            var save_success=false;
+            save_success=Kp.saveKp($scope.kp, $routeParams.id);
+            if (save_success){
+                $scope.edit=false;
+                $scope.openPopUpSave();  
+            }
+            
         }
 
         $scope.close = function()
         {
-            $location.path('/list');
+            //if($scope.edit){
+                $scope.openPopUpClose();
+            //}
+            //$location.path('/list');
         }
 
         $scope.switch = function(key)
@@ -199,8 +225,9 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
                 var nItem = angular.copy($scope.$eval(draglink));
 
                 if ($scope.addElem(nItem, droplink)) {
-                    if ($scope.deleteElem(draglink))
+                    if ($scope.deleteElem(draglink)){
                         $scope.$apply();
+                    }
                 }
             }
             return _self.init();
@@ -211,12 +238,11 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
             var elemIndex = link.slice((link.lastIndexOf('[') + 1), link.length - 1),
                     elemParent = link.slice(0, link.lastIndexOf('[')),
                     parent = $scope.$eval(elemParent);
-
+                    $scope.edit=true;
             if (parent.splice(elemIndex, 1))
             {
                 return true;
             }
-
             return false;
         };
 
@@ -230,6 +256,7 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
             }
 
             if (parent.content.push(elem)) {
+                
                 $scope.$apply();
                 return true;
             }
@@ -270,6 +297,7 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
             } else if(target.content.push(elem)){
                 $scope.$apply();
             }
+            $scope.edit=true;
         }
 
         $scope.setRecId = function(elem)
@@ -374,7 +402,7 @@ gController.directive('page', function($compile) {
                         dragLink = ui.draggable.attr('ulink');
 
                 _scope.moveElem(dropElem, dragElem, dropLink, dragLink);
-
+                $scope.edit=true;
                 return false;
             }
         }
@@ -449,14 +477,15 @@ gController.directive('treeitem', function($compile) {
             onDel: '&',
             level: '=',
             parent: '=',
-            index: '='
+            index: '=',
+            edit:'@'
         },
 
         template: function (elem, attrs) {
             return  '<li ng-class="{active: activeLink == link}" link="{{link}}">' +
                         '<span class="icon"></span>'+
                         '<input ng-model="content.title" type="text">'+
-                        '<span class="delete" title="Удалить элемент" ng-if="(index!==\'0\' && content.type!==\'page\')" ng-click="delete(parent, index)"></span>'+
+                        '<span class="delete" title="Удалить элемент" ng-if="(index!==\'0\' && content.type!==\'page\')" ng-click="delete(parent, index);"></span>'+
                         '<span class="up" title="Переместить вверх" ng-click="moveUp(parent, index)" ng-if="showUp(parent, index)"></span>'+
                         '<span class="down" title="Переместить вниз" ng-click="moveDown(parent, index)" ng-if="showDown(parent, index)"></span>'+
 
@@ -490,6 +519,7 @@ gController.directive('treeitem', function($compile) {
                     if (parent.content.length > 1 && index > 0)
                         return true;
                 }
+                
                 return false
             }
 
@@ -497,9 +527,13 @@ gController.directive('treeitem', function($compile) {
             {
                 if (!angular.isArray(parent))
                 {
-                    if (parent.content.length > 1 && index < (parent.content.length - 1))
+                    if (parent.content.length > 1 && index < (parent.content.length - 1)){
+                        $scope.edit=true;
                         return true;
+                    }
+                        
                 }
+                
                 return false
 
             }
@@ -507,7 +541,7 @@ gController.directive('treeitem', function($compile) {
             $scope.delete = function(parent, index)
             {
                 if (parent.content)
-                    parent.content.splice(index, 1);
+                    parent.content.splice(index, 1);   
             }
 
             $scope.moveUp = function(parent, index)
@@ -575,7 +609,51 @@ gController.directive('pPanel', function() {
     };
 });
 
+gController.directive('popUpSave', function(){
+    return{
+        restrict:'E',
+        scope:false,
+        replace:true,
+        template: '<div id="popUpMsg-bg" ng-show="showPopUpSave">'+
+        '<div id="popUpMsg"><div class="close" ng-click="closePopUpSave()">x</div>'+
+        '<div class="content">КП успешно сохранено</div><button ng-click="closePopUpSave();">Ok</button></div></div>',
+         controller: function($scope,$location) {
+            $scope.closePopUpSave = function(){
+                $scope.showPopUpSave = false;
+                console.log($scope.cl);
+                if($scope.cl){
+                    $location.path('/list');
+                }
+            }
+         }                                                                                                    
+    }; 
+});
 
+gController.directive('popUpClose', function(){
+    return{
+        restrict:'E',
+        scope:false,
+        replace:true,
+        template: '<div id="popUpMsg-bg" ng-show="showPopUpClose">'+
+        '<div id="popUpMsg"><div class="close" ng-click="closePopUpClose()">x</div>'+
+        '<div class="content">Сохранить изменения?</div><button class="btn_save" ng-click="closePopUpS();">Ok</button>'+
+        '<button class="btn_close" ng-click="closePopUpClose()">Cansel</button></div></div>',
+         controller: function($scope,$location) {
+            $scope.closePopUpClose = function(){
+                $scope.showPopUpClose = false;
+                $location.path('/list');
+            }
+            
+            $scope.closePopUpS=function(){
+              $scope.showPopUpClose = false;
+              $scope.cl=true;
+              $scope.save();
+              
+               
+            }
+         }                                                                                                    
+    };
+});
 
 /* Services */
 var gService = angular.module('gService', ['ngResource']);
@@ -631,7 +709,7 @@ gService.factory('Kp', ['$resource', '$location',
                 kpid: 'one',
                 id: k.id
             }, k, function() {
-                console.log('Complete!')
+                console.log('Complete!');
             }, function() {
                 console.log('Error!')
             });
