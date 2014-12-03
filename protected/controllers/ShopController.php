@@ -8,7 +8,7 @@ class ShopController extends Controller
         $get = filter_input_array(INPUT_GET);
         $request = $post ? array_merge_recursive($post, $get) : $get;
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
-        
+        Yii::log('input from shop !!!!!!!!!', 'info');
         /*
         foreach($request['data'] as $v){
             foreach($v as $k=>$v2){
