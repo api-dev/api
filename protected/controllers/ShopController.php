@@ -94,8 +94,10 @@ class ShopController extends Controller
         {   Yii::log('shop: photo !empty', 'info');
             $uploadFile = $_FILES['datafile'];
             $tmp_name = $uploadFile['tmp_name'];
+            Yii::log('shop: tmp_name = '.$tmp_name.'; uploadFile = '.$uploadFile, 'info');
             if(isset($tmp_name[$index]))
             {
+                Yii::log('shop: $index '.$tmp_name[$index], 'info');
                 return $this->setOnePhoto(array(
                     'name' => $uploadFile['name'][$index],
                     'type' => $uploadFile['type'][$index],
@@ -104,7 +106,7 @@ class ShopController extends Controller
                     'size' => $uploadFile['size'][$index],
                     'login' => $externalId,
                 ));
-            }
+            }else Yii::log('shop: no index', 'info');
         } else Yii::log('shop: photo empty', 'info');
         return true;
     }
