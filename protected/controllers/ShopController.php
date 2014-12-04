@@ -70,7 +70,7 @@ class ShopController extends Controller
             }
             Yii::log('shop: attributes', 'info');
             $index = 1;
-            $photo = $this->setPhoto($index, $product['external_id']);
+            $photo = $this->setPhoto($index, $data['external_id']);
             if($photo)
                 $product->image = $photo;
             Yii::log('shop: before save', 'info');
