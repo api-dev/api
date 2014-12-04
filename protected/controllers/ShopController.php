@@ -9,6 +9,7 @@ class ShopController extends Controller
         $request = $post ? array_merge_recursive($post, $get) : $get;
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
         Yii::log('input from shop !!!!!!!!!', 'info');
+        Yii::log('shop: '.$method, 'info');
         /*
         foreach($request['data'] as $v){
             foreach($v as $k=>$v2){
@@ -25,6 +26,7 @@ class ShopController extends Controller
 
     private function setSparepart($request) 
     {
+        Yii::log('shop: setSparepart', 'info');
         $this->setItems($request, 'Sparepart', 'external_id');
     }
     
@@ -54,11 +56,11 @@ class ShopController extends Controller
     {
         if (empty($data['external_id']))
             return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
-        
+        Yii::log('shop: setOneSparepart', 'info');
         $app = Yii::app();
         $transaction = $app->db_auth->beginTransaction();
         try {
-            $product = Product::model()->find('external_id=:external_id', array(':external_id' => $user['external_id']));
+            $product = Product::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
             if (!$product)
                 $product = new Product();
 
@@ -66,16 +68,16 @@ class ShopController extends Controller
                 if (isset($data[$name]) || !empty($data[$name]))
                     $product->$name = $data[$name];
             }
-            
+            Yii::log('shop: attributes', 'info');
             $photo = $this->setPhoto($index, $product['external_id']);
             if($photo)
                 $product->photo = $photo;
-            
+            Yii::log('shop: before save', 'info');
             if ($product->validate() && $product->save()) {
                 $transaction->commit();
                 return $this->result('Сохранение '.$product->external_id.' произошло успешно.');
             }
-            
+            Yii::log('shop: after save', 'info');
             $transaction->rollback();
             return $this->result($product->getErrors());
         } catch (Exception $e) {
@@ -86,7 +88,7 @@ class ShopController extends Controller
     }
     
     private function setPhoto($index, $externalId)
-    {
+    {   Yii::log('shop: setPhoto', 'info');
         if(!empty($_FILES))
         {
             $uploadFile = $_FILES['datafile'];
