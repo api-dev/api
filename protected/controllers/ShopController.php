@@ -69,9 +69,9 @@ class ShopController extends Controller
                     $product->$name = $data[$name];
             }
             Yii::log('shop: attributes', 'info');
-            //$photo = $this->setPhoto($index, $product['external_id']);
-            //if($photo)
-            //    $product->image = $photo;
+            $photo = $this->setPhoto($index, $product['external_id']);
+            if($photo)
+                $product->image = $photo;
             Yii::log('shop: before save', 'info');
             //if ($product->validate() && $product->save()) {
             if ($product->save()) {
@@ -112,7 +112,7 @@ class ShopController extends Controller
     private function setOnePhoto($photo)
     {
         if(!$photo['login']){
-            $this->result('Пользователя '.$photo['login'].' не существует!');
+            $this->result('Запчасти '.$photo['login'].' не существует!');
             return false;
         }
         
