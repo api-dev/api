@@ -134,7 +134,7 @@ class ShopController extends Controller
         $image->decode = true;
         $image->dir = $dir;
         $return = $image->load($photo);
-        Yii::log('return: '.$return, 'info');
+        foreach($return as $mes) Yii::log('=== '.$mes, 'info');
         if(is_array($return) && !empty($return)){
             $this->result('Фото запчасти '.$photo['id'].' успешно загружено');
             return $return[link];
