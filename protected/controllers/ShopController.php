@@ -158,7 +158,7 @@ class ShopController extends Controller
         }
         return $parent;*/
         
-        return '/images/shop';
+        return 'images/shop';
     }
     
     private function result($text) {

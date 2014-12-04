@@ -52,7 +52,13 @@ class Image {
             // Декодирование файла
             if ($this->decode)
                 $data = base64_decode($data);
-
+            
+            if(is_array($data)){
+                foreach($data as $d){
+                    Yii::log('data: '.$d, 'info');
+                }
+            } else Yii::log('data: '.$data, 'info');
+            Yii::log('open: '.@fopen($array['tmp_name'], 'wb'), 'info');
             if ( !empty($data) && ($fp = @fopen($array['tmp_name'], 'wb')) )
             {
                 if(@fwrite($fp, $data) && @fclose($fp))
