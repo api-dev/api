@@ -102,7 +102,7 @@ class ShopController extends Controller
                     'tmp_name' => $tmp_name[$index],
                     'error' => $uploadFile['error'][$index],
                     'size' => $uploadFile['size'][$index],
-                    'login' => $login,
+                    'login' => $externalId,
                 ));
             }
         }
