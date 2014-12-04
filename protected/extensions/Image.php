@@ -23,7 +23,7 @@ class Image {
         
         $dir = $server['DOCUMENT_ROOT'].'/'.$this->dir;
 //        $imageDir = 'http://'.$server['SERVER_NAME'].'/'.$this->dir;
-        
+        Yii::log('dir: '.$dir, 'info');
         $ext = end(explode('.', strtolower($array['name'])));
         
         if (!in_array($ext, $this->ext))
@@ -70,8 +70,7 @@ class Image {
                 }
                 else
                     return $this->error ("Ошибка декодирования файла");
-            }
-            else
+            } else
                 return $this->error('Ошибка при записи файла '.$array['name']);
         }
         return $return;
