@@ -55,8 +55,8 @@ class TrController extends Controller
         Yii::log('(входящее) создатель ='.$data['user_id'], 'info');
         Yii::log('(входящее) new_transport ='.$data['new_transport'], 'info');
         Yii::log('(входящее) date_close ='.$data['date_close'], 'info');
-        Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
-        Yii::log('(входящее) date_to ='.$data['date_to'], 'info');
+        //Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
+        //Yii::log('(входящее) date_to ='.$data['date_to'], 'info');
         
         /*Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
         Yii::log('(входящее) date_to ='.$data['date_to'], 'info');
@@ -158,7 +158,8 @@ class TrController extends Controller
             
             foreach ($model as $name => $v) {
                 if (isset($attribute[$name]) || !empty($attribute[$name])){
-                    if($name == 'date_close' || $name == 'date_from' || $name == 'date_to') $model->$name = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+                    //if($name == 'date_close' || $name == 'date_from' || $name == 'date_to') $model->$name = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+                    if($name == 'date_close') $model->$name = date('Y-m-d H:i:s', strtotime($attribute[$name]));
                     else $model->$name = $attribute[$name];
                     //Yii::log($name.' = '.$attribute[$name], 'info');
                 }
