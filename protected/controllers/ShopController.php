@@ -101,14 +101,19 @@ class ShopController extends Controller
             Yii::log('shop: index = '.$tmp_name[$index], 'info');
             if(isset($tmp_name[$index]))
             {
-                Yii::log('shop: $index '.$tmp_name[$index], 'info');
+                Yii::log('photo: name '.$uploadFile['name'][$index], 'info');
+                Yii::log('photo: type '.$uploadFile['type'][$index], 'info');
+                Yii::log('photo: tmp_name '.$tmp_name[$index], 'info');
+                Yii::log('photo: error '.$uploadFile['error'][$index], 'info');
+                Yii::log('photo: size '.$uploadFile['size'][$index], 'info');
+                Yii::log('photo: id '.$externalId, 'info');
                 return $this->setOnePhoto(array(
                     'name' => $uploadFile['name'][$index],
                     'type' => $uploadFile['type'][$index],
                     'tmp_name' => $tmp_name[$index],
                     'error' => $uploadFile['error'][$index],
                     'size' => $uploadFile['size'][$index],
-                    'login' => $externalId,
+                    'id' => $externalId,
                 ));
             }else Yii::log('shop: no index', 'info');
         } else Yii::log('shop: photo empty', 'info');
@@ -117,8 +122,8 @@ class ShopController extends Controller
 
     private function setOnePhoto($photo)
     {Yii::log('shop: setOnePhoto', 'info');
-        if(!$photo['login']){
-            $this->result('Запчасти '.$photo['login'].' не существует!');
+        if(!$photo['id']){
+            $this->result('Запчасти '.$photo['id'].' не существует!');
             return false;
         }
         
@@ -131,7 +136,7 @@ class ShopController extends Controller
         $return = $image->load($photo);
         Yii::log('shop: '.$return, 'info');
         if(is_array($return) && !empty($return)){
-            $this->result('Фото пользователя '.$photo['login'].' успешно загружено');
+            $this->result('Фото запчасти '.$photo['id'].' успешно загружено');
             return $return[link];
         } else {
             $this->result($return);
@@ -153,7 +158,7 @@ class ShopController extends Controller
         }
         return $parent;*/
         
-        return 'images/shop';
+        return '/images/shop';
     }
     
     private function result($text) {
