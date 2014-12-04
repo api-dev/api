@@ -69,11 +69,12 @@ class ShopController extends Controller
                     $product->$name = $data[$name];
             }
             Yii::log('shop: attributes', 'info');
-            $photo = $this->setPhoto($index, $product['external_id']);
-            if($photo)
-                $product->photo = $photo;
+            //$photo = $this->setPhoto($index, $product['external_id']);
+            //if($photo)
+            //    $product->image = $photo;
             Yii::log('shop: before save', 'info');
-            if ($product->validate() && $product->save()) {
+            //if ($product->validate() && $product->save()) {
+            if ($product->save()) {
                 $transaction->commit();
                 return $this->result('Сохранение '.$product->external_id.' произошло успешно.');
             }
