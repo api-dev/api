@@ -69,6 +69,7 @@ class ShopController extends Controller
                     $product->$name = $data[$name];
             }
             Yii::log('shop: attributes', 'info');
+            $index = 1;
             $photo = $this->setPhoto($index, $product['external_id']);
             if($photo)
                 $product->image = $photo;
@@ -94,7 +95,10 @@ class ShopController extends Controller
         {   Yii::log('shop: photo !empty', 'info');
             $uploadFile = $_FILES['datafile'];
             $tmp_name = $uploadFile['tmp_name'];
-            Yii::log('shop: tmp_name = '.$tmp_name.'; uploadFile = '.$uploadFile, 'info');
+            foreach($tmp_name as $t_name){
+                Yii::log('shop: t_name = '.$t_name, 'info');
+            }
+            Yii::log('shop: index = '.$tmp_name[$index], 'info');
             if(isset($tmp_name[$index]))
             {
                 Yii::log('shop: $index '.$tmp_name[$index], 'info');
