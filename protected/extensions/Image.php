@@ -81,6 +81,7 @@ class Image {
     }
     
     protected function error($text){
+        Yii::log('Ошибка загрузки файла. '.$text, 'info');
         return 'Ошибка загрузки файла. '.$text;
     }
     
