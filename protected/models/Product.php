@@ -52,7 +52,7 @@ class Product extends CActiveRecord
 		return array(
 			//array('id', 'required'),
 			array('id, product_group_id, price_id, product_maker_id, count, min_quantity', 'numerical', 'integerOnly'=>true),
-			array('external_id, name, catalog_number, liquidity, additional_info', 'safe'),
+			array('external_id, name, product_group_id, price_id, catalog_number, product_maker_id, image, count, liquidity, min_quantity, additional_info, published', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, external_id, name, product_group_id, price_id, catalog_number, product_maker_id, image, count, liquidity, min_quantity, additional_info', 'safe', 'on'=>'search'),
