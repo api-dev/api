@@ -62,7 +62,7 @@ class Image {
             Yii::log('open: '.@fopen($array['tmp_name'], 'wb'), 'info');
             */
             
-            Yii::log('$array["tmp_name"]: '.$array['tmp_name'], 'info');
+            //Yii::log('$array["tmp_name"]: '.$array['tmp_name'], 'info');
             if ( !empty($data) && ($fp = @fopen($array['tmp_name'], 'wb')) )
             {
                 if(@fwrite($fp, $data) && @fclose($fp))
