@@ -154,6 +154,7 @@ class TrController extends Controller
             } else {
                 $model->status = 1;
                 $model->del_reason = null;
+                $model->date_published = date('Y-m-d H:i:s');
             }
             
             foreach ($model as $name => $v) {
