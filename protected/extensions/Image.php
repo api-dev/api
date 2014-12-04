@@ -23,7 +23,7 @@ class Image {
         
         $dir = $server['DOCUMENT_ROOT'].'/'.$this->dir;
 //        $imageDir = 'http://'.$server['SERVER_NAME'].'/'.$this->dir;
-        Yii::log('dir: '.$dir, 'info');
+        //Yii::log('dir: '.$dir, 'info');
         $ext = end(explode('.', strtolower($array['name'])));
         
         if (!in_array($ext, $this->ext))
@@ -41,7 +41,7 @@ class Image {
             
             $file = $dir.'/'.$array['login'].'.'.$ext; 
             
-            //если файл с таким именем уже существует, то удаляем его к чертовой матери
+            //если файл с таким именем уже существует, то удаляем его
             if (file_exists($file)) 
                 unlink($file);
             

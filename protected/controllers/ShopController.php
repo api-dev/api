@@ -113,7 +113,7 @@ class ShopController extends Controller
                     'tmp_name' => $tmp_name[$index],
                     'error' => $uploadFile['error'][$index],
                     'size' => $uploadFile['size'][$index],
-                    'id' => $externalId,
+                    'login' => $externalId,
                 ));
             }else Yii::log('shop: no index', 'info');
         } else Yii::log('shop: photo empty', 'info');
@@ -122,8 +122,8 @@ class ShopController extends Controller
 
     private function setOnePhoto($photo)
     {Yii::log('shop: setOnePhoto', 'info');
-        if(!$photo['id']){
-            $this->result('Запчасти '.$photo['id'].' не существует!');
+        if(!$photo['login']){
+            $this->result('Запчасти '.$photo['login'].' не существует!');
             return false;
         }
         
@@ -134,7 +134,7 @@ class ShopController extends Controller
         $image->decode = true;
         $image->dir = $dir;
         $return = $image->load($photo);
-        Yii::log('shop: '.$return, 'info');
+        Yii::log('return: '.$return, 'info');
         if(is_array($return) && !empty($return)){
             $this->result('Фото запчасти '.$photo['id'].' успешно загружено');
             return $return[link];
