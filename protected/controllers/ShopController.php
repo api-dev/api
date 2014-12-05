@@ -135,14 +135,15 @@ class ShopController extends Controller
             return false;
         }
         
-        $dir = 'images/product'; //$this->getPhotoDir();
+        //$dir = 'images/product'; //$this->getPhotoDir();
+        $dir = 'images/shop'; //$this->getPhotoDir();
         Yii::log('shop: photo dir = '.$dir, 'info');
         $image = new Image();
         $image->mini = false;
         $image->decode = true;
         $image->dir = $dir;
         // /var/www/vhosts/lbr.ru/httpdocs/shoplbr/images/product
-        $image->externalDir = '/var/www/vhosts/lbr.ru/httpdocs/shoplbr/images/product'; //$server['DOCUMENT_ROOT'].'/../shoplbr/'.$dir;
+        //$image->externalDir = '/var/www/vhosts/lbr.ru/httpdocs/shoplbr/images/product'; //$server['DOCUMENT_ROOT'].'/../shoplbr/'.$dir;
         $return = $image->load($photo);
         //foreach($return as $mes) Yii::log('=== '.$mes, 'info');
         if(is_array($return) && !empty($return)){

@@ -22,7 +22,7 @@ class Image {
         $server = filter_input_array(INPUT_SERVER);
         
         $dir = $server['DOCUMENT_ROOT'].'/'.$this->dir;
-        if(!empty($this->externalDir)) $dir = $this->externalDir; //$server['DOCUMENT_ROOT'].'/'.$this->dir;
+        //if(!empty($this->externalDir)) $dir = $this->externalDir; //$server['DOCUMENT_ROOT'].'/'.$this->dir;
         
         Yii::log('===== photo dir = '.$dir, 'info');
         
