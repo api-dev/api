@@ -127,17 +127,21 @@ class ShopController extends Controller
             return false;
         }
         
-        $dir = $this->getPhotoDir();
+        $dir = 'images/product'; //$this->getPhotoDir();
         Yii::log('shop: photo dir = '.$dir, 'info');
         $image = new Image();
         $image->mini = false;
         $image->decode = true;
         $image->dir = $dir;
+        // /var/www/vhosts/lbr.ru/httpdocs/api/images/shop
+        $image->externalDir = $server['DOCUMENT_ROOT'].'/../shoplbr/'.$dir;
         $return = $image->load($photo);
         //foreach($return as $mes) Yii::log('=== '.$mes, 'info');
         if(is_array($return) && !empty($return)){
             $this->result('Фото запчасти '.$photo['login'].' успешно загружено');
-            return $return[link];
+            //$ext = end(explode('.', strtolower($array['name'])));
+            //$link = '/'.$dir.'/'.$array['login'].'.'.$ext;
+            return $return[link]; // !!! return $link;
         } else {
             $this->result($return);
         }
