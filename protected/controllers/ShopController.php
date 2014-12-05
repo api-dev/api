@@ -141,8 +141,8 @@ class ShopController extends Controller
         $image->mini = false;
         $image->decode = true;
         $image->dir = $dir;
-        // /var/www/vhosts/lbr.ru/httpdocs/api/images/shop
-        $image->externalDir = $server['DOCUMENT_ROOT'].'/../shoplbr/'.$dir;
+        // /var/www/vhosts/lbr.ru/httpdocs/shoplbr/images/product
+        $image->externalDir = '/var/www/vhosts/lbr.ru/httpdocs/shoplbr/images/product'; //$server['DOCUMENT_ROOT'].'/../shoplbr/'.$dir;
         $return = $image->load($photo);
         //foreach($return as $mes) Yii::log('=== '.$mes, 'info');
         if(is_array($return) && !empty($return)){
