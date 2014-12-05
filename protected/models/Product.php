@@ -7,15 +7,16 @@
  * @property integer $id
  * @property string $external_id
  * @property string $name
- * @property integer $product_group_id
- * @property integer $price_id
+ * @property string $product_group_id
+ * @property string $price_id
  * @property string $catalog_number
- * @property integer $product_maker_id
- * @property integer $image
+ * @property string $product_maker_id
+ * @property string $image
  * @property integer $count
  * @property string $liquidity
  * @property integer $min_quantity
  * @property string $additional_info
+ * @property boolean $published
  *
  * The followings are the available model relations:
  * @property Analog[] $analogs
@@ -50,12 +51,11 @@ class Product extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			//array('id', 'required'),
-			array('id, product_group_id, price_id, product_maker_id, count, min_quantity', 'numerical', 'integerOnly'=>true),
-			array('external_id, name, product_group_id, price_id, catalog_number, product_maker_id, image, count, liquidity, min_quantity, additional_info, published', 'safe'),
+			array('count, min_quantity', 'numerical', 'integerOnly'=>true),
+			array('external_id, name, product_group_id, price_id, catalog_number, product_maker_id, image, liquidity, additional_info, published', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, external_id, name, product_group_id, price_id, catalog_number, product_maker_id, image, count, liquidity, min_quantity, additional_info', 'safe', 'on'=>'search'),
+			array('id, external_id, name, product_group_id, price_id, catalog_number, product_maker_id, image, count, liquidity, min_quantity, additional_info, published', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -97,6 +97,7 @@ class Product extends CActiveRecord
 			'liquidity' => 'Liquidity',
 			'min_quantity' => 'Min Quantity',
 			'additional_info' => 'Additional Info',
+			'published' => 'Published',
 		);
 	}
 
@@ -121,15 +122,16 @@ class Product extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('external_id',$this->external_id,true);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('product_group_id',$this->product_group_id);
-		$criteria->compare('price_id',$this->price_id);
+		$criteria->compare('product_group_id',$this->product_group_id,true);
+		$criteria->compare('price_id',$this->price_id,true);
 		$criteria->compare('catalog_number',$this->catalog_number,true);
-		$criteria->compare('product_maker_id',$this->product_maker_id);
-		$criteria->compare('image',$this->image);
+		$criteria->compare('product_maker_id',$this->product_maker_id,true);
+		$criteria->compare('image',$this->image,true);
 		$criteria->compare('count',$this->count);
 		$criteria->compare('liquidity',$this->liquidity,true);
 		$criteria->compare('min_quantity',$this->min_quantity);
 		$criteria->compare('additional_info',$this->additional_info,true);
+		$criteria->compare('published',$this->published);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

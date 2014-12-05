@@ -30,6 +30,12 @@ class ShopController extends Controller
         $this->setItems($request, 'Sparepart', 'external_id');
     }
     
+    private function setGroup($request) 
+    {
+        Yii::log('shop: setGroup', 'info');
+        $this->setGroups($request, 'Group', 'external_id');
+    }
+    
     private function setItems($request, $method_name, $pk) 
     {
         $method = 'setOne' . $method_name;
@@ -75,6 +81,7 @@ class ShopController extends Controller
                 $product->image = $photo;
             Yii::log('shop: before save', 'info');
             //if ($product->validate() && $product->save()) {
+            $product->published = true;
             if ($product->save()) {
                 $transaction->commit();
                 return $this->result('Сохранение '.$product->external_id.' произошло успешно.');
@@ -139,35 +146,88 @@ class ShopController extends Controller
         //foreach($return as $mes) Yii::log('=== '.$mes, 'info');
         if(is_array($return) && !empty($return)){
             $this->result('Фото запчасти '.$photo['login'].' успешно загружено');
-            //$ext = end(explode('.', strtolower($array['name'])));
-            //$link = '/'.$dir.'/'.$array['login'].'.'.$ext;
+            //$ext = end(explode('.', strtolower($photo['name'])));
+            //$link = '/'.$dir.'/'.$photo['login'].'.'.$ext;
             return $return[link]; // !!! return $link;
         } else {
             $this->result($return);
         }
     }
     
-    private function getPhotoDir()
-    {
-        /*if(!$id)
-            return $this->result('Не найдено id категории');
-            
-        $group = Group::model()->findByPk($id);
-        $ancestors = $group->ancestors()->findAll();
-        $parent = 'images/photo';
-        for($i=1; $i<count($ancestors); $i++)
-        {
-            $folder = Translite::rusencode($ancestors[$i]->name);
-            $parent .= '/'.$folder;
-        }
-        return $parent;*/
-        
-        return 'images/shop';
-    }
-    
     private function result($text) {
         $this->renderPartial('index', array('text' => $text));
         return false;
+    }
+    
+    private function setGroups($request, $method_name, $pk) 
+    {
+        $method = 'setOne' . $method_name;
+        if (!method_exists($this, $method))
+            return $this->result('Системная ошибка. Метод "'.$method.'" не найден.');
+        
+        $data = $request['data'];
+
+        if (!$data || empty($data)) {
+            return $this->result('Ошибка. Нет данных при попытке записи групп "'.$method.'". Попробуйте еще раз.');
+        }
+
+        if (isset($data[$pk])) {
+            $this->$method($data);
+        } else {
+            foreach ($data as $i=>$item):
+                $this->$method($item);
+            endforeach;
+        }
+        
+        return $this->result('Выгрузка запчастей закончена.');
+    }
+    
+    private function setOneGroup($data, $parentId = null) 
+    {
+        if (empty($data['external_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        Yii::log('shop: setOneGroup', 'info');
+        $app = Yii::app();
+        $transaction = $app->db_auth->beginTransaction();
+        try {
+            $group = ProductGroup::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
+            if (!$group){
+                $group = new ProductGroup();
+            }
+            
+            foreach ($group as $name => $v) {
+                if (isset($data[$name]) || !empty($data[$name]))
+                    $group->$name = $data[$name];
+            }
+
+            $root = ProductGroup::model()->findByAttributes(array('level'=>1));
+            if(empty($parentId)) {
+                if(empty($root)) {
+                    $root = new ProductGroup;
+                    $root->name = 'Все группы';
+                    $root->saveNode();
+                }
+            } else {
+                $root = ProductGroup::model()->findByPk($parentId);
+            }
+
+            if ($group->id && $data['inner']) {
+                $this->setOneGroup($data['inner'], $group->id); 
+            }
+            
+            if($group->appendTo($root)){
+                $transaction->commit();
+                return $this->result('Сохранение группы '.$group->external_id.' произошло успешно.');
+            }
+            
+            Yii::log('shop group: after save', 'info');
+            $transaction->rollback();
+            return $this->result($group->getErrors());
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
     }
 }
 
