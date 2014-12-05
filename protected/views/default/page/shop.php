@@ -18,7 +18,7 @@
             <li>
                 <ul class="table">
                     <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
-                    <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор в системе учета. Уникальный. Обязательный</span> </li>
+                    <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор в системе учета 1С. Уникальный. Обязательный</span> </li>
                     <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название запчасти</span> </li>
                     <li><span class="param">product_group_id</span> <span class="type">(int)</span> <span class="info">ID группы в 1С</span> </li>
                     <!--li><span class="param">price_id</span> <span class="type">(int)</span> <span class="info">ID группы цен в 1С</span> </li-->
@@ -76,7 +76,7 @@
             <li>
                 <ul class="table">
                     <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
-                    <li><span class="param">external_id</span> <span class="type">(integer)</span> <span class="info">Идентефикатор группы в системе учета. Уникальный. Обязательный</span> </li>
+                    <li><span class="param">external_id</span> <span class="type">(integer)</span> <span class="info">Идентефикатор группы в системе учета 1С. Уникальный. Обязательный</span> </li>
                     <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название группы</span> </li>
                     <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Дочерние группы:
                             <ul class="table">
