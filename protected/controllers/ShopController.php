@@ -121,10 +121,10 @@ class ShopController extends Controller
 
     private function setOnePhoto($photo)
     {Yii::log('shop: setOnePhoto', 'info');
-        if(!$photo['login']){
+        /*if(!$photo['login']){
             $this->result('Запчасти '.$photo['login'].' не существует!');
             return false;
-        }
+        }*/
         
         //$dir = 'images/product'; //$this->getPhotoDir();
         $dir = 'images/shop'; //$this->getPhotoDir();
