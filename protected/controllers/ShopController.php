@@ -104,18 +104,8 @@ class ShopController extends Controller
         {   Yii::log('shop: photo !empty', 'info');
             $uploadFile = $_FILES['datafile'];
             $tmp_name = $uploadFile['tmp_name'];
-            foreach($tmp_name as $t_name){
-                Yii::log('shop: t_name = '.$t_name, 'info');
-            }
-            Yii::log('shop: index = '.$tmp_name[$index], 'info');
             if(isset($tmp_name[$index]))
             {
-                Yii::log('photo: name '.$uploadFile['name'][$index], 'info');
-                Yii::log('photo: type '.$uploadFile['type'][$index], 'info');
-                Yii::log('photo: tmp_name '.$tmp_name[$index], 'info');
-                Yii::log('photo: error '.$uploadFile['error'][$index], 'info');
-                Yii::log('photo: size '.$uploadFile['size'][$index], 'info');
-                Yii::log('photo: id '.$name, 'info');
                 return $this->setOnePhoto(array(
                     'name' => $uploadFile['name'][$index],
                     'type' => $uploadFile['type'][$index],
