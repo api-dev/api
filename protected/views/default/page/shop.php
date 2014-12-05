@@ -28,6 +28,7 @@
                     <li><span class="param">min_quantity</span> <span class="type">(int)</span> <span class="info">Минимальное количество для заказа</span> </li>
                     <li><span class="param">liquidity</span> <span class="type">(string)</span> <span class="info">Ликвидность</span> </li>
                     <li><span class="param">additional_info</span> <span class="type">(string)</span> <span class="info">Дополнительная информация</span> </li>
+                    <li><span class="param">image_name</span> <span class="type">(string)</span> <span class="info">Имя изображения запчасти в 1C</span> </li>
                     <li><span class="param">+ картинка</span><span class="info" style="margin-left: 100px;">Пакет данных</span></li>
                 </ul>
             </li>
