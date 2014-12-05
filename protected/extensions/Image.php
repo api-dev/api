@@ -22,8 +22,10 @@ class Image {
         $server = filter_input_array(INPUT_SERVER);
         
         $dir = $server['DOCUMENT_ROOT'].'/'.$this->dir;
-//        $imageDir = 'http://'.$server['SERVER_NAME'].'/'.$this->dir;
-        //Yii::log('dir: '.$dir, 'info');
+        if(!empty($this->externalDir)) $dir = $this->externalDir; //$server['DOCUMENT_ROOT'].'/'.$this->dir;
+        
+        Yii::log('===== photo dir = '.$dir, 'info');
+        
         $ext = end(explode('.', strtolower($array['name'])));
         
         if (!in_array($ext, $this->ext))
@@ -53,16 +55,6 @@ class Image {
             if ($this->decode)
                 $data = base64_decode($data);
             
-            /*
-            if(is_array($data)){
-                foreach($data as $d){
-                    Yii::log('data: '.$d, 'info');
-                }
-            } else Yii::log('data: '.$data, 'info');
-            Yii::log('open: '.@fopen($array['tmp_name'], 'wb'), 'info');
-            */
-            
-            //Yii::log('$array["tmp_name"]: '.$array['tmp_name'], 'info');
             if ( !empty($data) && ($fp = @fopen($array['tmp_name'], 'wb')) )
             {
                 if(@fwrite($fp, $data) && @fclose($fp))
