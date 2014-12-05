@@ -63,6 +63,9 @@ class ShopController extends Controller
         if (empty($data['external_id']))
             return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
         Yii::log('shop: setOneSparepart', 'info');
+        foreach($data as $k => $v){
+            Yii::log($k.' = '.$v, 'info');
+        }
         $app = Yii::app();
         $transaction = $app->db_auth->beginTransaction();
         try {
