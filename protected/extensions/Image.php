@@ -24,7 +24,7 @@ class Image {
         $dir = $server['DOCUMENT_ROOT'].'/'.$this->dir;
         //if(!empty($this->externalDir)) $dir = $this->externalDir; //$server['DOCUMENT_ROOT'].'/'.$this->dir;
         
-        Yii::log('===== photo dir = '.$dir, 'info');
+        //Yii::log('===== photo dir = '.$dir, 'info');
         
         $ext = end(explode('.', strtolower($array['name'])));
         

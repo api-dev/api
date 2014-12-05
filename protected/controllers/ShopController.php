@@ -76,8 +76,9 @@ class ShopController extends Controller
             }
             Yii::log('shop: attributes', 'info');
             $index = 1;
-            $photo = $this->setPhoto($index, $data['external_id']);
-            //$photo = $this->setPhoto($index, $data['image_name']);
+            Yii::log('=== Image Name = '.$data['image_name'], 'info');
+            //$photo = $this->setPhoto($index, $data['external_id']);
+            $photo = $this->setPhoto($index, $data['image_name']);
             if($photo)
                 $product->image = $photo;
             Yii::log('shop: before save', 'info');
@@ -148,9 +149,10 @@ class ShopController extends Controller
         //foreach($return as $mes) Yii::log('=== '.$mes, 'info');
         if(is_array($return) && !empty($return)){
             $this->result('Фото запчасти '.$photo['login'].' успешно загружено');
-            //$ext = end(explode('.', strtolower($photo['name'])));
-            //$link = '/'.$dir.'/'.$photo['login'].'.'.$ext;
-            return $return[link]; // !!! return $link;
+            //return $return[link];
+            $ext = end(explode('.', strtolower($photo['name'])));
+            $link = '/'.$dir.'/'.$photo['login'].'.'.$ext;
+            return $link;
         } else {
             $this->result($return);
         }
