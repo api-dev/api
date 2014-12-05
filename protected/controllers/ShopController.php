@@ -77,6 +77,7 @@ class ShopController extends Controller
             Yii::log('shop: attributes', 'info');
             $index = 1;
             $photo = $this->setPhoto($index, $data['external_id']);
+            //$photo = $this->setPhoto($index, $data['image_name']);
             if($photo)
                 $product->image = $photo;
             Yii::log('shop: before save', 'info');
@@ -96,7 +97,7 @@ class ShopController extends Controller
         }
     }
     
-    private function setPhoto($index, $externalId)
+    private function setPhoto($index, $name)
     {   Yii::log('shop: setPhoto', 'info');
         if(!empty($_FILES))
         {   Yii::log('shop: photo !empty', 'info');
@@ -113,14 +114,14 @@ class ShopController extends Controller
                 Yii::log('photo: tmp_name '.$tmp_name[$index], 'info');
                 Yii::log('photo: error '.$uploadFile['error'][$index], 'info');
                 Yii::log('photo: size '.$uploadFile['size'][$index], 'info');
-                Yii::log('photo: id '.$externalId, 'info');
+                Yii::log('photo: id '.$name, 'info');
                 return $this->setOnePhoto(array(
                     'name' => $uploadFile['name'][$index],
                     'type' => $uploadFile['type'][$index],
                     'tmp_name' => $tmp_name[$index],
                     'error' => $uploadFile['error'][$index],
                     'size' => $uploadFile['size'][$index],
-                    'login' => $externalId,
+                    'login' => $name,
                 ));
             }else Yii::log('shop: no index', 'info');
         } else Yii::log('shop: photo empty', 'info');
