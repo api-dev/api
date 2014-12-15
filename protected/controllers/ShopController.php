@@ -207,14 +207,14 @@ class ShopController extends Controller
             } else {
                 $root = ProductGroup::model()->findByPk($parentId);
             }
-
-            if ($group->id && $data['inner']) {
-                $this->setOneGroup($data['inner'], $group->id); 
-            }
             
             if($group->appendTo($root)){
                 $transaction->commit();
                 return $this->result('Сохранение группы '.$group->external_id.' произошло успешно.');
+            }
+            
+            if ($group->id && $data['inner']) {
+                $this->setOneGroup($data['inner'], $group->id); 
             }
             
             Yii::log('shop group: after save', 'info');
