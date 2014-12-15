@@ -232,7 +232,7 @@ class ShopController extends Controller
             }
             
             if($group->id) {
-                if($group->moveAsLast($root)) $commit = true;
+                if($group->moveAsFirst($root)) $commit = true;
             } else {
                 if($group->appendTo($root)) $commit = true;
             }

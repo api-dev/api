@@ -5,6 +5,7 @@
     <!--a href="#addtr">Добавление/редактирование производителя техники</a-->
     <a href="#addtr">Добавление/редактирование запчастей</a>
     <a href="#addgroup">Добавление/редактирование группы запчастей</a>
+    <a href="#addcategory">Добавление/редактирование категорий</a>
 </div>
 <div class="item">
     <h4><a name="addtr">Добавление/редактирование запчастей</a></h4>
@@ -91,7 +92,7 @@
             </li>
         </ul>
         <div class="h2">Примеры:</div>
-        <p>Пример добавляет/редактирует двух производителей запчастей:</p>
+        <p>Пример добавляет/редактирует две группы:</p>
         <pre style='font-size: 11px;'>
             action = 'group'
             data[1][external_id] = '3333333'
@@ -100,6 +101,43 @@
             data[1][inner][1][name] = 'Болты'
             data[1][inner][2][external_id] = '222222'
             data[1][inner][2][name] = 'Гайки'
+        </pre>
+    </div>
+    <h4><a name="addcategory">Добавление/редактирование категорий</a></h4>
+    <div class="text">
+        <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
+        <p>Параметры:</p>
+        <ul>
+            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>category.</b></li>
+            <li><span class="param">data</span> - массив с данными.</li>
+            <li><br>Принимаемые параметры <span class="param">data</span> при <span class="param">action=category:</span> </li>
+            <li>
+                <ul class="table">
+                    <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                    <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор группы в системе учета 1С. Уникальный. Обязательный</span> </li>
+                    <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название группы</span> </li>
+                    <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Дочерние группы:
+                            <ul class="table-inner">
+                                <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                                <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор группы в системе учета. Уникальный. Обязательный</span> </li>
+                                <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название группы</span> </li>
+                                <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Дочерние группы ...</span></li>
+                            </ul>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="h2">Примеры:</div>
+        <p>Пример добавляет/редактирует две категории:</p>
+        <pre style='font-size: 11px;'>
+            action = 'group'
+            data[1][external_id] = '3333333'
+            data[1][name] = 'Почвообработка и посев'
+            data[1][inner][1][external_id] = '111111'
+            data[1][inner][1][name] = 'Бороны дисковые'
+            data[1][inner][2][external_id] = '222222'
+            data[1][inner][2][name] = 'Бороны пружинные'
         </pre>
     </div>
 </div>
