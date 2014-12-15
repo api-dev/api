@@ -214,6 +214,7 @@ class ShopController extends Controller
             }
             
             if ($group->id && $data['inner']) {
+                Yii::log('Inner', 'info');
                 $this->setOneGroup($data['inner'], $group->id); 
             }
             
