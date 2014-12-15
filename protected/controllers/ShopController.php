@@ -41,6 +41,12 @@ class ShopController extends Controller
         $this->setGroups($request, 'Group', 'external_id');
     }
     
+    private function setCategory($request) 
+    {
+        Yii::log('shop: setCategory', 'info');
+        $this->setGroups($request, 'Category', 'external_id');
+    }
+    
     private function setItems($request, $method_name, $pk) 
     {
         $method = 'setOne' . $method_name;
@@ -172,17 +178,48 @@ class ShopController extends Controller
         /**************************/
         //test
         /*$data = array(
-            'external_id'=>'333',
-            'name'=>'333',
-            'inner'=>array(
-                'external_id'=>'22',
-                'name'=>'22',
+            0 => array(
+                'external_id'=>'333',
+                'name'=>'333',
                 'inner'=>array(
-                    'external_id'=>'11',
-                    'name'=>'11',
+                    0 => array(
+                        'external_id'=>'22',
+                        'name'=>'22',
+                        'inner'=>array(
+                            0 => array(
+                                'external_id'=>'11',
+                                'name'=>'11',
+                            ),
+                            1 => array(
+                                'external_id'=>'66',
+                                'name'=>'66',
+                            )
+                        ),
+                    ),
+                    1 => array(
+                        'external_id'=>'666',
+                        'name'=>'666',
+                        'inner'=>array(
+                            0 => array(
+                                'external_id'=>'116',
+                                'name'=>'116',
+                            ),
+                            1 => array(
+                                'external_id'=>'667',
+                                'name'=>'667',
+                            )
+                        ),
+                    ),
+                ),
+            ),
+            1 => array(
+                'external_id'=>'888',
+                'name'=>'888',
+                'inner'=>array(
                 ),
             ),
         );*/
+        
         /**************************/
         
         if (!$data || empty($data)) {
@@ -203,10 +240,15 @@ class ShopController extends Controller
     private function setOneGroup($data, $parentId = null)
     {
         $commit = false;
+        /*echo '<pre>';
+        var_dump($data);
+        echo '====================== ';
+        */
         if (empty($data['external_id']))
             return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
         Yii::log('shop: setOneGroup = '. $data['external_id'], 'info');
-
+        
         $app = Yii::app();
         $transaction = $app->db_auth->beginTransaction();
         try {
@@ -241,13 +283,83 @@ class ShopController extends Controller
                 $transaction->commit();
 
                 Yii::log('Group id '.$group->id, 'info');
-
                 if ($group->id && $data['inner']) {
                     Yii::log('Inner for ' . $group->id, 'info');
-                    $this->setOneGroup($data['inner'], $group->id); 
+                    if(is_array($data['inner'])) {
+                        foreach($data['inner'] as $item) {
+                            $this->setOneGroup($item, $group->id);
+                        }
+                    } else $this->setOneGroup($data['inner'], $group->id);
+                    
                 }
 
                 return $this->result('Сохранение группы '.$group->external_id.' произошло успешно.');
+            }
+            
+            Yii::log('shop group: after save', 'info');
+            $transaction->rollback();
+            return $this->result($group->getErrors());
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
+    }
+    
+    private function setOneCategory($data, $parentId = null)
+    {
+        $commit = false;
+        if (empty($data['external_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
+        Yii::log('shop: setOneCategory = '. $data['external_id'], 'info');
+
+        $app = Yii::app();
+        $transaction = $app->db_auth->beginTransaction();
+        try {
+            $group = Category::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
+            if (!$group) {
+                $group = new Category();
+            }
+            
+            foreach ($group as $name => $v) {
+                if (isset($data[$name]) || !empty($data[$name]))
+                    $group->$name = $data[$name];
+            }
+
+            $root = Category::model()->findByAttributes(array('level'=>1));
+            if(empty($parentId)) {
+                if(empty($root)) {
+                    $root = new Category;
+                    $root->name = 'Все категории';
+                    $root->saveNode();
+                }
+            } else {
+                $root = Category::model()->findByPk($parentId);
+            }
+            
+            if($group->id) {
+                if($group->moveAsFirst($root)) $commit = true;
+            } else {
+                if($group->appendTo($root)) $commit = true;
+            }
+            
+            if($commit) {
+                $transaction->commit();
+
+                Yii::log('Category id '.$group->id, 'info');
+
+                if ($group->id && $data['inner']) {
+                    Yii::log('Inner for ' . $group->id, 'info');
+
+                    if(is_array($data['inner'])) {
+                        foreach($data['inner'] as $item) {
+                            $this->setOneCategory($item, $group->id);
+                        }
+                    } else $this->setOneCategory($data['inner'], $group->id);
+                    
+                }
+                return $this->result('Сохранение категории '.$group->external_id.' произошло успешно.');
             }
             
             Yii::log('shop group: after save', 'info');
