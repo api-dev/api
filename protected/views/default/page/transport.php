@@ -33,7 +33,7 @@
                     <li><span class="param">description</span> <span class="type">(string)</span> <span class="info">Описание</span> </li>
                     <li><span class="param">new_transport</span> <span class="type">(int)</span> <span class="info">Произвести рассылку писем о появлении перевозки</span> </li>
                     <li><span class="param">pto</span> <span class="type">(string)</span> <span class="info">Экспорт ПТО</span> </li>
-                    <li><span class="param">points</span> <span class="type">(array)</span> <span class="info">Массив с промежуточными точками:<ul class="table">
+                    <li><span class="param">points</span> <span class="type">(array)</span> <span class="info">Массив с промежуточными точками:<ul class="table-inner">
                                 <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
                                 <li><span class="param">point</span> <span class="type">(string)</span> <span class="info">Название/место</span> </li>
                                 <li><span class="param">date</span> <span class="type">(date)</span> <span class="info">Дата. Формат - YYYY-MM-DD</span>
@@ -58,7 +58,7 @@
                     <li><span class="param">phone</span> <span class="type">(integer)</span> <span class="info">Номер телефона</span> </li>
                     <li><span class="param">phone2</span> <span class="type">(integer)</span> <span class="info">Дополнительный номер телефона</span> </li>
                     <li><span class="param">type</span> <span class="type">(integer)</span> <span class="info">Тип. 0 - общий, 1 - региональный, 2 - международный</span> </li>
-                    <li><span class="param">persons</span> <span class="type">(array)</span> <span class="info">Дополнительные контактные лица:<ul class="table">
+                    <li><span class="param">persons</span> <span class="type">(array)</span> <span class="info">Дополнительные контактные лица:<ul class="table-inner">
                                 <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
                                 <li><span class="param">email</span> <span class="type">(mixed)</span> <span class="info">E-mail адрес. Уникальный. Обязательный</span> </li>
                                 <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Имя контактного лица</span> </li>
