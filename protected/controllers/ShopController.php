@@ -205,7 +205,7 @@ class ShopController extends Controller
         $commit = false;
         if (empty($data['external_id']))
             return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
-        Yii::log('shop: setOneGroup', 'info');
+        Yii::log('shop: setOneGroup = '. $data['external_id'], 'info');
 
         $app = Yii::app();
         $transaction = $app->db_auth->beginTransaction();
@@ -243,7 +243,7 @@ class ShopController extends Controller
                 Yii::log('Group id '.$group->id, 'info');
 
                 if ($group->id && $data['inner']) {
-                    Yii::log('Inner', 'info');
+                    Yii::log('Inner for ' . $group->id, 'info');
                     $this->setOneGroup($data['inner'], $group->id); 
                 }
 
