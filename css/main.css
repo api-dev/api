@@ -128,18 +128,29 @@ a, a:link, a:active, a:visited
     border-radius: 3px;
     clear: both;
 }
-.item .text .table li
+
+.item .text .table-inner
+{
+    border-top: 1px solid rgb(205,201,196);
+    border-left: 1px solid rgb(205,201,196);
+    padding-left: 0px;
+    border-top-left-radius: 3px;
+    clear: both;
+}
+
+.item .text .table li, .item .text .table-inner li
 {
     cursor: default;
 }
 .item .text .table li:first-child
 {
-    background: rgb(205,201,196);/*rgb(245,240,235);*/
+    background: rgb(205,201,196);
 }
 .item .text .table li:not(:first-child):hover
 {
     background: rgb(245,240,235);
 }
+
 .item .text .table li .param,
 .item .text .table li .info,
 .item .text .table li .type

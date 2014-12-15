@@ -79,7 +79,7 @@
                     <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор группы в системе учета 1С. Уникальный. Обязательный</span> </li>
                     <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название группы</span> </li>
                     <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Дочерние группы:
-                            <ul class="table">
+                            <ul class="table-inner">
                                 <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
                                 <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор группы в системе учета. Уникальный. Обязательный</span> </li>
                                 <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название группы</span> </li>
