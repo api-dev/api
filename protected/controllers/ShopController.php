@@ -6,7 +6,12 @@ class ShopController extends Controller
     {
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
+        /**************************/
+        //test
+        //$get = array('m'=>'set', 'action'=>'group');
+        /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
+        
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
         Yii::log('input from shop !!!!!!!!!', 'info');
         Yii::log('shop: '.$method, 'info');
@@ -164,10 +169,26 @@ class ShopController extends Controller
         
         $data = $request['data'];
 
+        /**************************/
+        //test
+        /*$data = array(
+            'external_id'=>'333',
+            'name'=>'333',
+            'inner'=>array(
+                'external_id'=>'22',
+                'name'=>'22',
+                'inner'=>array(
+                    'external_id'=>'11',
+                    'name'=>'11',
+                ),
+            ),
+        );*/
+        /**************************/
+        
         if (!$data || empty($data)) {
             return $this->result('Ошибка. Нет данных при попытке записи групп "'.$method.'". Попробуйте еще раз.');
         }
-
+        
         if (isset($data[$pk])) {
             $this->$method($data);
         } else {
@@ -179,11 +200,13 @@ class ShopController extends Controller
         return $this->result('Выгрузка запчастей закончена.');
     }
     
-    private function setOneGroup($data, $parentId = null) 
+    private function setOneGroup($data, $parentId = null)
     {
+        $commit = false;
         if (empty($data['external_id']))
             return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
         Yii::log('shop: setOneGroup', 'info');
+
         $app = Yii::app();
         $transaction = $app->db_auth->beginTransaction();
         try {
@@ -208,14 +231,23 @@ class ShopController extends Controller
                 $root = ProductGroup::model()->findByPk($parentId);
             }
             
-            if($group->appendTo($root)){
-                $transaction->commit();
-                return $this->result('Сохранение группы '.$group->external_id.' произошло успешно.');
+            if($group->id) {
+                if($group->moveAsLast($root)) $commit = true;
+            } else {
+                if($group->appendTo($root)) $commit = true;
             }
             
-            if ($group->id && $data['inner']) {
-                Yii::log('Inner', 'info');
-                $this->setOneGroup($data['inner'], $group->id); 
+            if($commit) {
+                $transaction->commit();
+
+                Yii::log('Group id '.$group->id, 'info');
+
+                if ($group->id && $data['inner']) {
+                    Yii::log('Inner', 'info');
+                    $this->setOneGroup($data['inner'], $group->id); 
+                }
+
+                return $this->result('Сохранение группы '.$group->external_id.' произошло успешно.');
             }
             
             Yii::log('shop group: after save', 'info');
