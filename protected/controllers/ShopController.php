@@ -8,7 +8,7 @@ class ShopController extends Controller
         $get = filter_input_array(INPUT_GET);
         /**************************/
         //test
-        //$get = array('m'=>'set', 'action'=>'group');
+        $get = array('m'=>'set', 'action'=>'category');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -177,48 +177,32 @@ class ShopController extends Controller
 
         /**************************/
         //test
-        /*$data = array(
+        $data = array(
             0 => array(
                 'external_id'=>'333',
-                'name'=>'333',
+                'name'=>'Почвообработка и посев',
                 'inner'=>array(
                     0 => array(
                         'external_id'=>'22',
-                        'name'=>'22',
+                        'name'=>'Бороны дисковые',
                         'inner'=>array(
-                            0 => array(
-                                'external_id'=>'11',
-                                'name'=>'11',
-                            ),
-                            1 => array(
-                                'external_id'=>'66',
-                                'name'=>'66',
-                            )
                         ),
                     ),
                     1 => array(
                         'external_id'=>'666',
-                        'name'=>'666',
+                        'name'=>'lkjlkjlkj',
                         'inner'=>array(
-                            0 => array(
-                                'external_id'=>'116',
-                                'name'=>'116',
-                            ),
-                            1 => array(
-                                'external_id'=>'667',
-                                'name'=>'667',
-                            )
                         ),
                     ),
                 ),
             ),
             1 => array(
                 'external_id'=>'888',
-                'name'=>'888',
+                'name'=>'!! Тестовый',
                 'inner'=>array(
                 ),
             ),
-        );*/
+        );
         
         /**************************/
         
@@ -274,7 +258,8 @@ class ShopController extends Controller
             }
             
             if($group->id) {
-                if($group->moveAsFirst($root)) $commit = true;
+                $group->saveNode();
+                if($group->moveAsLast($root)) $commit = true;
             } else {
                 if($group->appendTo($root)) $commit = true;
             }
@@ -306,7 +291,7 @@ class ShopController extends Controller
         }
     }
     
-    private function setOneCategory($data, $parentId = null)
+    private function setOneCategory($data, $parentId = null, $prefix = '')
     {
         $commit = false;
         if (empty($data['external_id']))
@@ -317,54 +302,57 @@ class ShopController extends Controller
         $app = Yii::app();
         $transaction = $app->db_auth->beginTransaction();
         try {
-            $group = Category::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
-            if (!$group) {
-                $group = new Category();
+            $category = ProductCategory::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
+            if (!$category) {
+                $category = new ProductCategory();
             }
             
-            foreach ($group as $name => $v) {
-                if (isset($data[$name]) || !empty($data[$name]))
-                    $group->$name = $data[$name];
+            foreach ($category as $name => $v) {
+                if (isset($data[$name]) || !empty($data[$name])){
+                    $category->$name = $data[$name];
+                }
+                if(!empty($category->name)) $category->path = $prefix.'/'.Translite::rusencode($category->name);
             }
 
-            $root = Category::model()->findByAttributes(array('level'=>1));
+            $root = ProductCategory::model()->findByAttributes(array('level'=>1));
             if(empty($parentId)) {
                 if(empty($root)) {
-                    $root = new Category;
+                    $root = new ProductCategory;
                     $root->name = 'Все категории';
                     $root->saveNode();
                 }
             } else {
-                $root = Category::model()->findByPk($parentId);
+                $root = ProductCategory::model()->findByPk($parentId);
             }
             
-            if($group->id) {
-                if($group->moveAsFirst($root)) $commit = true;
+            if($category->id) {
+                $category->saveNode();
+                if($category->moveAsLast($root)) $commit = true;
             } else {
-                if($group->appendTo($root)) $commit = true;
+                if($category->appendTo($root)) $commit = true;
             }
             
             if($commit) {
                 $transaction->commit();
 
-                Yii::log('Category id '.$group->id, 'info');
+                Yii::log('Category id '.$category->id, 'info');
 
-                if ($group->id && $data['inner']) {
-                    Yii::log('Inner for ' . $group->id, 'info');
+                if ($category->id && $data['inner']) {
+                    Yii::log('Inner for ' . $category->id, 'info');
 
                     if(is_array($data['inner'])) {
                         foreach($data['inner'] as $item) {
-                            $this->setOneCategory($item, $group->id);
+                            $this->setOneCategory($item, $category->id, $category->path);
                         }
-                    } else $this->setOneCategory($data['inner'], $group->id);
+                    } else $this->setOneCategory($data['inner'], $category->id, $category->path);
                     
                 }
-                return $this->result('Сохранение категории '.$group->external_id.' произошло успешно.');
+                return $this->result('Сохранение категории '.$category->external_id.' произошло успешно.');
             }
             
             Yii::log('shop group: after save', 'info');
             $transaction->rollback();
-            return $this->result($group->getErrors());
+            return $this->result($category->getErrors());
         } catch (Exception $e) {
             $this->result("Исключение: " . $e->getMessage() . "\n");
             $transaction->rollback();
