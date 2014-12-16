@@ -27,7 +27,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php
 
 <Limit POST>
-SetEnvIf Request_URI "^/(us|tr|kp)" NO_AUTH
+SetEnvIf Request_URI "^/(us|tr|kp|shop)" NO_AUTH
 
 AuthType Basic  
 AuthName "Sorry, access denied."
