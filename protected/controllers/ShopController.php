@@ -311,7 +311,7 @@ class ShopController extends Controller
                 if (isset($data[$name]) || !empty($data[$name])){
                     $category->$name = $data[$name];
                 }
-                if(!empty($category->name)) $category->path = $prefix.'/'.Translite::rusencode($category->name);
+                if(!empty($category->name)) $category->path = $prefix.'/'.Translite::rusencode($category->name, '-');
             }
 
             $root = ProductCategory::model()->findByAttributes(array('level'=>1));
