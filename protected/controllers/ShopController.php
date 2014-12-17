@@ -199,11 +199,12 @@ class ShopController extends Controller
             1 => array(
                 'external_id'=>'888',
                 'name'=>'!! Тестовый',
+                'published'=>'0',
                 'inner'=>array(
                 ),
             ),
-        );*/
-        
+        );
+        */
         /**************************/
         
         if (!$data || empty($data)) {
@@ -311,6 +312,10 @@ class ShopController extends Controller
                 if (isset($data[$name]) || !empty($data[$name])){
                     $category->$name = trim($data[$name]);
                 }
+                
+                if(isset($data['published'])) $category->published = (bool)((int)$data['published']);
+                else $category->published = true;
+                
                 if(!empty($category->name)) $category->path = $prefix.'/'.Translite::rusencode($category->name, '-');
             }
 
@@ -319,6 +324,7 @@ class ShopController extends Controller
                 if(empty($root)) {
                     $root = new ProductCategory;
                     $root->name = 'Все категории';
+                    $root->published = true;
                     $root->saveNode();
                 }
             } else {

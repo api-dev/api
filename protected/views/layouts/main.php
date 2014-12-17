@@ -17,12 +17,13 @@
         <li><a href="/?view=user">Пользователи</a></li>
         <li><a href="/?view=transport">Биржа</a></li>
         <li><a href="/?view=shop">Магазин</a></li>
+        <li><a href="http://www.lbr.ru/users/login/">Вход на сайт ЛБР</a></li>
         <li class="login"><?php
     $app = Yii::app();
     if(!$app->user->isGuest)
-        echo CHtml::link('Выход', 'http://auth.lbr.ru/logout/', array('class'=>'logout'));
+        echo CHtml::link('Выход из Api', 'http://auth.lbr.ru/logout/', array('class'=>'logout'));
     else
-        echo CHtml::link('Вход', 'http://auth.lbr.ru/', array('class'=>'login'));
+        echo CHtml::link('Вход в Api', 'http://auth.lbr.ru/', array('class'=>'login'));
     ?></li>
     </ul>
 </div>
