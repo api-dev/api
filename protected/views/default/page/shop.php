@@ -6,7 +6,7 @@
     <a href="#addtr">Добавление/редактирование запчастей</a>
     <a href="#addgroup">Добавление/редактирование группы запчастей</a>
     <a href="#addcategory">Добавление/редактирование категорий</a>
-    <!--a href="#addmodelline">Добавление/редактирование модельного ряда</a-->
+    <a href="#addmodelline">Добавление/редактирование модельных рядов и моделей</a>
 </div>
 <div class="item">
     <h4><a name="addtr">Добавление/редактирование запчастей</a></h4>
@@ -143,7 +143,7 @@
             data[0][inner][1][name] = 'Бороны пружинные'
         </pre>
     </div>
-    <!--h4><a name="addmodelline">Добавление/редактирование модельного ряда и модели</a></h4>
+    <h4><a name="addmodelline">Добавление/редактирование модельных рядов и моделей</a></h4>
     <div class="text">
         <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
         <p>Параметры:</p>
@@ -156,13 +156,15 @@
                     <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
                     <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор группы в системе учета 1С. Уникальный. Обязательный</span> </li>
                     <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название модельного ряда</span> </li>
-                    <li><span class="param">category_id</span> <span class="type">(string)</span> <span class="info">ID категории в 1С, которой принадлежит модельный ряд</span> </li>
+                    <li><span class="param">category</span> <span class="type">(string)</span> <span class="info">ID категории в 1С, которой принадлежит модельный ряд</span> </li>
+                    <li><span class="param">published</span> <span class="type">(int)</span> <span class="info">Отображать модельный ряд пользователям (1) или нет (0)</span> </li>
                     <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Дочерние модели:
                             <ul class="table-inner">
                                 <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
                                 <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор группы в системе учета. Уникальный. Обязательный</span> </li>
                                 <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название модели</span> </li>
-                                <li><span class="param">category_id</span> <span class="type">(string)</span> <span class="info">ID категории в 1С, которой принадлежит модель</span> </li>
+                                <li><span class="param">category</span> <span class="type">(string)</span> <span class="info">ID категории в 1С, которой принадлежит модель</span> </li>
+                                <li><span class="param">published</span> <span class="type">(int)</span> <span class="info">Отображать модель пользователям (1) или нет (0)</span> </li>
                                 <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Дочерние модели ...</span></li>
                             </ul>
                         </span>
@@ -184,5 +186,5 @@
             data[0][inner][1][name] = '2N-3010'
             data[0][inner][1][category_id] = 'MNS0004523'
         </pre>
-    </div-->
+    </div>
 </div>

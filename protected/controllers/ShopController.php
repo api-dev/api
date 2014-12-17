@@ -8,46 +8,28 @@ class ShopController extends Controller
         $get = filter_input_array(INPUT_GET);
         /**************************/
         //test
-        //$get = array('m'=>'set', 'action'=>'category');
+        //$get = array('m'=>'set', 'action'=>'modelline');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
         Yii::log('input from shop !!!!!!!!!', 'info');
         Yii::log('shop: '.$method, 'info');
-        /*
-        foreach($request['data'] as $v){
-            foreach($v as $k=>$v2){
-                Yii::log('(input) '.$k.' = '.$v2, 'info');
-            }
-        }
-        */
-        
+
         if (method_exists($this, $method)) {
             $this->$method($request);
         } else
             return $this->result('Неверные параметры. Допустимые: m - set; action - sparepart. Полученные: m=' . $request['m'] . ', action=' . $request['action']);
     }
-
+    
+    /*-------- Set Sparepart --------*/
     private function setSparepart($request) 
     {
         Yii::log('shop: setSparepart', 'info');
         $this->setItems($request, 'Sparepart', 'external_id');
     }
     
-    private function setGroup($request) 
-    {
-        Yii::log('shop: setGroup', 'info');
-        $this->setGroups($request, 'Group', 'external_id');
-    }
-    
-    private function setCategory($request) 
-    {
-        Yii::log('shop: setCategory', 'info');
-        $this->setGroups($request, 'Category', 'external_id');
-    }
-    
-    private function setItems($request, $method_name, $pk) 
+    private function setItems($request, $method_name, $pk, $parentId = false) 
     {
         $method = 'setOne' . $method_name;
         if (!method_exists($this, $method))
@@ -55,6 +37,43 @@ class ShopController extends Controller
 
         $data = $request['data'];
 
+        /**************************/
+        //test
+        /*
+        $data = array(
+            0 => array(
+                'external_id'=>'333',
+                'name'=>'Почвообработка и посев',
+                'category'=>'333',
+                'inner'=>array(
+                    0 => array(
+                        'external_id'=>'22',
+                        'name'=>'Бороны дисковые',
+                        'category'=>'333',
+                        'inner'=>array(
+                        ),
+                    ),
+                    1 => array(
+                        'external_id'=>'666',
+                        'name'=>'lkjlkjlkj',
+                        'category'=>'333',
+                        'inner'=>array(
+                        ),
+                    ),
+                ),
+            ),
+            1 => array(
+                'external_id'=>'888',
+                'name'=>'!! Тестовый',
+                'published'=>'0',
+                'category'=>'666',
+                'inner'=>array(
+                ),
+            ),
+        );
+        */
+        /**************************/
+        
         if (!$data || empty($data)) {
             return $this->result('Ошибка. Нет данных при вызове метода "'.$method.'". Попробуйте еще раз.');
         }
@@ -62,13 +81,20 @@ class ShopController extends Controller
         if (isset($data[$pk])) {
             $this->$method($data);
         } else {
-            foreach ($data as $i=>$item):
-                $this->$method($item, $i);
-            endforeach;
+            if($parentId){
+                foreach ($data as $i=>$item):
+                    $this->$method($item);
+                endforeach;
+            } else {
+                foreach ($data as $i=>$item):
+                    $this->$method($item, $i);
+                endforeach;    
+            }
         }
         
-        return $this->result('Выгрузка запчастей закончена.');
+        return $this->result('Выгрузка данных в магазин закончена.');
     }
+    
     private function setOneSparepart($data, $index = 1) 
     {
         if (empty($data['external_id']))
@@ -161,74 +187,18 @@ class ShopController extends Controller
             $this->result($return);
         }
     }
+    /*-------- End Set Sparepart --------*/
+    /*-------- Set Groups ---------------*/
     
-    private function result($text) {
-        $this->renderPartial('index', array('text' => $text));
-        return false;
-    }
-    
-    private function setGroups($request, $method_name, $pk) 
+    private function setGroup($request) 
     {
-        $method = 'setOne' . $method_name;
-        if (!method_exists($this, $method))
-            return $this->result('Системная ошибка. Метод "'.$method.'" не найден.');
-        
-        $data = $request['data'];
-
-        /**************************/
-        //test
-        /*$data = array(
-            0 => array(
-                'external_id'=>'333',
-                'name'=>'Почвообработка и посев',
-                'inner'=>array(
-                    0 => array(
-                        'external_id'=>'22',
-                        'name'=>'Бороны дисковые',
-                        'inner'=>array(
-                        ),
-                    ),
-                    1 => array(
-                        'external_id'=>'666',
-                        'name'=>'lkjlkjlkj',
-                        'inner'=>array(
-                        ),
-                    ),
-                ),
-            ),
-            1 => array(
-                'external_id'=>'888',
-                'name'=>'!! Тестовый',
-                'published'=>'0',
-                'inner'=>array(
-                ),
-            ),
-        );
-        */
-        /**************************/
-        
-        if (!$data || empty($data)) {
-            return $this->result('Ошибка. Нет данных при попытке записи групп "'.$method.'". Попробуйте еще раз.');
-        }
-        
-        if (isset($data[$pk])) {
-            $this->$method($data);
-        } else {
-            foreach ($data as $i=>$item):
-                $this->$method($item);
-            endforeach;
-        }
-        
-        return $this->result('Выгрузка запчастей закончена.');
+        Yii::log('shop: setGroup', 'info');
+        $this->setItems($request, 'Group', 'external_id', true);
     }
     
     private function setOneGroup($data, $parentId = null)
     {
         $commit = false;
-        /*echo '<pre>';
-        var_dump($data);
-        echo '====================== ';
-        */
         if (empty($data['external_id']))
             return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
         
@@ -282,7 +252,6 @@ class ShopController extends Controller
                 return $this->result('Сохранение группы '.$group->external_id.' произошло успешно.');
             }
             
-            Yii::log('shop group: after save', 'info');
             $transaction->rollback();
             return $this->result($group->getErrors());
         } catch (Exception $e) {
@@ -290,6 +259,14 @@ class ShopController extends Controller
             $transaction->rollback();
             return false;
         }
+    }
+    /*-------- End Set Groups --------*/
+    /*-------- Set Category ----------*/
+    
+    private function setCategory($request) 
+    {
+        Yii::log('shop: setCategory', 'info');
+        $this->setItems($request, 'Category', 'external_id', true);
     }
     
     private function setOneCategory($data, $parentId = null, $prefix = '')
@@ -356,7 +333,6 @@ class ShopController extends Controller
                 return $this->result('Сохранение категории '.$category->external_id.' произошло успешно.');
             }
             
-            Yii::log('shop group: after save', 'info');
             $transaction->rollback();
             return $this->result($category->getErrors());
         } catch (Exception $e) {
@@ -364,6 +340,96 @@ class ShopController extends Controller
             $transaction->rollback();
             return false;
         }
+    }
+    /*-------- End Set Category --------*/
+    /*-------- Set Modelline -----------*/
+    private function setModelline($request)
+    {
+        Yii::log('shop: setModelline', 'info');
+        $this->setItems($request, 'Modelline', 'external_id', true);
+    }
+    
+    private function setOneModelline($data, $parentId = null, $prefix = '')
+    {
+        $commit = false;
+        if (empty($data['external_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
+        Yii::log('shop: setOneModelLine = '. $data['external_id'], 'info');
+        
+        $app = Yii::app();
+        $transaction = $app->db_auth->beginTransaction();
+        try {
+            $modelLine = ProductModelLine::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
+            if (!$modelLine) {
+                $modelLine = new ProductModelLine();
+            }
+            
+            foreach ($modelLine as $name => $v) {
+                if (isset($data[$name]) || !empty($data[$name])){
+                    $modelLine->$name = trim($data[$name]);
+                }
+                
+                if(isset($data['published'])) $modelLine->published = (bool)((int)$data['published']);
+                else $modelLine->published = true;
+                
+                $category = ProductCategory::model()->find('external_id = :external_id', array(':external_id' => $data['category']));
+                if(!empty($category))$modelLine->category_id = $category->id;
+
+                if(!empty($modelLine->name)) $modelLine->path = $prefix.'/'.Translite::rusencode($modelLine->name, '-');
+            }
+
+            $root = ProductModelLine::model()->findByAttributes(array('level'=>1));
+            if(empty($parentId)) {
+                if(empty($root)) {
+                    $root = new ProductModelLine;
+                    $root->name = 'Все модельные ряды';
+                    $root->published = true;
+                    $root->saveNode();
+                }
+            } else {
+                $root = ProductModelLine::model()->findByPk($parentId);
+            }
+            
+            if($modelLine->id) {
+                $modelLine->saveNode();
+                if($modelLine->moveAsLast($root)) $commit = true;
+            } else {
+                if($modelLine->appendTo($root)) $commit = true;
+            }
+            
+            if($commit) {
+                $transaction->commit();
+
+                Yii::log('Modelline id '.$modelLine->id, 'info');
+
+                if ($modelLine->id && $data['inner']) {
+                    Yii::log('Inner for ' . $modelLine->id, 'info');
+
+                    if(is_array($data['inner'])) {
+                        foreach($data['inner'] as $item) {
+                            $this->setOneModelline($item, $modelLine->id, $modelLine->path);
+                        }
+                    } else $this->setOneModelline($data['inner'], $modelLine->id, $modelLine->path);
+                    
+                }
+                return $this->result('Сохранение модели '.$modelLine->external_id.' произошло успешно.');
+            }
+            
+            $transaction->rollback();
+            return $this->result($modelLine->getErrors());
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
+    }
+    
+    /*-------- End Set Modelline --------*/
+    
+    private function result($text) {
+        $this->renderPartial('index', array('text' => $text));
+        return false;
     }
 }
 
