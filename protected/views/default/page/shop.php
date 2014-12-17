@@ -22,10 +22,10 @@
                     <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
                     <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор в системе учета 1С. Уникальный. Обязательный</span> </li>
                     <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название запчасти</span> </li>
-                    <li><span class="param">product_group_id</span> <span class="type">(int)</span> <span class="info">ID группы в 1С</span> </li>
+                    <li><span class="param">product_group</span> <span class="type">(string)</span> <span class="info">ID группы в 1С, которой принадлежит запчасть</span> </li>
                     <!--li><span class="param">price_id</span> <span class="type">(int)</span> <span class="info">ID группы цен в 1С</span> </li-->
                     <li><span class="param">catalog_number</span> <span class="type">(string)</span> <span class="info">Каталожный номер</span> </li>
-                    <li><span class="param">product_maker_id</span> <span class="type">(int)</span> <span class="info">ID производителя запчастей в 1С</span> </li>
+                    <li><span class="param">product_maker</span> <span class="type">(string)</span> <span class="info">ID производителя в 1С, которой принадлежит запчасть</span> </li>
                     <li><span class="param">count</span> <span class="type">(int)</span> <span class="info">Количество в наличии</span> </li>
                     <li><span class="param">min_quantity</span> <span class="type">(int)</span> <span class="info">Минимальное количество для заказа</span> </li>
                     <li><span class="param">liquidity</span> <span class="type">(string)</span> <span class="info">Ликвидность</span> </li>
