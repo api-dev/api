@@ -243,7 +243,7 @@ class ShopController extends Controller
             
             foreach ($group as $name => $v) {
                 if (isset($data[$name]) || !empty($data[$name]))
-                    $group->$name = $data[$name];
+                    $group->$name = trim($data[$name]);
             }
 
             $root = ProductGroup::model()->findByAttributes(array('level'=>1));
@@ -309,7 +309,7 @@ class ShopController extends Controller
             
             foreach ($category as $name => $v) {
                 if (isset($data[$name]) || !empty($data[$name])){
-                    $category->$name = $data[$name];
+                    $category->$name = trim($data[$name]);
                 }
                 if(!empty($category->name)) $category->path = $prefix.'/'.Translite::rusencode($category->name, '-');
             }
