@@ -2,13 +2,13 @@
 
 class ShopController extends Controller
 {
-    public function actionIndex() 
+    public function actionIndex()
     {
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
         //test
-        //$get = array('m'=>'set', 'action'=>'modelline');
+        $get = array('m'=>'set', 'action'=>'productmaker');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -39,39 +39,21 @@ class ShopController extends Controller
 
         /**************************/
         //test
-        /*
-        $data = array(
+        
+        /*$data = array(
             0 => array(
-                'external_id'=>'333',
-                'name'=>'Почвообработка и посев',
-                'category'=>'333',
+                'product_id'=>'UPR0000334',
                 'inner'=>array(
                     0 => array(
-                        'external_id'=>'22',
-                        'name'=>'Бороны дисковые',
-                        'category'=>'333',
-                        'inner'=>array(
-                        ),
+                        'analog_id'=>'UPR0023594',
                     ),
                     1 => array(
-                        'external_id'=>'666',
-                        'name'=>'lkjlkjlkj',
-                        'category'=>'333',
-                        'inner'=>array(
-                        ),
+                        'analog_id'=>'TRM0000966',
                     ),
                 ),
             ),
-            1 => array(
-                'external_id'=>'888',
-                'name'=>'!! Тестовый',
-                'published'=>'0',
-                'category'=>'666',
-                'inner'=>array(
-                ),
-            ),
-        );
-        */
+        );*/
+        
         /**************************/
         
         if (!$data || empty($data)) {
@@ -151,7 +133,7 @@ class ShopController extends Controller
                     'type' => $uploadFile['type'][$index],
                     'tmp_name' => $tmp_name[$index],
                     'error' => $uploadFile['error'][$index],
-                    'size' => $uploadFile['size'][$index],
+                    'size'  => $uploadFile['size'][$index],
                     'login' => $name,
                 ));
             }else Yii::log('shop: no index', 'info');
@@ -426,6 +408,361 @@ class ShopController extends Controller
     }
     
     /*-------- End Set Modelline --------*/
+    /*-------- Set ModelProduct --------*/
+    
+    private function setModelProduct($request) 
+    {
+        Yii::log('shop: setModelProduct', 'info');
+        $this->setItems($request, 'ModelProduct', 'model_line');
+    }
+    
+    private function setOneModelProduct($data)
+    {
+        if (empty($data['model_line']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
+        Yii::log('shop: setOneModelProduct = '. $data['model_line'], 'info');
+        
+        try {
+            $model = ProductModelLine::model()->find('external_id=:external_id', array(':external_id' => $data['model_line']));
+            if (!$model) {
+                return $this->result('Ошибка. Модель не найдена.');
+            }
+            
+            ProductInModelLine::model()->deleteAll('model_line_id=:model_line_id', array(':model_line_id' => $model->id));
+            if(is_array($data['inner'])) {
+                foreach($data['inner'] as $item) {
+                    $this->saveProductInModel($item['product_id'], $model->id);
+                }
+                return $this->result('Выгрузка продуктов для модельного ряда '.$data['model_line'].' закончена.');
+            } 
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
+    }
+    
+    private function saveProductInModel($id, $modelId)
+    {
+        $app = Yii::app();
+        $product = Product::model()->find('external_id=:external_id', array(':external_id' => $id));
+        if($product) {
+            $transaction = $app->db_auth->beginTransaction();
+            $element = new ProductInModelLine;
+            $element->model_line_id = $modelId;
+            $element->product_id = $product->id;
+            if($element->save()) {
+                $transaction->commit();
+                return $this->result('Сохранение продукта (id = '.$id.') в модельный ряд произошло успешно.');
+            } else {
+                $transaction->rollback();
+                return $this->result($element->getErrors());
+            }
+        } else {
+            return $this->result('Ошибка. Продукт с id='.$id.' не найден.');
+        }
+    }
+    /*-------- End Set ModelProduct --------*/
+    /*-------- Set RelatedProduct ----------*/
+    private function setRelatedProduct($request) 
+    {
+        Yii::log('shop: setRelatedProduct', 'info');
+        $this->setItems($request, 'RelatedProduct', 'product_id');
+    }
+    
+    private function setOneRelatedProduct($data)
+    {
+        if (empty($data['product_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
+        Yii::log('shop: setOneRelatedProduct = '. $data['product_id'], 'info');
+        
+        try {
+            $model = Product::model()->find('external_id=:external_id', array(':external_id' => $data['product_id']));
+            if (!$model) {
+                return $this->result('Ошибка. Продукт не найден.');
+            }
+            
+            RelatedProduct::model()->deleteAll('product_id=:product_id', array(':product_id' => $model->id));
+            if(is_array($data['inner'])) {
+                foreach($data['inner'] as $item) {
+                    $this->saveRelatedProduct($item['related_id'], $model->id);
+                }
+                return $this->result('Выгрузка сопутствующих товаров для продукта '.$data['product_id'].' закончена.');
+            } 
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
+    }
+    
+    private function saveRelatedProduct($id, $modelId)
+    {
+        $app = Yii::app();
+        $product = Product::model()->find('external_id=:external_id', array(':external_id' => $id));
+        if($product) {
+            $transaction = $app->db_auth->beginTransaction();
+            $element = new RelatedProduct;
+            $element->product_id = $modelId;
+            $element->related_product_id = $product->id;
+            if($element->save()) {
+                $transaction->commit();
+                return $this->result('Сохранение сопутствующего товара (id = '.$id.') произошло успешно.');
+            } else {
+                $transaction->rollback();
+                return $this->result($element->getErrors());
+            }
+        } else {
+            return $this->result('Ошибка. Сопутствующий товар с id='.$id.' не найден.');
+        }
+    }
+    /*-------- End Set RelatedProduct ------*/
+    /*-------- Set AnalogProduct -----------*/
+    private function setAnalogProduct($request)
+    {
+        Yii::log('shop: setAnalogProduct', 'info');
+        $this->setItems($request, 'AnalogProduct', 'product_id');
+    }
+    
+    private function setOneAnalogProduct($data)
+    {
+        if (empty($data['product_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
+        Yii::log('shop: setOneAnalogProduct = '. $data['product_id'], 'info');
+        
+        try {
+            $model = Product::model()->find('external_id=:external_id', array(':external_id' => $data['product_id']));
+            if (!$model) {
+                return $this->result('Ошибка. Продукт не найден.');
+            }
+            
+            AnalogProduct::model()->deleteAll('product_id=:product_id', array(':product_id' => $model->id));
+            if(is_array($data['inner'])) {
+                foreach($data['inner'] as $item) {
+                    $this->saveAnalogProduct($item['analog_id'], $model->id);
+                }
+                return $this->result('Выгрузка аналогов для продукта '.$data['product_id'].' закончена.');
+            } 
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
+    }
+    
+    private function saveAnalogProduct($id, $modelId)
+    {
+        $app = Yii::app();
+        $product = Product::model()->find('external_id=:external_id', array(':external_id' => $id));
+        if($product) {
+            $transaction = $app->db_auth->beginTransaction();
+            $element = new AnalogProduct;
+            $element->product_id = $modelId;
+            $element->analog_product_id = $product->id;
+            if($element->save()) {
+                $transaction->commit();
+                return $this->result('Сохранение аналога (id = '.$id.') произошло успешно.');
+            } else {
+                $transaction->rollback();
+                return $this->result($element->getErrors());
+            }
+        } else {
+            return $this->result('Ошибка. Аналог с id='.$id.' не найден.');
+        }
+    }
+    /*-------- End Set AnalogProduct ------*/
+    /*-------- Set ProductMaker -----------*/
+    private function setProductMaker($request)
+    {
+        Yii::log('shop: setProductMaker', 'info');
+        $this->setMaker($request, 'ProductMaker', 'external_id');
+    }
+    
+    private function setMaker($request, $method_name, $pk, $parentId = false) 
+    {
+        $method = 'setOne' . $method_name;
+        if (!method_exists($this, $method))
+            return $this->result('Системная ошибка. Метод "'.$method.'" не найден.');
+
+        $data = $request['data'];
+        
+        /**************************/
+        //test
+        
+        
+        $data = array(
+            0 => array(
+                'external_id'=>'55555',
+                'name'=>'kljlkj',
+            ),
+        );
+        
+        
+        /**************************/
+        
+        if (!$data || empty($data)) {
+            return $this->result('Ошибка. Нет данных при вызове метода "'.$method.'". Попробуйте еще раз.');
+        }
+
+        if (isset($data[$pk])) {
+            $this->$method($data, $model_name);
+        } else {
+            foreach ($data as $item):
+                $this->$method($item, $model_name);
+            endforeach;
+        }
+        
+        return $this->result('Выгрузка данных в магазин закончена.');
+    }
+    
+    private function setOneProductMaker($data, $model_name)
+    {
+        if (empty($data['external_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
+        Yii::log('shop: setOneProductMaker = '. $data['external_id'], 'info');
+        
+        try {
+            $model = ProductMaker::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
+            if (!$model)
+                $model = new ProductMaker;
+            
+            $app = Yii::app();
+            $transaction = $app->db_auth->beginTransaction();
+            foreach ($model as $name => $v) {
+                if (isset($data[$name]) || !empty($data[$name]))
+                    $model->$name = $data[$name];
+            }
+            
+            $model->published = true;
+            if(!empty($data['image_name'])) {
+                $index = 1;
+                $photo = $this->setMakerPhoto($index, $data['image_name']);
+                if(!empty($photo))
+                    $model->logo = $photo;
+            }
+            
+            if($model->save()) {
+                $transaction->commit();
+                return $this->result('Сохранение производителя запчастей (id = '.$data['external_id'].') произошло успешно.');
+            } else {
+                $transaction->rollback();
+                return $this->result($model->getErrors());
+            }
+            
+            return $this->result('Выгрузка производителя запчастей '.$data['external_id'].' закончена.');
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
+    }
+    
+    private function setMakerPhoto($index, $name)
+    {   Yii::log('shop: setMakerPhoto', 'info');
+        if(!empty($_FILES))
+        {   Yii::log('shop: photo !empty', 'info');
+            $uploadFile = $_FILES['datafile'];
+            $tmp_name = $uploadFile['tmp_name'];
+            if(isset($tmp_name[$index]))
+            {
+                return $this->setOneMakerPhoto(array(
+                    'name' => $uploadFile['name'][$index],
+                    'type' => $uploadFile['type'][$index],
+                    'tmp_name' => $tmp_name[$index],
+                    'error' => $uploadFile['error'][$index],
+                    'size'  => $uploadFile['size'][$index],
+                    'id' => $name,
+                ));
+            }else Yii::log('shop: no index', 'info');
+        } else Yii::log('shop: photo empty', 'info');
+        return true;
+    }
+
+    private function setOneMakerPhoto($photo)
+    {   
+        Yii::log('shop: setOnePhoto', 'info');
+        if(!$photo['id']){
+            $this->result('Запчасти '.$photo['id'].' не существует!');
+            return false;
+        }
+        
+        //$dir = 'images/product'; //$this->getPhotoDir();
+        $dir = 'images/shop/maker'; //$this->getPhotoDir();
+        Yii::log('shop: photo dir = '.$dir, 'info');
+        $image = new Image();
+        $image->mini = false;
+        $image->decode = true;
+        $image->dir = $dir;
+        // /var/www/vhosts/lbr.ru/httpdocs/shoplbr/images/product
+        //$image->externalDir = '/var/www/vhosts/lbr.ru/httpdocs/shoplbr/images/product'; //$server['DOCUMENT_ROOT'].'/../shoplbr/'.$dir;
+        $return = $image->load($photo);
+        //foreach($return as $mes) Yii::log('=== '.$mes, 'info');
+        if(is_array($return) && !empty($return)){
+            $this->result('Фото производителя '.$photo['id'].' успешно загружено');
+            //return $return[link];
+            $ext = end(explode('.', strtolower($photo['name'])));
+            $link = '/'.$dir.'/'.$photo['id'].'.'.$ext;
+            return $link;
+        } else {
+            $this->result($return);
+        }
+    }
+    
+    /*-------- End Set ProductMaker -------*/
+    /*-------- Set ProductMaker -----------*/
+    private function setEquipmentMaker($request)
+    {
+        Yii::log('shop: setEquipmentMaker', 'info');
+        $this->setMaker($request, 'EquipmentMaker', 'external_id');
+    }
+    
+    private function setOneEquipmentMaker($data, $model_name)
+    {
+        if (empty($data['external_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
+        Yii::log('shop: setOneEquipmentMaker = '. $data['external_id'], 'info');
+        
+        try {
+            $model = EquipmentMaker::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
+            if (!$model)
+                $model = new EquipmentMaker;
+            
+            $app = Yii::app();
+            $transaction = $app->db_auth->beginTransaction();
+            foreach ($model as $name => $v) {
+                if (isset($data[$name]) || !empty($data[$name]))
+                    $model->$name = $data[$name];
+            }
+            
+            $model->published = true;
+            if(!empty($data['image_name'])) {
+                $index = 1;
+                $photo = $this->setMakerPhoto($index, $data['image_name']);
+                if(!empty($photo))
+                    $model->logo = $photo;
+            }
+            
+            if($model->save()) {
+                $transaction->commit();
+                return $this->result('Сохранение производителя техники (id = '.$data['external_id'].') произошло успешно.');
+            } else {
+                $transaction->rollback();
+                return $this->result($model->getErrors());
+            }
+            
+            return $this->result('Выгрузка производителя запчастей '.$data['external_id'].' закончена.');
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
+    }
+    /*-------- End Set ProductMaker -------*/
     
     private function result($text) {
         $this->renderPartial('index', array('text' => $text));
