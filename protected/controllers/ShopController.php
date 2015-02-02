@@ -96,6 +96,12 @@ class ShopController extends Controller
                 if (isset($data[$name]) || !empty($data[$name]))
                     $product->$name = $data[$name];
             }
+            $groupId = ProductGroup::model()->find('external_id=:external_id', array(':external_id' => $data['product_group']))->id;
+            if(!empty($groupId)) $product->product_group_id = $groupId;
+            
+            $makerId = ProductMaker::model()->find('external_id=:external_id', array(':external_id' => $data['product_maker']))->id;
+            if(!empty($makerId)) $product->product_maker_id = $makerId;
+            
             Yii::log('shop: attributes', 'info');
             $index = 1;
             Yii::log('=== Image Name = '.$data['image_name'], 'info');
@@ -277,6 +283,10 @@ class ShopController extends Controller
                 
                 if(!empty($category->name)) $category->path = $prefix.'/'.Translite::rusencode($category->name, '-');
             }
+            
+            $makerId = ProductMaker::model()->find('external_id=:external_id', array(':external_id' => $data['equipment_maker']))->id;
+            if(!empty($makerId)) $product->product_maker_id = $makerId;
+            
 
             $root = ProductCategory::model()->findByAttributes(array('level'=>1));
             if(empty($parentId)) {
