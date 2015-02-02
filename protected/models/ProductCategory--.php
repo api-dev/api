@@ -10,11 +10,13 @@
  * @property integer $lft
  * @property integer $rgt
  * @property integer $parent
+ * @property integer $maker_id
  * @property boolean $published
  * @property integer $level
  * @property string $path
  *
  * The followings are the available model relations:
+ * @property EquipmentMaker $maker
  * @property ModelLine[] $modelLines
  */
 class ProductCategory extends CActiveRecord
@@ -39,11 +41,11 @@ class ProductCategory extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('lft, rgt, parent, level', 'numerical', 'integerOnly'=>true),
+			array('lft, rgt, parent, maker_id, level', 'numerical', 'integerOnly'=>true),
 			array('external_id, name, published, path', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, external_id, name, lft, rgt, parent, published, level, path', 'safe', 'on'=>'search'),
+			array('id, external_id, name, lft, rgt, parent, maker_id, published, level, path', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,6 +57,7 @@ class ProductCategory extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'maker' => array(self::BELONGS_TO, 'EquipmentMaker', 'maker_id'),
 			'modelLines' => array(self::HAS_MANY, 'ModelLine', 'category_id'),
 		);
 	}
@@ -71,6 +74,7 @@ class ProductCategory extends CActiveRecord
 			'lft' => 'Lft',
 			'rgt' => 'Rgt',
 			'parent' => 'Parent',
+			'maker_id' => 'Maker',
 			'published' => 'Published',
 			'level' => 'Level',
 			'path' => 'Path',
@@ -101,6 +105,7 @@ class ProductCategory extends CActiveRecord
 		$criteria->compare('lft',$this->lft);
 		$criteria->compare('rgt',$this->rgt);
 		$criteria->compare('parent',$this->parent);
+		$criteria->compare('maker_id',$this->maker_id);
 		$criteria->compare('published',$this->published);
 		$criteria->compare('level',$this->level);
 		$criteria->compare('path',$this->path,true);

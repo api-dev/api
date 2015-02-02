@@ -33,7 +33,7 @@
                     <li><span class="param">min_quantity</span> <span class="type">(int)</span> <span class="info">Минимальное количество для заказа</span> </li>
                     <li><span class="param">liquidity</span> <span class="type">(string)</span> <span class="info">Ликвидность</span> </li>
                     <li><span class="param">additional_info</span> <span class="type">(string)</span> <span class="info">Дополнительная информация</span> </li>
-                    <li><span class="param">image_name</span> <span class="type">(string)</span> <span class="info">Имя изображения запчасти в 1C</span> </li>
+                    <li><span class="param">image_name</span> <span class="type">(string)</span> <span class="info">Имя изображения запчасти (как она будет называться на сайте)</span> </li>
                     <li><span class="param">+ картинка</span><span class="info" style="margin-left: 100px;">Пакет данных</span></li>
                 </ul>
             </li>
@@ -67,7 +67,7 @@
                     <li><span class="param">description</span> <span class="type">(string)</span> <span class="info">Описание производителя запчастей</span> </li>
                     <!--li><span class="param">published</span> <span class="type">(string)</span><span class="info">Публиковать</span></li-->
                     <li><span class="param">country</span> <span class="type">(string)</span> <span class="info">Страна производителя</span></li>
-                    <li><span class="param">image_name</span> <span class="type">(string)</span> <span class="info">Название картинки в системе учета 1С</span></li>
+                    <li><span class="param">image_name</span> <span class="type">(string)</span> <span class="info">Название картинки (как она будет называться на сайте)</span></li>
                     <li><span class="param">+ картинка</span><span class="info" style="margin-left: 100px;">Пакет данных</span></li>
                 </ul>
             </li>
