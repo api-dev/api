@@ -6,6 +6,7 @@
     <a href="#addequipmentmaker">Добавление/редактирование производителя техники</a>
     <a href="#addcategory">Добавление/редактирование категорий</a>
     <a href="#addmodelline">Добавление/редактирование модельных рядов и моделей</a>
+    <a href="#addmodelequipment">Добавление/редактирование отношения модельных рядов к производителям техники (какой производитель закреплен за модельным рядом)</a>
     <a href="#addgroup">Добавление/редактирование группы запчастей</a>
     <a href="#addtr">Добавление/редактирование запчастей</a>
     <a href="#addmodelproduct">Добавление/редактирование отношения товаров (запчастей) к модельным рядам</a>
@@ -244,6 +245,30 @@
             data[0][model_line] = '3333333'
             data[0][inner][0][product_id] = '111111'
             data[0][inner][1][product_id] = '222222'
+        </pre>
+    </div>
+    <h4><a name="addmodelequipment">Добавление/редактирование отношения модельных рядов к производителям техники</a></h4>
+    <div class="text">
+        <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
+        <p>Параметры:</p>
+        <ul>
+            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>modelequipment.</b></li>
+            <li><span class="param">data</span> - массив с данными.</li>
+            <li><br>Принимаемые параметры <span class="param">data</span> при <span class="param">action=modelequipment:</span> </li>
+            <li>
+                <ul class="table">
+                    <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                    <li><span class="param">model</span> <span class="type">(string)</span> <span class="info">Идентефикатор модели в системе учета 1С. Уникальный. Обязательный</span></li>
+                    <li><span class="param">maker</span> <span class="type">(string)</span> <span class="info">Идентефикатор производителя техники в системе учета 1С. Уникальный. Обязательный</span></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="h2">Примеры:</div>
+        <p>Пример:</p>
+        <pre style='font-size: 11px;'>
+            action = 'modelproduct'
+            data[0][model_line] = '3333333'
+            data[0][maker] = '5555'
         </pre>
     </div>
     <h4><a name="addrelatedproduct">Добавление/редактирование сопутствующих товаров</a></h4>

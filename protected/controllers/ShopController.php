@@ -474,6 +474,55 @@ class ShopController extends Controller
         }
     }
     /*-------- End Set ModelProduct --------*/
+    /*-------- Set ModelEquipment ----------*/
+    
+    private function setModelEquipment($request) 
+    {
+        Yii::log('shop: setModelEquipment', 'info');
+        $this->setItems($request, 'ModelEquipment', 'model');
+    }
+    
+    private function setOneModelEquipment($data)
+    {
+        if (empty($data['model']) || empty($data['maker']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
+        Yii::log('shop: setOneModelEquipment (model = '.$data['model'].'; maker = '. $data['maker'].')', 'info');
+        
+        try {
+            $maker = EquipmentMaker::model()->find('external_id=:external_id', array(':external_id' => $data['maker']));
+            if (!$maker) {
+                return $this->result('Ошибка. Производитель техники не найден.');
+            }
+            
+            $model = ProductModelLine::model()->find('external_id=:external_id', array(':external_id' => $data['model']));
+            if (!$model) {
+                return $this->result('Ошибка. Модель не найдена.');
+            }
+            
+            EquipmentInModelLine::model()->deleteAll('model_id=:model_line_id', array(':model_line_id' => $model->id));
+            
+            $app = Yii::app();
+            $transaction = $app->db_auth->beginTransaction();
+            
+            $element = new EquipmentInModelLine;
+            $element->model_id = $model->id;
+            $element->maker_id = $maker->id;
+            
+            if($element->save()) {
+                $transaction->commit();
+                return $this->result('Сохранение соотношения в таблицу equipment_maker_in_model произошло успешно.');
+            } else {
+                $transaction->rollback();
+                return $this->result($element->getErrors());
+            }
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
+    }
+    /*-------- End ModelEquipment ----------*/
     /*-------- Set RelatedProduct ----------*/
     private function setRelatedProduct($request) 
     {
