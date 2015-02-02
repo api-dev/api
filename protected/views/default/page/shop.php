@@ -9,7 +9,7 @@
     <a href="#addmodelequipment">Добавление/редактирование отношения модельных рядов к производителям техники (какой производитель закреплен за модельным рядом)</a>
     <a href="#addgroup">Добавление/редактирование группы запчастей</a>
     <a href="#addtr">Добавление/редактирование запчастей</a>
-    <a href="#addmodelproduct">Добавление/редактирование отношения товаров (запчастей) к модельным рядам</a>
+    <a href="#addmodelproduct">Добавление/редактирование отношения товаров (запчастей) к модельным рядам (какие запчасти закреплены за модельным рядом)</a>
     <a href="#addrelatedproduct">Добавление/редактирование сопутствующих товаров</a>
 </div>
 <div class="item">
@@ -32,7 +32,7 @@
                     <li><span class="param">product_maker</span> <span class="type">(string)</span> <span class="info">ID производителя в 1С, которой принадлежит запчасть</span> </li>
                     <li><span class="param">count</span> <span class="type">(int)</span> <span class="info">Количество в наличии</span> </li>
                     <li><span class="param">min_quantity</span> <span class="type">(int)</span> <span class="info">Минимальное количество для заказа</span> </li>
-                    <li><span class="param">liquidity</span> <span class="type">(string)</span> <span class="info">Ликвидность</span> </li>
+                    <li><span class="param">liquidity</span> <span class="type">(string)</span> <span class="info">Ликвидность (А, В, С)</span> </li>
                     <li><span class="param">additional_info</span> <span class="type">(string)</span> <span class="info">Дополнительная информация</span> </li>
                     <li><span class="param">image_name</span> <span class="type">(string)</span> <span class="info">Имя изображения запчасти (как она будет называться на сайте)</span> </li>
                     <li><span class="param">+ картинка</span><span class="info" style="margin-left: 100px;">Пакет данных</span></li>
@@ -267,7 +267,7 @@
         <p>Пример:</p>
         <pre style='font-size: 11px;'>
             action = 'modelproduct'
-            data[0][model_line] = '3333333'
+            data[0][model] = '3333333'
             data[0][maker] = '5555'
         </pre>
     </div>
