@@ -500,20 +500,22 @@ class ShopController extends Controller
             if (!$model) {
                 return $this->result('Ошибка. Модель не найдена.');
             }
-            
+            Yii::log('shop: model ('.$model->id.') and maker('.$maker->id.') - ok', 'info');
             EquipmentInModelLine::model()->deleteAll('model_id=:model_line_id', array(':model_line_id' => $model->id));
-            
+            Yii::log('shop: after delete', 'info');
             $app = Yii::app();
             $transaction = $app->db_auth->beginTransaction();
             
             $element = new EquipmentInModelLine;
             $element->model_id = $model->id;
             $element->maker_id = $maker->id;
-            
+            Yii::log('shop: set values', 'info');
             if($element->save()) {
+                Yii::log('shop: commit', 'info');
                 $transaction->commit();
                 return $this->result('Сохранение соотношения в таблицу equipment_maker_in_model произошло успешно.');
             } else {
+                Yii::log('shop: rollback', 'info');
                 $transaction->rollback();
                 return $this->result($element->getErrors());
             }
