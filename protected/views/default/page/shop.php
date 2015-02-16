@@ -160,7 +160,7 @@
         <div class="h2">Примеры:</div>
         <p>Пример:</p>
         <pre style='font-size: 11px;'>
-            action = 'modelproduct'
+            action = 'modelequipment'
             data[0][model] = '3333333'
             data[0][maker] = '5555'
         </pre>
