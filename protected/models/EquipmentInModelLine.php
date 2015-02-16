@@ -45,7 +45,7 @@ class EquipmentModelLine extends CActiveRecord
 	/**
 	 * @return array relational rules.
 	 */
-	public function relations()
+	/*public function relations()
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
@@ -53,7 +53,7 @@ class EquipmentModelLine extends CActiveRecord
 			'model' => array(self::BELONGS_TO, 'ModelLine', 'model_id'),
 			'maker' => array(self::BELONGS_TO, 'EquipmentMaker', 'maker_id'),
 		);
-	}
+	}*/
 
 	/**
 	 * @return array customized attribute labels (name=>label)
