@@ -501,7 +501,7 @@ class ShopController extends Controller
                 return $this->result('Ошибка. Модель не найдена.');
             }
             Yii::log('shop: model ('.$model->id.') and maker('.$maker->id.') - ok', 'info');
-            EquipmentInModelLine::model()->deleteAll('model_id=:model_line_id', array(':model_line_id' => $model->id));
+            //EquipmentInModelLine::model()->deleteAll('model_id=:model_line_id', array(':model_line_id' => $model->id));
             Yii::log('shop: after delete', 'info');
             $app = Yii::app();
             $transaction = $app->db_auth->beginTransaction();
