@@ -111,6 +111,7 @@
                     <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор в системе учета 1С. Уникальный. Обязательный</span> </li>
                     <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название модельного ряда</span> </li>
                     <li><span class="param">category</span> <span class="type">(string)</span> <span class="info">ID категории в 1С, которой принадлежит модельный ряд</span> </li>
+                    <li><span class="param">maker</span> <span class="type">(string)</span> <span class="info">ID производителя техники в 1С, которому принадлежит модельный ряд</span> </li>
                     <li><span class="param">published</span> <span class="type">(int)</span> <span class="info">Отображать модельный ряд пользователям (1) или нет (0)</span> </li>
                     <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Дочерние модели:
                             <ul class="table-inner">
@@ -118,6 +119,7 @@
                                 <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор в системе учета. Уникальный. Обязательный</span> </li>
                                 <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название модели</span> </li>
                                 <li><span class="param">category</span> <span class="type">(string)</span> <span class="info">ID категории в 1С, которой принадлежит модель</span> </li>
+                                <li><span class="param">maker</span> <span class="type">(string)</span> <span class="info">ID производителя техники в 1С, которому принадлежит модель</span> </li>
                                 <li><span class="param">published</span> <span class="type">(int)</span> <span class="info">Отображать модель пользователям (1) или нет (0)</span> </li>
                                 <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Дочерние модели ...</span></li>
                             </ul>

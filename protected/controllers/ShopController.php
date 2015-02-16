@@ -218,7 +218,8 @@ class ShopController extends Controller
             
             if($group->id) {
                 $group->saveNode();
-                if($group->moveAsLast($root)) $commit = true;
+                //if($group->moveAsLast($root)) 
+                $commit = true;
             } else {
                 if($group->appendTo($root)) $commit = true;
             }
@@ -302,7 +303,8 @@ class ShopController extends Controller
             
             if($category->id) {
                 $category->saveNode();
-                if($category->moveAsLast($root)) $commit = true;
+                //if($category->moveAsLast($root)) 
+                $commit = true;
             } else {
                 if($category->appendTo($root)) $commit = true;
             }
@@ -349,6 +351,7 @@ class ShopController extends Controller
         
         Yii::log('shop: setOneModelLine = '. $data['external_id'], 'info');
         Yii::log('shop: category = '. $data['category'], 'info');
+        Yii::log('shop: maker = '. $data['maker'], 'info');
         
         $app = Yii::app();
         $transaction = $app->db_auth->beginTransaction();
@@ -359,7 +362,7 @@ class ShopController extends Controller
             }
             
             foreach ($modelLine as $name => $v) {
-                if (isset($data[$name]) || !empty($data[$name])){
+                if (isset($data[$name]) || !empty($data[$name])) {
                     $modelLine->$name = trim($data[$name]);
                 }
                 
@@ -367,7 +370,10 @@ class ShopController extends Controller
                 else $modelLine->published = true;
                 
                 $category = ProductCategory::model()->find('external_id = :external_id', array(':external_id' => $data['category']));
-                if(!empty($category))$modelLine->category_id = $category->id;
+                if(!empty($category)) $modelLine->category_id = $category->id;
+                
+                $maker = EquipmentMaker::model()->find('external_id = :external_id', array(':external_id' => $data['maker']));
+                if(!empty($maker)) $modelLine->maker_id = $maker->id;
 
                 if(!empty($modelLine->name)) $modelLine->path = $prefix.'/'.Translite::rusencode($modelLine->name, '-');
             }
@@ -386,7 +392,8 @@ class ShopController extends Controller
             
             if($modelLine->id) {
                 $modelLine->saveNode();
-                if($modelLine->moveAsLast($root)) $commit = true;
+                //if($modelLine->moveAsLast($root))
+                $commit = true;
             } else {
                 if($modelLine->appendTo($root)) $commit = true;
             }
@@ -500,10 +507,11 @@ class ShopController extends Controller
             if (!$model) {
                 return $this->result('Ошибка. Модель не найдена.');
             }
+            $app = Yii::app();
             Yii::log('shop: model ('.$model->id.') and maker('.$maker->id.') - ok', 'info');
             //EquipmentInModelLine::model()->deleteAll('model_id=:model_line_id', array(':model_line_id' => $model->id));
             Yii::log('shop: after delete', 'info');
-            $app = Yii::app();
+            
             $transaction = $app->db_auth->beginTransaction();
             
             $element = new EquipmentInModelLine;
