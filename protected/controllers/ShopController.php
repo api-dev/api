@@ -372,12 +372,12 @@ class ShopController extends Controller
                 if(!empty($modelLine->name)) $modelLine->path = $prefix.'/'.Translite::rusencode($modelLine->name, '-');
             }
             
-            $categoryId = ProductCategory::model()->find('external_id=:external_id', array(':external_id' => $data['category']));
-            if(!empty($categoryId)) 
+            /*$categoryId = ProductCategory::model()->find('external_id=:external_id', array(':external_id' => $data['category']));
+            if(!empty($categoryId))
             {
                 $modelLine->category_id = $categoryId->id;
                 Yii::log('shop: category in DB = '. $categoryId->id, 'info');
-            }
+            }*/
             $root = ProductModelLine::model()->findByAttributes(array('level'=>1));
             if(empty($parentId)) {
                 if(empty($root)) {
