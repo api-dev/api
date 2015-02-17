@@ -484,7 +484,7 @@ class ShopController extends Controller
     /*-------- End Set ModelProduct --------*/
     /*-------- Set ModelEquipment ----------*/
     
-    private function setModelEquipment($request) 
+    /*private function setModelEquipment($request) 
     {
         Yii::log('shop: setModelEquipment', 'info');
         $this->setItems($request, 'ModelEquipment', 'model');
@@ -532,7 +532,7 @@ class ShopController extends Controller
             $transaction->rollback();
             return false;
         }
-    }
+    }*/
     /*-------- End ModelEquipment ----------*/
     /*-------- Set RelatedProduct ----------*/
     private function setRelatedProduct($request) 
