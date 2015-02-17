@@ -14,13 +14,10 @@
  * @property boolean $published
  * @property integer $level
  * @property string $path
- * @property integer $maker_id
  *
  * The followings are the available model relations:
- * @property EquipmentMakerInModel[] $equipmentMakerInModels
- * @property EquipmentMaker $maker
+ * @property GroupInModelLine[] $groupInModelLines
  * @property Category $category
- * @property ProductInModelLine[] $productInModelLines
  */
 class ProductModelLine extends CActiveRecord
 {
@@ -44,12 +41,11 @@ class ProductModelLine extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-                        array('name', 'required'),
-			array('category_id, lft, rgt, parent, level, maker_id', 'numerical', 'integerOnly'=>true),
+			array('category_id, lft, rgt, parent, level', 'numerical', 'integerOnly'=>true),
 			array('external_id, name, published, path', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, external_id, name, category_id, lft, rgt, parent, published, level, path, maker_id', 'safe', 'on'=>'search'),
+			array('id, external_id, name, category_id, lft, rgt, parent, published, level, path', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,16 +56,9 @@ class ProductModelLine extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		/*return array(
-			'equipmentMakerInModels' => array(self::HAS_MANY, 'EquipmentMakerInModel', 'model_id'),
-			'maker' => array(self::BELONGS_TO, 'EquipmentMaker', 'maker_id'),
-			'category' => array(self::BELONGS_TO, 'Category', 'category_id'),
-			'productInModelLines' => array(self::HAS_MANY, 'ProductInModelLine', 'model_line_id'),
-		);*/
-                return array(
+		return array(
 			'groupInModelLines' => array(self::HAS_MANY, 'GroupInModelLine', 'model_line_id'),
 			'category' => array(self::BELONGS_TO, 'Category', 'category_id'),
-                        'maker' => array(self::BELONGS_TO, 'EquipmentMaker', 'maker_id'),
 		);
 	}
 
@@ -79,7 +68,7 @@ class ProductModelLine extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+                        'id' => 'ID',
 			'external_id' => 'External',
 			'name' => 'Название',
 			'category_id' => 'Category',
@@ -87,9 +76,8 @@ class ProductModelLine extends CActiveRecord
 			'rgt' => 'Rgt',
 			'parent' => 'Parent',
 			'published' => 'Опубликовать',
-			'level' => 'Level',
+                        'level' => 'Level',
 			'path' => 'Path',
-			'maker_id' => 'Maker',
 		);
 	}
 
@@ -121,7 +109,6 @@ class ProductModelLine extends CActiveRecord
 		$criteria->compare('published',$this->published);
 		$criteria->compare('level',$this->level);
 		$criteria->compare('path',$this->path,true);
-		$criteria->compare('maker_id',$this->maker_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
