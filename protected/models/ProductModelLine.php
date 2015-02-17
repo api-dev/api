@@ -67,7 +67,7 @@ class ProductModelLine extends CActiveRecord
 			'productInModelLines' => array(self::HAS_MANY, 'ProductInModelLine', 'model_line_id'),
 		);*/
                 return array(
-			'groupInModelLines' => array(self::HAS_MANY, 'GroupInModelLine', 'model_line_id'),
+			'productInModelLines' => array(self::HAS_MANY, 'ProductInModelLine', 'model_line_id'),
 			'category' => array(self::BELONGS_TO, 'Category', 'category_id'),
                         'maker' => array(self::BELONGS_TO, 'EquipmentMaker', 'maker_id'),
 		);
