@@ -106,9 +106,10 @@ class ShopController extends Controller
             $index = 1;
             Yii::log('=== Image Name = '.$data['image_name'], 'info');
             //$photo = $this->setPhoto($index, $data['external_id']);
-            $photo = $this->setPhoto($index, $data['image_name']);
+            /*$photo = $this->setPhoto($index, $data['image_name']);
             if($photo)
-                $product->image = $photo;
+                $product->image = $photo;*/
+            $product->image = $data['image_name'];
             Yii::log('shop: before save', 'info');
             //if ($product->validate() && $product->save()) {
             $product->published = true;
