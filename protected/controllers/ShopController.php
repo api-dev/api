@@ -429,13 +429,13 @@ class ShopController extends Controller
     /*-------- End Set Modelline --------*/
     /*-------- Set ModelProduct --------*/
     
-    private function setModelProduct($request) 
+    private function setModelproduct($request) 
     {
         Yii::log('shop: setModelProduct', 'info');
         $this->setItems($request, 'ModelProduct', 'model_line');
     }
     
-    private function setOneModelProduct($data)
+    private function setOneModelproduct($data)
     {
         if (empty($data['model_line']))
             return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
