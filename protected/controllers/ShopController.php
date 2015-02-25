@@ -139,7 +139,7 @@ class ShopController extends Controller
                                     $transact->rollback();
                                     Yii::log('Ошибка при сохранении товара в модельный ряд '.$item['model'], 'info');
                                 }
-                            }
+                            } else Yii::log('Продукт id='.$product->id.' в модельном ряду id='.$model->id.' уже существует. ', 'info');
                         }
                     }
                 }
