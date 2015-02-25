@@ -8,7 +8,7 @@
     <a href="#addmodelline">Добавление/редактирование модельных рядов и моделей</a>
     <!--a href="#addmodelequipment">Добавление/редактирование отношения модельных рядов к производителям техники (какой производитель закреплен за модельным рядом)</a-->
     <a href="#addgroup">Добавление/редактирование группы запчастей</a>
-    <a href="#addtr">Добавление/редактирование запчастей</a>
+    <a href="#addsp">Добавление/редактирование запчастей</a>
     <a href="#addmodelproduct">Добавление/редактирование отношения товаров (запчастей) к модельным рядам (какие запчасти закреплены за модельным рядом)</a>
     <a href="#addrelatedproduct">Добавление/редактирование сопутствующих товаров</a>
     <a href="#addanalogproduct">Добавление/редактирование товаров-аналогов</a>
@@ -204,7 +204,7 @@
             data[0][inner][1][name] = 'Гайки'
         </pre>
     </div>
-    <h4><a name="addtr">Добавление/редактирование запчастей</a></h4>
+    <h4><a name="addsp">Добавление/редактирование запчастей</a></h4>
     <div class="text">
         <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
         <p>Параметры:</p>
@@ -227,6 +227,13 @@
                     <li><span class="param">additional_info</span> <span class="type">(string)</span> <span class="info">Дополнительная информация</span> </li>
                     <li><span class="param">image_name</span> <span class="type">(string)</span> <span class="info">Имя изображения запчасти (как она будет называться на сайте)</span> </li>
                     <li><span class="param">+ картинка</span><span class="info" style="margin-left: 100px;">Пакет данных</span></li>
+                    <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Модели, к которым относится запчасть:
+                            <ul class="table-inner">
+                                <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                                <li><span class="param">model</span> <span class="type">(string)</span> <span class="info">Идентефикатор модели в системе учета 1С. Уникальный. Обязательный</span> </li>
+                            </ul>
+                        </span>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -237,10 +244,14 @@
             data[0][external_id] = '1111111111'
             data[0][name] = 'Датчик весовой 375WS'
             data[0][catalog_number] = '375WS'
+            data[0][inner][0][model] = '333333'
+            data[0][inner][1][model] = '222222'
             ...
             data[1][external_id] = '222222222'
             data[1][name] = 'Индикатор GT-460'
             data[1][catalog_number] = 'GT-460'
+            data[1][inner][0][model] = '444444'
+            data[1][inner][1][model] = '555555'
         </pre>
     </div>
     <h4><a name="addmodelproduct">Добавление/редактирование отношения товаров (запчастей) к модельным рядам</a></h4>

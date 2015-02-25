@@ -105,16 +105,44 @@ class ShopController extends Controller
             Yii::log('shop: attributes', 'info');
             $index = 1;
             Yii::log('=== Image Name = '.$data['image_name'], 'info');
+            
             //$photo = $this->setPhoto($index, $data['external_id']);
-            /*$photo = $this->setPhoto($index, $data['image_name']);
+            
+            /*
+            $photo = $this->setPhoto($index, $data['image_name']);
             if($photo)
-                $product->image = $photo;*/
+                $product->image = $photo;
+            */
+            
             $product->image = $data['image_name'];
             Yii::log('shop: before save', 'info');
             //if ($product->validate() && $product->save()) {
             $product->published = true;
             if ($product->save()) {
                 $transaction->commit();
+                if(is_array($data['inner'])) {
+                    foreach($data['inner'] as $item) {
+                        $model = ProductModelLine::model()->find('external_id=:external_id', array(':external_id' => $item['model']));
+                        if (!$model) {
+                            Yii::log('Model '.$item['model']." was't found.", 'info');
+                        } else {
+                            $exists = ProductInModelLine::model()->exists('product_id = :product_id and model_line_id = :model_id', array(':product_id'=>$product->id, ':model_id'=>$model->id));
+                            if(!$exists){
+                                $transact = $app->db_auth->beginTransaction();
+                                $element = new ProductInModelLine;
+                                $element->model_line_id = $model->id;
+                                $element->product_id = $product->id;
+                                if($element->save()) {
+                                    $transact->commit();
+                                    Yii::log('Сохранение продукта (id = '.$product->id.') в модельный ряд '.$item['model'].' произошло успешно.', 'info');
+                                } else {
+                                    $transact->rollback();
+                                    Yii::log('Ошибка при сохранении товара в модельный ряд '.$item['model'], 'info');
+                                }
+                            }
+                        }
+                    }
+                }
                 return $this->result('Сохранение '.$product->external_id.' произошло успешно.');
             }
             Yii::log('shop: after save', 'info');
@@ -454,7 +482,7 @@ class ShopController extends Controller
                     $this->saveProductInModel($item['product_id'], $model->id);
                 }
                 return $this->result('Выгрузка продуктов для модельного ряда '.$data['model_line'].' закончена.');
-            } 
+            }
         } catch (Exception $e) {
             $this->result("Исключение: " . $e->getMessage() . "\n");
             $transaction->rollback();
