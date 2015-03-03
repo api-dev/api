@@ -374,7 +374,7 @@
                 &lt;count&gt;2&lt;/count&gt;
                 &lt;liquidity&gt;A&lt;/liquidity&gt;
                 &lt;additional_info&gt;Сопутствующая информация.&lt;/additional_info&gt;
-                &lt;published&gt;1&lt;/publisheds&gt;
+                &lt;published&gt;1&lt;/published&gt;
                 &lt;models&gt;
                     &lt;model external_id=&quot;3566&quot;&gt;3566&lt;/model&gt;
                     &lt;model external_id=&quot;3567&quot;&gt;3567&lt;/model&gt;
@@ -387,7 +387,7 @@
                 &lt;count&gt;2&lt;/count&gt;
                 &lt;liquidity&gt;A&lt;/liquidity&gt;
                 &lt;additional_info&gt;Сопутствующая информация.&lt;/additional_info&gt;
-                &lt;published&gt;1&lt;/publisheds&gt;
+                &lt;published&gt;1&lt;/published&gt;
                 &lt;models&gt;
                     &lt;model external_id=&quot;3566&quot;&gt;3566&lt;/model&gt;
                     &lt;model external_id=&quot;3567&quot;&gt;3567&lt;/model&gt;
