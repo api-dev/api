@@ -367,7 +367,7 @@
         <br/>Возвращаемый xml:
         <code>
             <pre style='font-size:12px;'>
-            &lt;transport external_id=&quot;5555&quot;&gt;
+            &lt;sparepart external_id=&quot;5555&quot;&gt;
                 &lt;name&gt;Болт&lt;/name&gt;
                 &lt;product_group&gt;115545&lt;/product_group&gt;
                 &lt;catalog_number&gt;388370A1&lt;/catalog_number&gt;
@@ -379,8 +379,8 @@
                     &lt;model external_id=&quot;3566&quot;&gt;3566&lt;/model&gt;
                     &lt;model external_id=&quot;3567&quot;&gt;3567&lt;/model&gt;
                 &lt;/models&gt;
-            &lt;/transport&gt;
-            &lt;transport external_id=&quot;666&quot;&gt;
+            &lt;/sparepart&gt;
+            &lt;sparepart external_id=&quot;666&quot;&gt;
                 &lt;name&gt;Сальник&lt;/name&gt;
                 &lt;product_group&gt;115545&lt;/product_group&gt;
                 &lt;catalog_number&gt;388370A2&lt;/catalog_number&gt;
@@ -392,7 +392,7 @@
                     &lt;model external_id=&quot;3566&quot;&gt;3566&lt;/model&gt;
                     &lt;model external_id=&quot;3567&quot;&gt;3567&lt;/model&gt;
                 &lt;/models&gt;
-            &lt;/transport&gt;
+            &lt;/sparepart&gt;
             
             </pre>        
         </code>
