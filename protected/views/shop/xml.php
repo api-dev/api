@@ -16,8 +16,8 @@ foreach ($data as $sp):
         $echo .= '<published>'.(int)$sp[published].'</published>';
         if(count($productModels)) {
             $echo .= '<models>';
-                foreach ($productModels as $modelId):
-                   $model = ProductModelLine::model()->findByPk($modelId);
+                foreach ($productModels as $productModel):
+                   $model = ProductModelLine::model()->findByPk($productModel->model_line_id);
                    $echo .= '<model external_id="'.$model->external_id.'">'.$model->external_id.'</model>';
                 endforeach;
             $echo .= '</models>';
