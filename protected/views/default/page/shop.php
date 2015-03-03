@@ -12,6 +12,7 @@
     <a href="#addmodelproduct">Добавление/редактирование отношения товаров (запчастей) к модельным рядам (какие запчасти закреплены за модельным рядом)</a>
     <a href="#addrelatedproduct">Добавление/редактирование сопутствующих товаров</a>
     <a href="#addanalogproduct">Добавление/редактирование товаров-аналогов</a>
+    <a href="#getsp">Получение данных о запчастях</a>
 </div>
 <div class="item">
     <h4><a name="addproductmaker">Добавление/редактирование производителя запчастей</a></h4>
@@ -347,5 +348,53 @@
             data[0][inner][0][analog_id] = '111111'
             data[0][inner][1][analog_id] = '222222'
         </pre>
+    </div>
+    <h4><a name="getsp">Получение данных о запчастях</a></h4>
+    <div class="text">
+        <p><span class="param">URL</span> : api.lbr.ru/shop?m=get</p>
+        <p>Параметры:</p>
+        <ul>
+            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>sparepart.</b></li>
+            <li><span class="param">data</span> - массив с идентефикаторами запчастей.</li>
+        </ul>
+        <div class="h2">Примеры:</div>
+        Пример вернет xml-файл с информацией о двух запчастях
+        <pre style='font-size: 11px;'>
+            action = 'sparepart'
+            data[1][external_id] = '5555'
+            data[2][external_id] = '6666'
+        </pre>
+        <br/>Возвращаемый xml:
+        <code>
+            <pre style='font-size:12px;'>
+            &lt;transport external_id=&quot;5555&quot;&gt;
+                &lt;name&gt;Болт&lt;/name&gt;
+                &lt;product_group&gt;115545&lt;/product_group&gt;
+                &lt;catalog_number&gt;388370A1&lt;/catalog_number&gt;
+                &lt;count&gt;2&lt;/count&gt;
+                &lt;liquidity&gt;A&lt;/liquidity&gt;
+                &lt;additional_info&gt;Сопутствующая информация.&lt;/additional_info&gt;
+                &lt;published&gt;1&lt;/publisheds&gt;
+                &lt;models&gt;
+                    &lt;model external_id=&quot;3566&quot;&gt;3566&lt;/model&gt;
+                    &lt;model external_id=&quot;3567&quot;&gt;3567&lt;/model&gt;
+                &lt;/models&gt;
+            &lt;/transport&gt;
+            &lt;transport external_id=&quot;666&quot;&gt;
+                &lt;name&gt;Сальник&lt;/name&gt;
+                &lt;product_group&gt;115545&lt;/product_group&gt;
+                &lt;catalog_number&gt;388370A1&lt;/catalog_number&gt;
+                &lt;count&gt;2&lt;/count&gt;
+                &lt;liquidity&gt;A&lt;/liquidity&gt;
+                &lt;additional_info&gt;Сопутствующая информация.&lt;/additional_info&gt;
+                &lt;published&gt;1&lt;/publisheds&gt;
+                &lt;models&gt;
+                    &lt;model external_id=&quot;3566&quot;&gt;3566&lt;/model&gt;
+                    &lt;model external_id=&quot;3567&quot;&gt;3567&lt;/model&gt;
+                &lt;/models&gt;
+            &lt;/transport&gt;
+            
+            </pre>        
+        </code>
     </div>
 </div>

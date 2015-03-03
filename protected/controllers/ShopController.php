@@ -22,6 +22,26 @@ class ShopController extends Controller
             return $this->result('Неверные параметры. Допустимые: m - set; action - sparepart. Полученные: m=' . $request['m'] . ', action=' . $request['action']);
     }
     
+    /*-------- Get Sparepart --------*/
+    private function getSparepart($request) 
+    {
+        $data = $request['data'];
+        if (!$data || empty($data))
+            return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
+
+        $in = array();
+        foreach ($data as $item)
+            array_push($in, $item[external_id]);
+
+        $sp = Yii::app()->db_exch->createCommand()
+                ->select('*')
+                ->from('product')
+                ->where(array('in', 'external_id', $in))
+                ->queryAll()
+        ;
+
+        $this->renderPartial('xml', array('data' => $sp));
+    }
     /*-------- Set Sparepart --------*/
     private function setSparepart($request) 
     {
