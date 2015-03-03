@@ -2,12 +2,14 @@
 $echo = '<?xml version="1.0" encoding="UTF-8" ?>';
 $echo .= '<data count="'.  count($data).'">';
 foreach ($data as $sp):
-    $productGroup = ProductGroup::model()->findByPk($sp[product_group_id]);
+    $productGroup = '';
+    if(!empty($sp[product_group_id]))
+       $productGroup = ProductGroup::model()->findByPk($sp[product_group_id])->external_id;
     $productMaker = ProductMaker::model()->findByPk($sp[product_maker_id]);
     $productModels = ProductInModelLine::model()->findAll('product_id=:id', array(':id'=>$sp[id]));
     $echo .= '<sparepart external_id="'.$sp[external_id].'">';
         $echo .= '<name>'.$sp[name].'</name>';
-        $echo .= '<product_group>'.$productGroup->external_id.'</name>';
+        $echo .= '<product_group>'.$productGroup.'</product_group>';
         $echo .= '<catalog_number>'.$sp[catalog_number].'</catalog_number>';
         $echo .= '<count>'.$sp[count].'</count>';
         $echo .= '<liquidity>'.$sp[liquidity].'</liquidity>';
