@@ -383,7 +383,7 @@
             &lt;transport external_id=&quot;666&quot;&gt;
                 &lt;name&gt;Сальник&lt;/name&gt;
                 &lt;product_group&gt;115545&lt;/product_group&gt;
-                &lt;catalog_number&gt;388370A1&lt;/catalog_number&gt;
+                &lt;catalog_number&gt;388370A2&lt;/catalog_number&gt;
                 &lt;count&gt;2&lt;/count&gt;
                 &lt;liquidity&gt;A&lt;/liquidity&gt;
                 &lt;additional_info&gt;Сопутствующая информация.&lt;/additional_info&gt;
