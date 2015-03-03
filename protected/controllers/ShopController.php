@@ -138,6 +138,7 @@ class ShopController extends Controller
             Yii::log('shop: before save', 'info');
             //if ($product->validate() && $product->save()) {
             $product->published = true;
+            $product->update_time = date('Y-m-d H:i:s');
             if ($product->save()) {
                 $transaction->commit();
                 if(is_array($data['inner'])) {
@@ -350,6 +351,7 @@ class ShopController extends Controller
                 $root = ProductCategory::model()->findByPk($parentId);
             }
             
+            $category->update_time = date('Y-m-d H:i:s');
             if($category->id) {
                 $category->saveNode();
                 //if($category->moveAsLast($root)) 
@@ -439,6 +441,7 @@ class ShopController extends Controller
                 $root = ProductModelLine::model()->findByPk($parentId);
             }
             
+            $modelLine->update_time = date('Y-m-d H:i:s');
             if($modelLine->id) {
                 $modelLine->saveNode();
                 //if($modelLine->moveAsLast($root))
