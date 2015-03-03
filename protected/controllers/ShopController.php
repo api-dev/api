@@ -33,7 +33,7 @@ class ShopController extends Controller
         foreach ($data as $item)
             array_push($in, $item[external_id]);
         
-        $sp = Yii::app()->db_exch->createCommand()
+        $sp = Yii::app()->db_shop->createCommand()
                 ->select('*')
                 ->from('product')
                 ->where(array('in', 'external_id', $in))
