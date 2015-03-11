@@ -40,8 +40,30 @@ class ShopController extends Controller
                 ->queryAll()
         ;
 
-        $this->renderPartial('xml', array('data' => $sp));
+        $this->renderPartial('spxml', array('data' => $sp));
     }
+    /*-------- End get Sparepart ----*/
+    /*-------- Get Order ------------*/
+    private function getOrder($request) 
+    {
+        $data = $request['data'];
+        if (!$data || empty($data))
+            return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
+
+        /*$in = array();
+        foreach ($data as $item)
+            array_push($in, $item[external_id]);
+        
+        $sp = Yii::app()->db_shop->createCommand()
+                ->select('*')
+                ->from('product')
+                ->where(array('in', 'external_id', $in))
+                ->queryAll()
+        ;
+        */
+        $this->renderPartial('orderxml', array('data' => $sp));
+    }
+    /*-------- End get Order --------*/
     /*-------- Set Sparepart --------*/
     private function setSparepart($request) 
     {
