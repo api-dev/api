@@ -124,9 +124,9 @@ class ShopController extends Controller
         if (empty($data['external_id']))
             return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
         Yii::log('shop: setOneSparepart', 'info');
-        foreach($data as $k => $v){
+        /*foreach($data as $k => $v){
             Yii::log($k.' = '.$v, 'info');
-        }
+        }*/
         $app = Yii::app();
         $transaction = $app->db_auth->beginTransaction();
         try {
@@ -137,6 +137,7 @@ class ShopController extends Controller
             foreach ($product as $name => $v) {
                 if (isset($data[$name]) || !empty($data[$name]))
                     $product->$name = $data[$name];
+                Yii::log($name.' = '.$product->$name);
             }
             $groupId = ProductGroup::model()->find('external_id=:external_id', array(':external_id' => $data['product_group']))->id;
             if(!empty($groupId)) $product->product_group_id = $groupId;
