@@ -137,7 +137,7 @@ class ShopController extends Controller
             foreach ($product as $name => $v) {
                 if (isset($data[$name]) || !empty($data[$name]))
                     $product->$name = $data[$name];
-                Yii::log($name.' = '.$product->$name);
+                Yii::log($name.' = '.$product->$name, 'info');
             }
             $groupId = ProductGroup::model()->find('external_id=:external_id', array(':external_id' => $data['product_group']))->id;
             if(!empty($groupId)) $product->product_group_id = $groupId;
