@@ -7,10 +7,9 @@
  * @property integer $id
  * @property string $external_id
  * @property string $name
- * @property string $product_group_id
- * @property string $price_id
+ * @property integer $product_group_id
  * @property string $catalog_number
- * @property string $product_maker_id
+ * @property integer $product_maker_id
  * @property string $image
  * @property integer $count
  * @property string $liquidity
@@ -24,20 +23,22 @@
  * @property AttributeValue[] $attributeValues
  * @property OrderProduct[] $orderProducts
  * @property ProductMaker $productMaker
- * @property Price $price
  * @property ProductGroup $productGroup
+ * @property ProductInModelLine[] $productInModelLines
  * @property RelatedProduct[] $relatedProducts
  * @property RelatedProduct[] $relatedProducts1
+ * @property Wishlist[] $wishlists
  */
 class Product extends CActiveRecord
 {
+	/**
+	 * @return string the associated database table name
+	 */
         public function getDbConnection()
         {
             return Yii::app()->db_shop;
         }
-	/**
-	 * @return string the associated database table name
-	 */
+        
 	public function tableName()
 	{
 		return 'product';
@@ -50,13 +51,13 @@ class Product extends CActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
-		return array(
-			array('count, min_quantity', 'numerical', 'integerOnly'=>true),
-			array('external_id, name, product_group_id, price_id, catalog_number, product_maker_id, image, liquidity, additional_info, published', 'safe'),
+                return array(
+			/*array('count, min_quantity', 'numerical', 'integerOnly'=>true, 'message'=>'Поле должно содержать целое число'),*/
+			array('external_id, weight, name, product_group_id, catalog_number, product_maker_id, liquidity, image, additional_info, published', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, external_id, name, product_group_id, price_id, catalog_number, product_maker_id, image, count, liquidity, min_quantity, additional_info, published', 'safe', 'on'=>'search'),
-		);
+			array('id, external_id, name, product_group_id, catalog_number, product_maker_id, count, liquidity, image, min_quantity, additional_info, published, productGroup_name, productMaker_name', 'safe', 'on'=>'search'),
+                );
 	}
 
 	/**
@@ -72,10 +73,11 @@ class Product extends CActiveRecord
 			'attributeValues' => array(self::HAS_MANY, 'AttributeValue', 'product_id'),
 			'orderProducts' => array(self::HAS_MANY, 'OrderProduct', 'product_id'),
 			'productMaker' => array(self::BELONGS_TO, 'ProductMaker', 'product_maker_id'),
-			'price' => array(self::BELONGS_TO, 'Price', 'price_id'),
 			'productGroup' => array(self::BELONGS_TO, 'ProductGroup', 'product_group_id'),
+			//'productInModelLines' => array(self::HAS_MANY, 'ProductInModelLine', 'product_id'),
 			'relatedProducts' => array(self::HAS_MANY, 'RelatedProduct', 'related_product_id'),
 			'relatedProducts1' => array(self::HAS_MANY, 'RelatedProduct', 'product_id'),
+			'wishlists' => array(self::HAS_MANY, 'Wishlist', 'product_id'),
 		);
 	}
 
@@ -84,20 +86,24 @@ class Product extends CActiveRecord
 	 */
 	public function attributeLabels()
 	{
-		return array(
+                return array(
 			'id' => 'ID',
 			'external_id' => 'External',
-			'name' => 'Name',
-			'product_group_id' => 'Product Group',
-			'price_id' => 'Price',
-			'catalog_number' => 'Catalog Number',
-			'product_maker_id' => 'Product Maker',
-			'image' => 'Image',
-			'count' => 'Count',
-			'liquidity' => 'Liquidity',
-			'min_quantity' => 'Min Quantity',
-			'additional_info' => 'Additional Info',
-			'published' => 'Published',
+			'name' => 'Название',
+			'product_group_id' => 'Группа продукта',
+                        //'group'=>'Группа продукта',
+			'catalog_number' => 'Каталожный номер',
+			'product_maker_id' => 'Производитель',
+			'image' => 'Изображение',
+			'count' => 'Количество',
+			'liquidity' => 'Ликвидность',
+			'min_quantity' => 'Минимальное количество',
+			'additional_info' => 'Дополнительная информация',
+                        //'productGroup_name'=>'Группа', 
+                        //'productMaker_name'=>'Производитель',
+                        //'price_value'=>'Цена',
+                        //'currency_iso'=>'Валюта',
+			'published' => 'Опубликовать',
 		);
 	}
 
@@ -115,24 +121,21 @@ class Product extends CActiveRecord
 	 */
 	public function search()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
+                $criteria=new CDbCriteria;
 		$criteria->compare('id',$this->id);
 		$criteria->compare('external_id',$this->external_id,true);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('product_group_id',$this->product_group_id,true);
-		$criteria->compare('price_id',$this->price_id,true);
 		$criteria->compare('catalog_number',$this->catalog_number,true);
-		$criteria->compare('product_maker_id',$this->product_maker_id,true);
+                $criteria->compare('product_maker_id',$this->product_maker_id,true);
 		$criteria->compare('image',$this->image,true);
 		$criteria->compare('count',$this->count);
 		$criteria->compare('liquidity',$this->liquidity,true);
 		$criteria->compare('min_quantity',$this->min_quantity);
 		$criteria->compare('additional_info',$this->additional_info,true);
 		$criteria->compare('published',$this->published);
-
+                
+                
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

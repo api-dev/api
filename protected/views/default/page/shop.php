@@ -222,10 +222,10 @@
                     <!--li><span class="param">price_id</span> <span class="type">(int)</span> <span class="info">ID группы цен в 1С</span> </li-->
                     <li><span class="param">catalog_number</span> <span class="type">(string)</span> <span class="info">Каталожный номер</span> </li>
                     <li><span class="param">product_maker</span> <span class="type">(string)</span> <span class="info">ID производителя в 1С, которой принадлежит запчасть</span> </li>
-                    <li><span class="param">count</span> <span class="type">(int)</span> <span class="info">Количество в наличии</span> </li>
+                    <li><span class="param">count</span> <span class="type">(string)</span> <span class="info">Количество в наличии</span> </li>
                     <li><span class="param">min_quantity</span> <span class="type">(int)</span> <span class="info">Минимальное количество для заказа</span> </li>
                     <li><span class="param">liquidity</span> <span class="type">(string)</span> <span class="info">Ликвидность (А, В, С)</span> </li>
-                    <li><span class="param">weight</span> <span class="type">(float)</span> <span class="info">Вес, кг</span> </li>
+                    <li><span class="param">weight</span> <span class="type">(string)</span> <span class="info">Вес, кг</span> </li>
                     <li><span class="param">additional_info</span> <span class="type">(string)</span> <span class="info">Дополнительная информация</span> </li>
                     <li><span class="param">image_name</span> <span class="type">(string)</span> <span class="info">Имя изображения запчасти (как она будет называться на сайте)</span> </li>
                     <li><span class="param">+ картинка</span><span class="info" style="margin-left: 100px;">Пакет данных</span></li>
