@@ -41,6 +41,12 @@ class Product extends CActiveRecord
                 $productMaker_name,
                 //$currency_iso,
                 $group;
+        
+        public function getDbConnection()
+        {
+            return Yii::app()->db_shop;
+        }
+        
 	public function tableName()
 	{
 		return 'product';
