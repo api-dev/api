@@ -908,6 +908,67 @@ class ShopController extends Controller
         }
     }
     /*-------- End Set ProductMaker -------*/
+    /*-------- Set Draft --------*/
+    
+    private function setDraft($request) 
+    {
+        Yii::log('shop: setDraft', 'info');
+        $this->setItems($request, 'Draft', 'external_id');
+    }
+    
+    private function setOneDraft($data)
+    {
+        if (empty($data['external_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
+        Yii::log('shop: setOneDraft = '. $data['external_id'], 'info');
+        
+        try {
+            $model = Draft::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
+            if (!$model) {
+                $model = new Draft;
+            }
+            if(!empty($data['name']))$model->name = $data['name'];
+            if(!empty($data['image']))$model->image = $data['image'];
+            $model->save();
+            
+            ProductInDraft::model()->deleteAll('draft_id=:id', array(':id' => $model->id));
+            if(is_array($data['inner'])) {
+                foreach($data['inner'] as $item) {
+                    $this->saveProductInDraft($item, $model->id);
+                }
+                return $this->result('Выгрузка запчастей для сборочного черетежа '.$data['external_id'].' закончена.');
+            }
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
+    }
+    
+    private function saveProductInDraft($data, $draftId)
+    {
+        $app = Yii::app();
+        $product = Product::model()->find('external_id=:external_id', array(':external_id' => $data['product_id']));
+        if($product) {
+            $transaction = $app->db_auth->beginTransaction();
+            $element = new ProductInDraft;
+            $element->draft_id = $draftId;
+            $element->product_id = $product->id;
+            $element->level = $data['level'];
+            $element->count = $data['count'];
+            if($element->save()) {
+                $transaction->commit();
+                return $this->result('Сохранение продукта (id = '.$id.') в чертеже произошло успешно.');
+            } else {
+                $transaction->rollback();
+                return $this->result($element->getErrors());
+            }
+        } else {
+            return $this->result('Ошибка. Продукт с id='.$id.' не найден.');
+        }
+    }
+    /*-------- End Set Draft --------*/
     
     private function result($text) {
         $this->renderPartial('index', array('text' => $text));

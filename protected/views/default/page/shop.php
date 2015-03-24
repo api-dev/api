@@ -13,6 +13,7 @@
     <a href="#addrelatedproduct">Добавление/редактирование сопутствующих товаров</a>
     <a href="#addanalogproduct">Добавление/редактирование товаров-аналогов</a>
     <a href="#getsp">Получение данных о запчастях</a>
+    <a href="#adddraft">Получение данных о запчастях</a>
 </div>
 <div class="item">
     <h4><a name="addproductmaker">Добавление/редактирование производителя запчастей</a></h4>
@@ -397,5 +398,46 @@
             
             </pre>        
         </code>
+    </div>
+    <h4><a name="adddraft">Добавление/редактирование сборочных чертежей</a></h4>
+    <div class="text">
+        <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
+        <p>Параметры:</p>
+        <ul>
+            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>draft.</b></li>
+            <li><span class="param">data</span> - массив с данными.</li>
+            <li><br>Принимаемые параметры <span class="param">data</span> при <span class="param">action=draft:</span> </li>
+            <li>
+                <ul class="table">
+                    <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                    <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор сборочного чертежа в системе учета 1С. Уникальный. Обязательный</span></li>
+                    <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Наименование сборочного чертежа</span></li>
+                    <li><span class="param">image</span> <span class="type">(string)</span> <span class="info">Имя изображения сборочного чертежа (как он будет называться на сайте)</span></li>
+                    <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Запчасти, относящиеся к данному модельному ряду:
+                            <ul class="table-inner">
+                                <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                                <li><span class="param">product_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор продукта (запчасти) в системе учета 1С. Уникальный. Обязательный</span> </li>
+                                <li><span class="param">level</span> <span class="type">(string)</span> <span class="info">Номер на чертеже</span> </li>
+                                <li><span class="param">count</span> <span class="type">(string)</span> <span class="info">Количество в узле</span> </li>
+                            </ul>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="h2">Примеры:</div>
+        <p>Пример добавляет два товара (запчасти) в модельный ряд:</p>
+        <pre style='font-size: 11px;'>
+            action = 'draft'
+            data[0][external_id] = 'MNS-00001088'
+            data[0][name] = 'Ботвоудалитель'
+            data[0][image_name] = 'MNS-00001088.jpg'
+            data[0][inner][0][product_id] = '111111'
+            data[0][inner][0][level] = '1'
+            data[0][inner][0][count] = '2'
+            data[0][inner][1][product_id] = '222222'
+            data[0][inner][1][level] = '2'
+            data[0][inner][1][count] = '1'
+        </pre>
     </div>
 </div>
