@@ -55,6 +55,7 @@ class TrController extends Controller
         Yii::log('(входящее) создатель ='.$data['user_id'], 'info');
         Yii::log('(входящее) new_transport ='.$data['new_transport'], 'info');
         Yii::log('(входящее) date_close ='.$data['date_close'], 'info');
+        Yii::log('(входящее) date_close ='.$data['description'], 'info');
         //Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
         //Yii::log('(входящее) date_to ='.$data['date_to'], 'info');
         
