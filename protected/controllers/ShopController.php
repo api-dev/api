@@ -89,11 +89,11 @@ class ShopController extends Controller
                 'inner'=>array(
                     0 => array(
                         'external_id'=>'UPR0023594',
-                        'name'=>'Алтайский край',
+                        'name'=>'Алтайский край2',
                     ),
                     1 => array(
                         'external_id'=>'TRM0000966',
-                        'name'=>'Восточно-Казахстанская область',
+                        'name'=>'Восточно-Казахстанская область2',
                     ),
                 ),
             ),
@@ -931,8 +931,12 @@ class ShopController extends Controller
             if (!$model) {
                 $model = new Draft;
             }
-            if(!empty($data['name']))$model->name = $data['name'];
-            if(!empty($data['image']))$model->image = $data['image'];
+            //if(!empty($data['name']))$model->name = $data['name'];
+            //if(!empty($data['image']))$model->image = $data['image'];
+            foreach ($model as $name => $v) {
+                if (isset($data[$name]) || !empty($data[$name]))
+                    $model->$name = $data[$name];
+            }
             $model->save();
             
             ProductInDraft::model()->deleteAll('draft_id=:id', array(':id' => $model->id));
@@ -976,11 +980,10 @@ class ShopController extends Controller
     
     private function setFilial($request) 
     {
-        Yii::log('shop: setCategory', 'info');
+        Yii::log('shop: setFilial', 'info');
         $this->setItems($request, 'Filial', 'external_id', true);
     }
     
-    //setOneCategory($data, $parentId = null, $prefix = '')
     private function setOneFilial($data, $parentId = null)
     {
         $commit = false;
@@ -1013,26 +1016,10 @@ class ShopController extends Controller
             $filial->update_time = date('Y-m-d H:i:s');
             if($filial->id) {
                 $filial->saveNode();
-                //if($filial->moveAsLast($root)) 
                 $commit = true;
             } else {
                 if($filial->appendTo($root)) $commit = true;
             }
-            
-            /*if($commit) {
-                $transaction->commit();
-                
-                Yii::log('Filial id '.$filial->id, 'info');
-                //PriceInFilial::model()->deleteAll('filial_id=:id', array(':id' => $filial->id));
-                if ($filial->id && !empty($data['inner'])) {
-                    Yii::log('Inner for ' . $filial->id, 'info');
-
-                    foreach($data['inner'] as $item) {
-                        //$this->savePriceInFilial($item, $filial->id);
-                    }
-                }
-                return $this->result('Сохранение филиала '.$filial->external_id.' произошло успешно.');
-            }*/
             
             if($commit) {
                 $transaction->commit();
@@ -1057,31 +1044,62 @@ class ShopController extends Controller
             return false;
         }
     }
-    
-    /*private function savePriceInFilial($data, $filialId)
+    /*-------- End Set Filial --------*/
+    /*-------- Set Filial Price ------*/
+    /*private function setPrice($request) 
     {
-        $app = Yii::app();
-        $product = Product::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
-        if($product) {
+        Yii::log('shop: setPrice', 'info');
+        $this->setItems($request, 'Price', 'external_id', true);
+    }
+    
+    private function setOnePrice($data)
+    {
+        if (empty($data['filial_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора филиала.');
+            
+        if (empty($data['product_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора продукта.');
+        
+        Yii::log('shop: setOnePrice', 'info');
+        
+        try {
+            $product = Product::model()->find('external_id=:external_id', array(':external_id' => $data['product_id']));
+            if($product) {
+                $filial = Filial::model()->find('external_id=:external_id', array(':external_id' => $data['filial_id']));
+                if($filial){
+                    PriceInFilial::model()->deleteAll('product=:product_id and filial_id=:filial_id', array(':id' => $product->id, ':filial_id' => $filial->id));
+                } else {
+                    return $this->result('Ошибка. Филиал с id='.$data['filial_id'].' не найден.');
+                }
+            } else {
+                return $this->result('Ошибка. Продукт с id='.$data['product_id'].' не найден.');
+            }
+            //////////////////////////////////
+            $model = new PriceInFilial;
+            $app = Yii::app();
             $transaction = $app->db_auth->beginTransaction();
-            $element = new PriceInFilial;
-            $element->filial_id = $filialId;
-            $element->product_id = $product->id;
-            $element->price = $data['price'];
-            $element->currency_code = $data['currency_code'];
-            if($element->save()) {
+            foreach ($model as $name => $v) {
+                if (isset($data[$name]) || !empty($data[$name]))
+                    $model->$name = $data[$name];
+            }
+            if($model->save()) {
                 $transaction->commit();
-                return $this->result('Сохранение продукта (id = '.$data['external_id'].') в чертеже произошло успешно.');
+                return $this->result('Сохранение производителя запчастей (id = '.$data['external_id'].') произошло успешно.');
             } else {
                 $transaction->rollback();
-                return $this->result($element->getErrors());
+                return $this->result($model->getErrors());
             }
-        } else {
-            return $this->result('Ошибка. Продукт с id='.$data['external_id'].' не найден.');
-        }
+
+            return $this->result('Выгрузка производителя запчастей '.$data['external_id'].' закончена.');
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }   
     }*/
     
-    /*-------- End Set Filial --------*/
+    
+    /*-------- End Set Filial Price ----*/
     private function result($text) {
         $this->renderPartial('index', array('text' => $text));
         return false;

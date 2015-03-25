@@ -15,6 +15,7 @@
     <a href="#getsp">Получение данных о запчастях</a>
     <a href="#adddraft">Добавление/редактирование сборочных чертежей</a>
     <a href="#addfilial">Добавление/редактирование филиалов и зон</a>
+    <!--a href="#addprice">Добавление/редактирование цен запчастей по филиалам</a-->
 </div>
 <div class="item">
     <h4><a name="addproductmaker">Добавление/редактирование производителя запчастей</a></h4>
@@ -420,6 +421,7 @@
                                 <li><span class="param">product_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор продукта (запчасти) в системе учета 1С. Уникальный. Обязательный</span> </li>
                                 <li><span class="param">level</span> <span class="type">(string)</span> <span class="info">Номер на чертеже</span> </li>
                                 <li><span class="param">count</span> <span class="type">(string)</span> <span class="info">Количество в узле</span> </li>
+                                <li><span class="param">note</span> <span class="type">(string)</span> <span class="info">Примечание</span> </li>
                             </ul>
                         </span>
                     </li>
@@ -477,4 +479,32 @@
             data[0][inner][1][name] = 'Восточно-Казахстанская область'
         </pre>
     </div>
+    <!--h4><a name="addprice">Добавление/редактирование цен запчастей по филиалам</a></h4>
+    <div class="text">
+        <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
+        <p>Параметры:</p>
+        <ul>
+            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>price.</b></li>
+            <li><span class="param">data</span> - массив с данными.</li>
+            <li><br>Принимаемые параметры <span class="param">data</span> при <span class="param">action=price:</span> </li>
+            <li>
+                <ul class="table">
+                    <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                    <li><span class="param">filial_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор филиала в системе учета 1С. Уникальный. Обязательный</span> </li>
+                    <li><span class="param">product_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор запчасти в системе учета 1С. Уникальный. Обязательный</span> </li>
+                    <li><span class="param">price</span> <span class="type">(string)</span> <span class="info">Цена</span> </li>
+                    <li><span class="param">currency_code</span> <span class="type">(string)</span> <span class="info">Код валюты</span> </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="h2">Примеры:</div>
+        <p>Пример добавляет/редактирует категории:</p>
+        <pre style='font-size: 11px;'>
+            action = 'price'
+            data[0][filial_id] = '999999999'
+            data[0][product_id] = '8888888'
+            data[0][price] = '8'
+            data[0][currency_code] = '1'
+        </pre>
+    </div-->
 </div>

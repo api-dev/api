@@ -9,6 +9,7 @@
  * @property integer $product_id
  * @property string $level
  * @property string $count
+ * @property string $note
  *
  * The followings are the available model relations:
  * @property Product $product
@@ -16,10 +17,6 @@
  */
 class ProductInDraft extends CActiveRecord
 {
-        public function getDbConnection()
-        {
-            return Yii::app()->db_shop;
-        }
 	/**
 	 * @return string the associated database table name
 	 */
@@ -38,10 +35,10 @@ class ProductInDraft extends CActiveRecord
 		return array(
 			array('draft_id, product_id', 'required'),
 			array('draft_id, product_id', 'numerical', 'integerOnly'=>true),
-			array('level, count', 'safe'),
+			array('level, count, note', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, draft_id, product_id, level, count', 'safe', 'on'=>'search'),
+			array('id, draft_id, product_id, level, count, note', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +66,7 @@ class ProductInDraft extends CActiveRecord
 			'product_id' => 'Product',
 			'level' => 'Level',
 			'count' => 'Count',
+			'note' => 'Note',
 		);
 	}
 
@@ -95,6 +93,7 @@ class ProductInDraft extends CActiveRecord
 		$criteria->compare('product_id',$this->product_id);
 		$criteria->compare('level',$this->level,true);
 		$criteria->compare('count',$this->count,true);
+		$criteria->compare('note',$this->note,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
