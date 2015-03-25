@@ -438,9 +438,11 @@
             data[0][inner][0][product_id] = '111111'
             data[0][inner][0][level] = '1'
             data[0][inner][0][count] = '2'
+            data[0][inner][0][note] = 'Примечание'
             data[0][inner][1][product_id] = '222222'
             data[0][inner][1][level] = '2'
             data[0][inner][1][count] = '1'
+            data[0][inner][1][note] = 'Примечание'
         </pre>
     </div>
     <h4><a name="addfilial">Добавление/редактирование филиалов и зон</a></h4>
