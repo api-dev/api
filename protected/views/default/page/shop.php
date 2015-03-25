@@ -14,6 +14,7 @@
     <a href="#addanalogproduct">Добавление/редактирование товаров-аналогов</a>
     <a href="#getsp">Получение данных о запчастях</a>
     <a href="#adddraft">Добавление/редактирование сборочных чертежей</a>
+    <!--a href="#addfilial">Добавление/редактирование филиалов и зон</a-->
 </div>
 <div class="item">
     <h4><a name="addproductmaker">Добавление/редактирование производителя запчастей</a></h4>
@@ -77,7 +78,7 @@
                     <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Дочерние категории:
                             <ul class="table-inner">
                                 <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
-                                <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор гв системе учета. Уникальный. Обязательный</span> </li>
+                                <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор категории системе учета. Уникальный. Обязательный</span> </li>
                                 <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название категории</span> </li>
                                 <li><span class="param">published</span> <span class="type">(int)</span> <span class="info">Отображать категорию пользователям (1) или нет (0)</span> </li>
                                 <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Дочерние категории ...</span></li>
@@ -440,4 +441,40 @@
             data[0][inner][1][count] = '1'
         </pre>
     </div>
+    <!--h4><a name="addfilial">Добавление/редактирование филиалов и зон</a></h4>
+    <div class="text">
+        <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
+        <p>Параметры:</p>
+        <ul>
+            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>filial.</b></li>
+            <li><span class="param">data</span> - массив с данными.</li>
+            <li><br>Принимаемые параметры <span class="param">data</span> при <span class="param">action=filial:</span> </li>
+            <li>
+                <ul class="table">
+                    <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                    <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор в системе учета 1С. Уникальный. Обязательный</span> </li>
+                    <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название филиала</span> </li>
+                    <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Зоны, входящие в филиал:
+                            <ul class="table-inner">
+                                <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                                <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор зоны системе учета. Уникальный. Обязательный</span> </li>
+                                <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название зоны</span> </li>
+                            </ul>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="h2">Примеры:</div>
+        <p>Пример добавляет/редактирует категории:</p>
+        <pre style='font-size: 11px;'>
+            action = 'filial'
+            data[0][external_id] = '999999999'
+            data[0][name] = 'Барнаул'
+            data[0][inner][0][external_id] = '8888888888'
+            data[0][inner][0][name] = 'Алтайский край'
+            data[0][inner][1][external_id] = '777777777'
+            data[0][inner][1][name] = 'Восточно-Казахстанская область'
+        </pre>
+    </div-->
 </div>

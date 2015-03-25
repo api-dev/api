@@ -969,7 +969,81 @@ class ShopController extends Controller
         }
     }
     /*-------- End Set Draft --------*/
+    /*-------- Set Filial ----------*/
     
+    /*private function setFilial($request) 
+    {
+        Yii::log('shop: setCategory', 'info');
+        $this->setItems($request, 'Filial', 'external_id', true);
+    }*/
+    
+    private function setOneFilial($data)
+    {
+        $commit = false;
+        if (empty($data['external_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
+        Yii::log('shop: setOneFilial = '. $data['external_id'], 'info');
+
+        $app = Yii::app();
+        $transaction = $app->db_auth->beginTransaction();
+        try {
+            $filial = Filial::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
+            if (!$filial) {
+                $filial = new Filial();
+            }
+            $filial->name = $data['name'];
+            $filial->external_id = $data['external_id'];
+            
+            $root = Filial::model()->findByAttributes(array('level'=>1));
+            if(empty($root)) {
+                $root = new Filial;
+                $root->name = 'Все филиалы';
+                $root->saveNode();
+            }
+            
+            $filial->update_time = date('Y-m-d H:i:s');
+            if($filial->id) {
+                $filial->saveNode();
+                //if($filial->moveAsLast($root)) 
+                $commit = true;
+            } else {
+                if($filial->appendTo($root)) $commit = true;
+            }
+            
+            if($commit) {
+                $transaction->commit();
+
+                Yii::log('Filial id '.$filial->id, 'info');
+
+                if ($filial->id && $data['inner']) {
+                    Yii::log('Inner for ' . $filial->id, 'info');
+
+                    /* 
+                    if(is_array($data['inner'])) {
+                        foreach($data['inner'] as $item) {
+                            //$this->setOneFilial($item, $filial->id, $filial->path);
+                        }
+                    }
+                    */
+                }
+                return $this->result('Сохранение филиала '.$filial->external_id.' произошло успешно.');
+            }
+            
+            $transaction->rollback();
+            return $this->result($filial->getErrors());
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
+    }
+    
+    private function saveProductInFilial($prodExternalId)
+    {
+        
+    }
+    /*-------- End Set Filial --------*/
     private function result($text) {
         $this->renderPartial('index', array('text' => $text));
         return false;
