@@ -14,7 +14,7 @@
     <a href="#addanalogproduct">Добавление/редактирование товаров-аналогов</a>
     <a href="#getsp">Получение данных о запчастях</a>
     <a href="#adddraft">Добавление/редактирование сборочных чертежей</a>
-    <!--a href="#addfilial">Добавление/редактирование филиалов и зон</a-->
+    <a href="#addfilial">Добавление/редактирование филиалов и зон</a>
 </div>
 <div class="item">
     <h4><a name="addproductmaker">Добавление/редактирование производителя запчастей</a></h4>
@@ -441,7 +441,7 @@
             data[0][inner][1][count] = '1'
         </pre>
     </div>
-    <!--h4><a name="addfilial">Добавление/редактирование филиалов и зон</a></h4>
+    <h4><a name="addfilial">Добавление/редактирование филиалов и зон</a></h4>
     <div class="text">
         <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
         <p>Параметры:</p>
@@ -476,5 +476,5 @@
             data[0][inner][1][external_id] = '777777777'
             data[0][inner][1][name] = 'Восточно-Казахстанская область'
         </pre>
-    </div-->
+    </div>
 </div>

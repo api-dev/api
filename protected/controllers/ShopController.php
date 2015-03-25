@@ -8,7 +8,7 @@ class ShopController extends Controller
         $get = filter_input_array(INPUT_GET);
         /**************************/
         //test
-        //$get = array('m'=>'set', 'action'=>'productmaker');
+        $get = array('m'=>'set', 'action'=>'filial');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -82,19 +82,22 @@ class ShopController extends Controller
         /**************************/
         //test
         
-        /*$data = array(
+        $data = array(
             0 => array(
-                'product_id'=>'UPR0000334',
+                'external_id'=>'UPR0000334',
+                'name'=>'Барнаул',
                 'inner'=>array(
                     0 => array(
-                        'analog_id'=>'UPR0023594',
+                        'external_id'=>'UPR0023594',
+                        'name'=>'Алтайский край',
                     ),
                     1 => array(
-                        'analog_id'=>'TRM0000966',
+                        'external_id'=>'TRM0000966',
+                        'name'=>'Восточно-Казахстанская область',
                     ),
                 ),
             ),
-        );*/
+        );
         
         /**************************/
         
@@ -971,13 +974,14 @@ class ShopController extends Controller
     /*-------- End Set Draft --------*/
     /*-------- Set Filial ----------*/
     
-    /*private function setFilial($request) 
+    private function setFilial($request) 
     {
         Yii::log('shop: setCategory', 'info');
         $this->setItems($request, 'Filial', 'external_id', true);
-    }*/
+    }
     
-    private function setOneFilial($data)
+    //setOneCategory($data, $parentId = null, $prefix = '')
+    private function setOneFilial($data, $parentId = null)
     {
         $commit = false;
         if (empty($data['external_id']))
@@ -989,17 +993,21 @@ class ShopController extends Controller
         $transaction = $app->db_auth->beginTransaction();
         try {
             $filial = Filial::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
-            if (!$filial) {
-                $filial = new Filial();
+            if (empty($filial)) {
+                $filial = new Filial;
             }
             $filial->name = $data['name'];
             $filial->external_id = $data['external_id'];
             
             $root = Filial::model()->findByAttributes(array('level'=>1));
-            if(empty($root)) {
-                $root = new Filial;
-                $root->name = 'Все филиалы';
-                $root->saveNode();
+            if(empty($parentId)) {
+                if(empty($root)) {
+                    $root = new Filial;
+                    $root->name = 'Все филиалы';
+                    $root->saveNode();
+                }
+            } else {
+                $root = Filial::model()->findByPk($parentId);
             }
             
             $filial->update_time = date('Y-m-d H:i:s');
@@ -1011,21 +1019,32 @@ class ShopController extends Controller
                 if($filial->appendTo($root)) $commit = true;
             }
             
+            /*if($commit) {
+                $transaction->commit();
+                
+                Yii::log('Filial id '.$filial->id, 'info');
+                //PriceInFilial::model()->deleteAll('filial_id=:id', array(':id' => $filial->id));
+                if ($filial->id && !empty($data['inner'])) {
+                    Yii::log('Inner for ' . $filial->id, 'info');
+
+                    foreach($data['inner'] as $item) {
+                        //$this->savePriceInFilial($item, $filial->id);
+                    }
+                }
+                return $this->result('Сохранение филиала '.$filial->external_id.' произошло успешно.');
+            }*/
+            
             if($commit) {
                 $transaction->commit();
 
                 Yii::log('Filial id '.$filial->id, 'info');
 
-                if ($filial->id && $data['inner']) {
-                    Yii::log('Inner for ' . $filial->id, 'info');
+                if ($filial->id && !empty($data['inner'])) {
+                    Yii::log('Inner for filial with id = ' . $filial->id, 'info');
 
-                    /* 
-                    if(is_array($data['inner'])) {
-                        foreach($data['inner'] as $item) {
-                            //$this->setOneFilial($item, $filial->id, $filial->path);
-                        }
+                    foreach($data['inner'] as $item) {
+                        $this->setOneFilial($item, $filial->id);
                     }
-                    */
                 }
                 return $this->result('Сохранение филиала '.$filial->external_id.' произошло успешно.');
             }
@@ -1039,10 +1058,29 @@ class ShopController extends Controller
         }
     }
     
-    private function saveProductInFilial($prodExternalId)
+    /*private function savePriceInFilial($data, $filialId)
     {
-        
-    }
+        $app = Yii::app();
+        $product = Product::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
+        if($product) {
+            $transaction = $app->db_auth->beginTransaction();
+            $element = new PriceInFilial;
+            $element->filial_id = $filialId;
+            $element->product_id = $product->id;
+            $element->price = $data['price'];
+            $element->currency_code = $data['currency_code'];
+            if($element->save()) {
+                $transaction->commit();
+                return $this->result('Сохранение продукта (id = '.$data['external_id'].') в чертеже произошло успешно.');
+            } else {
+                $transaction->rollback();
+                return $this->result($element->getErrors());
+            }
+        } else {
+            return $this->result('Ошибка. Продукт с id='.$data['external_id'].' не найден.');
+        }
+    }*/
+    
     /*-------- End Set Filial --------*/
     private function result($text) {
         $this->renderPartial('index', array('text' => $text));
