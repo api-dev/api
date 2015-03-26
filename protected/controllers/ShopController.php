@@ -8,7 +8,7 @@ class ShopController extends Controller
         $get = filter_input_array(INPUT_GET);
         /**************************/
         //test
-        $get = array('m'=>'set', 'action'=>'filial');
+        //$get = array('m'=>'set', 'action'=>'filial');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -82,7 +82,7 @@ class ShopController extends Controller
         /**************************/
         //test
         
-        $data = array(
+        /*$data = array(
             0 => array(
                 'external_id'=>'UPR0000334',
                 'name'=>'Барнаул',
@@ -97,7 +97,7 @@ class ShopController extends Controller
                     ),
                 ),
             ),
-        );
+        );*/
         
         /**************************/
         
