@@ -966,13 +966,13 @@ class ShopController extends Controller
             $element->count = $data['count'];
             if($element->save()) {
                 $transaction->commit();
-                return $this->result('Сохранение продукта (id = '.$id.') в чертеже произошло успешно.');
+                return $this->result('Сохранение продукта (id = '.$data['product_id'].') в чертеже произошло успешно.');
             } else {
                 $transaction->rollback();
                 return $this->result($element->getErrors());
             }
         } else {
-            return $this->result('Ошибка. Продукт с id='.$id.' не найден.');
+            return $this->result('Ошибка. Продукт с id='.$data['product_id'].' не найден.');
         }
     }
     /*-------- End Set Draft --------*/
