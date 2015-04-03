@@ -510,7 +510,7 @@ class ShopController extends Controller
     {
         Yii::log('shop: setModelProduct', 'info');
         $this->setItems($request, 'ModelProduct', 'model_line');
-    }*/
+    }
     
     private function setOneModelproduct($data)
     {
@@ -558,7 +558,7 @@ class ShopController extends Controller
         } else {
             return $this->result('Ошибка. Продукт с id='.$id.' не найден.');
         }
-    }
+    }*/
     /*-------- End Set ModelProduct --------*/
     /*-------- Set ModelEquipment ----------*/
     
