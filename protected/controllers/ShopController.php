@@ -506,11 +506,11 @@ class ShopController extends Controller
     /*-------- End Set Modelline --------*/
     /*-------- Set ModelProduct --------*/
     
-    private function setModelproduct($request) 
+    /*private function setModelproduct($request) 
     {
         Yii::log('shop: setModelProduct', 'info');
         $this->setItems($request, 'ModelProduct', 'model_line');
-    }
+    }*/
     
     private function setOneModelproduct($data)
     {
