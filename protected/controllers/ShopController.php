@@ -687,7 +687,7 @@ class ShopController extends Controller
                 return $this->result('Ошибка. Продукт не найден.');
             }
             
-            AnalogProduct::model()->deleteAll('product_id=:product_id', array(':product_id' => $model->id));
+            ProductAnalog::model()->deleteAll('product_id=:product_id', array(':product_id' => $model->id));
             if(is_array($data['inner'])) {
                 foreach($data['inner'] as $item) {
                     $this->saveAnalogProduct($item['analog_id'], $model->id);
@@ -707,7 +707,7 @@ class ShopController extends Controller
         $product = Product::model()->find('external_id=:external_id', array(':external_id' => $id));
         if($product) {
             $transaction = $app->db_auth->beginTransaction();
-            $element = new AnalogProduct;
+            $element = new ProductAnalog;
             $element->product_id = $modelId;
             $element->analog_product_id = $product->id;
             if($element->save()) {
