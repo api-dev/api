@@ -34,7 +34,7 @@ class RelatedProduct extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('product_id, related_product_id', 'numerical', 'integerOnly'=>true),
+			//array('product_id, related_product_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, product_id, related_product_id', 'safe', 'on'=>'search'),
