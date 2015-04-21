@@ -690,6 +690,7 @@ class ShopController extends Controller
             ProductAnalog::model()->deleteAll('product_id=:product_id', array(':product_id' => $model->id));
             if(is_array($data['inner'])) {
                 foreach($data['inner'] as $item) {
+                    Yii::log('inner = '. $item['analog_id'], 'info');
                     $this->saveAnalogProduct($item['analog_id'], $model->id);
                 }
                 return $this->result('Выгрузка аналогов для продукта '.$data['product_id'].' закончена.');
