@@ -9,6 +9,7 @@
  * @property integer $filial_id
  * @property string $price
  * @property string $currency_code
+ * @property string $update_time
  *
  * The followings are the available model relations:
  * @property Filial $filial
@@ -36,12 +37,12 @@ class PriceInFilial extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('product_id, filial_id', 'required'),
-			array('product_id, filial_id', 'numerical', 'integerOnly'=>true),
-			array('price, currency_code', 'safe'),
+			//array('product_id, filial_id', 'required'),
+			//array('product_id, filial_id', 'numerical', 'integerOnly'=>true),
+			array('price, currency_code, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, product_id, filial_id, price, currency_code', 'safe', 'on'=>'search'),
+			array('id, product_id, filial_id, price, currency_code, update_time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +70,7 @@ class PriceInFilial extends CActiveRecord
 			'filial_id' => 'Filial',
 			'price' => 'Price',
 			'currency_code' => 'Currency Code',
+			'update_time' => 'Update Time',
 		);
 	}
 
@@ -95,6 +97,7 @@ class PriceInFilial extends CActiveRecord
 		$criteria->compare('filial_id',$this->filial_id);
 		$criteria->compare('price',$this->price,true);
 		$criteria->compare('currency_code',$this->currency_code,true);
+		$criteria->compare('update_time',$this->update_time,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

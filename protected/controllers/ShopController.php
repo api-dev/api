@@ -862,7 +862,7 @@ class ShopController extends Controller
     }
     
     /*-------- End Set ProductMaker -------*/
-    /*-------- Set ProductMaker -----------*/
+    /*-------- Set EquipmentMaker -----------*/
     private function setEquipmentMaker($request)
     {
         Yii::log('shop: setEquipmentMaker', 'info');
@@ -911,7 +911,7 @@ class ShopController extends Controller
             return false;
         }
     }
-    /*-------- End Set ProductMaker -------*/
+    /*-------- End Set EquipmentMaker -------*/
     /*-------- Set Draft --------*/
     
     private function setDraft($request) 
@@ -1047,10 +1047,10 @@ class ShopController extends Controller
     }
     /*-------- End Set Filial --------*/
     /*-------- Set Filial Price ------*/
-    /*private function setPrice($request) 
+    private function setPrice($request) 
     {
         Yii::log('shop: setPrice', 'info');
-        $this->setItems($request, 'Price', 'external_id', true);
+        $this->setItems($request, 'Price', 'filial_id', true);
     }
     
     private function setOnePrice($data)
@@ -1061,14 +1061,18 @@ class ShopController extends Controller
         if (empty($data['product_id']))
             return $this->result('Ошибка. Нет уникального идентефикатора продукта.');
         
-        Yii::log('shop: setOnePrice', 'info');
+        if (empty($data['currency_code']))
+            return $this->result('Ошибка. Нет уникального идентефикатора валюты.');
         
+        Yii::log('shop: setOnePrice', 'info');
         try {
             $product = Product::model()->find('external_id=:external_id', array(':external_id' => $data['product_id']));
             if($product) {
                 $filial = Filial::model()->find('external_id=:external_id', array(':external_id' => $data['filial_id']));
                 if($filial){
                     PriceInFilial::model()->deleteAll('product=:product_id and filial_id=:filial_id', array(':id' => $product->id, ':filial_id' => $filial->id));
+                    $currency = Currency::model()->find('external_id=:external_id', array(':external_id' => $data['currency_code']));
+                    if(empty($currency)) return $this->result('Ошибка. Валюта с id='.$data['currency_code'].' не найден.');
                 } else {
                     return $this->result('Ошибка. Филиал с id='.$data['filial_id'].' не найден.');
                 }
@@ -1083,24 +1087,68 @@ class ShopController extends Controller
                 if (isset($data[$name]) || !empty($data[$name]))
                     $model->$name = $data[$name];
             }
+            $model->currency_code = $currency->id;
+            $model->filial_id = $filial->id;
+            $model->product_id = $product->id;
+            $model->update_time = date('Y-m-d H:i:s');
             if($model->save()) {
                 $transaction->commit();
-                return $this->result('Сохранение производителя запчастей (id = '.$data['external_id'].') произошло успешно.');
+                return $this->result('Сохранение цены для запчасти (id = '.$data['product_id'].') произошло успешно.');
             } else {
                 $transaction->rollback();
                 return $this->result($model->getErrors());
             }
 
-            return $this->result('Выгрузка производителя запчастей '.$data['external_id'].' закончена.');
+            return $this->result('Выгрузка цен закончена.');
         } catch (Exception $e) {
             $this->result("Исключение: " . $e->getMessage() . "\n");
             $transaction->rollback();
             return false;
         }   
-    }*/
-    
-    
+    }
     /*-------- End Set Filial Price ----*/
+    /*-------- Set Currency -----------*/
+    private function setCurrency($request)
+    {
+        Yii::log('shop: setCurrency', 'info');
+        $this->setItems($request, 'Currency', 'external_id');
+    }
+    
+    private function setOneCurrency($data, $model_name)
+    {
+        if (empty($data['external_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
+        Yii::log('shop: setOneCurrency = '. $data['external_id'], 'info');
+        
+        try {
+            $model = Currency::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
+            if (!$model)
+                $model = new Currency;
+            
+            $app = Yii::app();
+            $transaction = $app->db_auth->beginTransaction();
+            foreach ($model as $name => $v) {
+                if (isset($data[$name]) || !empty($data[$name]))
+                    $model->$name = $data[$name];
+            }
+            
+            if($model->save()) {
+                $transaction->commit();
+                return $this->result('Сохранение валюты (id = '.$data['external_id'].') произошло успешно.');
+            } else {
+                $transaction->rollback();
+                return $this->result($model->getErrors());
+            }
+            
+            return $this->result('Выгрузка валюты '.$data['external_id'].' закончена.');
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
+    }
+    /*-------- End Set Currency -------*/
     private function result($text) {
         $this->renderPartial('index', array('text' => $text));
         return false;

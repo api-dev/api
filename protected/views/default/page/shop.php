@@ -15,7 +15,8 @@
     <a href="#getsp">Получение данных о запчастях</a>
     <a href="#adddraft">Добавление/редактирование сборочных чертежей</a>
     <a href="#addfilial">Добавление/редактирование филиалов и зон</a>
-    <!--a href="#addprice">Добавление/редактирование цен запчастей по филиалам</a-->
+    <a href="#addcurrency">Добавление/редактирование валюты</a>
+    <a href="#addprice">Добавление/редактирование цен запчастей (по филиалам)</a>
 </div>
 <div class="item">
     <h4><a name="addproductmaker">Добавление/редактирование производителя запчастей</a></h4>
@@ -481,7 +482,39 @@
             data[0][inner][1][name] = 'Восточно-Казахстанская область'
         </pre>
     </div>
-    <!--h4><a name="addprice">Добавление/редактирование цен запчастей по филиалам</a></h4>
+    <h4><a name="addcurrency">Добавление/редактирование валюты</a></h4>
+    <div class="text">
+        <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
+        <p>Параметры:</p>
+        <ul>
+            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>currency.</b></li>
+            <li><span class="param">data</span> - массив с данными.</li>
+            <li><br>Принимаемые параметры <span class="param">data</span> при <span class="param">action=currency:</span> </li>
+            <li>
+                <ul class="table">
+                    <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                    <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор валюты в системе учета 1С. Уникальный. Обязательный</span> </li>
+                    <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название валюты</span> </li>
+                    <li><span class="param">iso</span> <span class="type">(string)</span> <span class="info">Сокращение валюты</span> </li>
+                    <li><span class="param">symbol</span> <span class="type">(string)</span> <span class="info">Символ валюты</span> </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="h2">Пример:</div>
+        <p>Пример добавляет/редактирует валюту:</p>
+        <pre style='font-size: 11px;'>
+            action = 'currency'
+            data[0][external_id] = '999999999'
+            data[0][name] = 'Доллар'
+            data[0][iso] = 'USD'
+            data[0][symbol] = '$'
+            data[1][external_id] = '888888888'
+            data[1][name] = 'Рубль'
+            data[1][iso] = 'RUB'
+            data[1][symbol] = 'руб.'
+        </pre>
+    </div>
+    <h4><a name="addprice">Добавление/редактирование цен запчастей (по филиалам)</a></h4>
     <div class="text">
         <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
         <p>Параметры:</p>
@@ -494,8 +527,8 @@
                     <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
                     <li><span class="param">filial_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор филиала в системе учета 1С. Уникальный. Обязательный</span> </li>
                     <li><span class="param">product_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор запчасти в системе учета 1С. Уникальный. Обязательный</span> </li>
-                    <li><span class="param">price</span> <span class="type">(string)</span> <span class="info">Цена</span> </li>
-                    <li><span class="param">currency_code</span> <span class="type">(string)</span> <span class="info">Код валюты</span> </li>
+                     <li><span class="param">currency_code</span> <span class="type">(string)</span> <span class="info">Идентефикатор валюты в системе учета 1С. Уникальный. Обязательный</span> </li>
+                    <li><span class="param">price</span> <span class="type">(string)</span> <span class="info">Цена</span></li>
                 </ul>
             </li>
         </ul>
@@ -503,10 +536,10 @@
         <p>Пример добавляет/редактирует категории:</p>
         <pre style='font-size: 11px;'>
             action = 'price'
-            data[0][filial_id] = '999999999'
-            data[0][product_id] = '8888888'
+            data[0][filial_id] = '666666666'
+            data[0][product_id] = '777777777'
+            data[0][currency_code] = '888888888'
             data[0][price] = '8'
-            data[0][currency_code] = '1'
         </pre>
-    </div-->
+    </div>
 </div>

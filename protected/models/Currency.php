@@ -1,22 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "filial".
+ * This is the model class for table "currency".
  *
- * The followings are the available columns in table 'filial':
+ * The followings are the available columns in table 'currency':
  * @property integer $id
  * @property string $external_id
  * @property string $name
- * @property string $update_time
- * @property integer $rgt
- * @property integer $lft
- * @property integer $parent
- * @property integer $level
+ * @property string $iso
+ * @property string $symbol
  *
  * The followings are the available model relations:
- * @property PriceInFilial[] $priceInFilials
+ * @property Price[] $prices
  */
-class Filial extends CActiveRecord
+class Currency extends CActiveRecord
 {
         public function getDbConnection()
         {
@@ -27,7 +24,7 @@ class Filial extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'filial';
+		return 'currency';
 	}
 
 	/**
@@ -38,11 +35,11 @@ class Filial extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			//array('rgt, lft, parent, level', 'numerical', 'integerOnly'=>true),
-			array('external_id, name, update_time', 'safe'),
+			//array('id', 'numerical', 'integerOnly'=>true),
+			array('external_id, name, iso, symbol', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, external_id, name, update_time, rgt, lft, parent, level', 'safe', 'on'=>'search'),
+			array('id, external_id, name, iso, symbol', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +51,7 @@ class Filial extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'priceInFilials' => array(self::HAS_MANY, 'PriceInFilial', 'filial_id'),
+			'prices' => array(self::HAS_MANY, 'Price', 'currency_id'),
 		);
 	}
 
@@ -66,12 +63,9 @@ class Filial extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'external_id' => 'External',
-			'name' => 'Name',
-			'update_time' => 'Update Time',
-			'rgt' => 'Rgt',
-			'lft' => 'Lft',
-			'parent' => 'Parent',
-			'level' => 'Level',
+			'name' => 'Название',
+			'iso' => 'ISO',
+			'symbol' => 'Символ',
 		);
 	}
 
@@ -96,11 +90,8 @@ class Filial extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('external_id',$this->external_id,true);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('update_time',$this->update_time,true);
-		$criteria->compare('rgt',$this->rgt);
-		$criteria->compare('lft',$this->lft);
-		$criteria->compare('parent',$this->parent);
-		$criteria->compare('level',$this->level);
+		$criteria->compare('iso',$this->iso,true);
+		$criteria->compare('symbol',$this->symbol,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -111,24 +102,10 @@ class Filial extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Filial the static model class
+	 * @return Currency the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-        
-        public function behaviors()
-        {
-            return array(
-                'nestedSetBehavior'=>array(
-                    'class'=>'ext.yiiext.behaviors.trees.NestedSetBehavior',
-                    'leftAttribute'=>'lft',
-                    'rightAttribute'=>'rgt',
-                    'levelAttribute'=>'level',
-                    'rootAttribute'=>'parent',
-                    'hasManyRoots'=>true,
-                ),
-            );
-        }
 }
