@@ -165,6 +165,8 @@ class ShopController extends Controller
             //if ($product->validate() && $product->save()) {
             $product->published = true;
             $product->update_time = date('Y-m-d H:i:s');
+            if(!empty($product->name)) $product->path = '/'.$product->id.'-'.Translite::rusencode($product->name, '-');
+                
             if ($product->save()) {
                 $transaction->commit();
                 if(is_array($data['inner'])) {
@@ -979,7 +981,7 @@ class ShopController extends Controller
     /*-------- End Set Draft --------*/
     /*-------- Set Filial ----------*/
     
-    private function setFilial($request) 
+    private function setFilial($request)
     {
         Yii::log('shop: setFilial', 'info');
         $this->setItems($request, 'Filial', 'external_id', true);
