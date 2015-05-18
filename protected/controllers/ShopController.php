@@ -354,7 +354,9 @@ class ShopController extends Controller
             
             foreach ($category as $name => $v) {
                 if (isset($data[$name]) || !empty($data[$name])){
-                    $category->$name = trim($data[$name]);
+                    preg_match('/\d{2,}\./i', $data[$name], $result);
+                    $category->name = trim(substr($data[$name], strlen($result[0])));
+                    //$category->$name = trim($data[$name]);
                 }
                 
                 if(isset($data['published'])) $category->published = (bool)((int)$data['published']);
