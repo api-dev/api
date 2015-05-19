@@ -165,7 +165,7 @@ class ShopController extends Controller
             //if ($product->validate() && $product->save()) {
             $product->published = true;
             $product->update_time = date('Y-m-d H:i:s');
-            if(!empty($product->name)) $product->path = '/'.$product->id.'-'.Translite::rusencode($product->name, '-');
+            if(!empty($product->name)) $product->path = '/sparepart/'.$product->id.'-'.Translite::rusencode($product->name, '-');
                 
             if ($product->save()) {
                 $transaction->commit();
@@ -353,7 +353,7 @@ class ShopController extends Controller
             }
             
             foreach ($category as $name => $v) {
-                if (isset($data[$name]) || !empty($data[$name])){
+                if (isset($data[$name]) || !empty($data[$name])) {
                     preg_match('/\d{2,}\./i', $data[$name], $result);
                     $category->name = trim(substr($data[$name], strlen($result[0])));
                     //$category->$name = trim($data[$name]);
