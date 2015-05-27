@@ -32,7 +32,7 @@ foreach ($data as $tr):
             
             $echo .= '<win>';
                 $echo .= '<inn>'.$parent->inn.'</inn>';
-                if($tr[type]=='1'){ // for local transport
+                if($tr[type]=='1') { // for local transport
                     $echo .= '<nds>'.$user->userFields[0]->with_nds.'</nds>';
                 } else $echo .= '<nds>0</nds>';
                 $echo .= '<ndspercent>'.Yii::app()->params['nds'].'</ndspercent>';
