@@ -1074,7 +1074,7 @@ class ShopController extends Controller
             if($product) {
                 $filial = Filial::model()->find('external_id=:external_id', array(':external_id' => $data['filial_id']));
                 if($filial){
-                    PriceInFilial::model()->deleteAll('product=:product_id and filial_id=:filial_id', array(':id' => $product->id, ':filial_id' => $filial->id));
+                    PriceInFilial::model()->deleteAll('product_id=:product_id and filial_id=:filial_id', array(':product_id' => $product->id, ':filial_id' => $filial->id));
                     $currency = Currency::model()->find('external_id=:external_id', array(':external_id' => $data['currency_code']));
                     if(empty($currency)) return $this->result('Ошибка. Валюта с id='.$data['currency_code'].' не найден.');
                 } else {
