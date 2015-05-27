@@ -35,9 +35,7 @@ foreach ($data as $tr):
                 if($tr[type]=='1'){ // for local transport
                     $echo .= '<nds>'.$user->userFields[0]->with_nds.'</nds>';
                 } else $echo .= '<nds>0</nds>';
-                if($user->userFields[0]->with_nds=='1'){
-                    $echo .= '<ndspercent>'.Yii::app()->params['nds'].'</ndspercent>';
-                }
+                $echo .= '<ndspercent>'.Yii::app()->params['nds'].'</ndspercent>';
                 $echo .= '<price>'.$rate->price.'</price>';
                 $echo .= '<currency>'.$tr[currency].'</currency>';
                 $echo .= '<date>'.$rate->date.'</date>';
