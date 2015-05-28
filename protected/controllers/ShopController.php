@@ -8,7 +8,7 @@ class ShopController extends Controller
         $get = filter_input_array(INPUT_GET);
         /**************************/
         //test
-        //$get = array('m'=>'set', 'action'=>'filial');
+        //$get = array('m'=>'set', 'action'=>'category');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -94,6 +94,21 @@ class ShopController extends Controller
                     1 => array(
                         'external_id'=>'TRM0000966',
                         'name'=>'Восточно-Казахстанская область2',
+                    ),
+                ),
+            ),
+        );*/
+        /*
+        $data = array(
+            0 => array(
+                'external_id'=>'MNS0001337',
+                'name'=>'1.Тракторная техника',
+                'published'=>'1',
+                'inner'=>array(
+                    0 => array(
+                        'external_id'=>'UPR0',
+                        'published'=>'1',
+                        'name'=>'Тракторы',
                     ),
                 ),
             ),
@@ -348,15 +363,26 @@ class ShopController extends Controller
         $transaction = $app->db_auth->beginTransaction();
         try {
             $category = ProductCategory::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
+            /*
             if (!$category) {
                 $category = new ProductCategory();
             }
+            */
+            set_time_limit(0);
+            if($category) {
+                $category->deleteNode();
+            }
+            
+            $category = new ProductCategory();
             
             foreach ($category as $name => $v) {
                 if (isset($data[$name]) || !empty($data[$name])) {
-                    preg_match('/\d{2,}\./i', $data[$name], $result);
-                    $category->name = trim(substr($data[$name], strlen($result[0])));
-                    //$category->$name = trim($data[$name]);
+                    preg_match('/\d{1,}\./i', $data[$name], $result);
+                    if(!empty($result[0])) {
+                        $strlen = strlen($result[0]);
+                        $category->name = substr($data[$name], $strlen);
+                    } else 
+                        $category->$name = trim($data[$name]);
                 }
                 
                 if(isset($data['published'])) $category->published = (bool)((int)$data['published']);
