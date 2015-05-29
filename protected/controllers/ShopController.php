@@ -368,12 +368,16 @@ class ShopController extends Controller
                 $category = new ProductCategory();
             }
             */
+            
             set_time_limit(0);
             if($category) {
-                $category->deleteNode();
-            }
-            
-            $category = new ProductCategory();
+                // del all children
+                $allChildren = $category->children()->findAll();
+                foreach($allChildren as $oneChild){
+                   $oneChild->deleteNode();
+                }
+            } else            
+                $category = new ProductCategory();
             
             foreach ($category as $name => $v) {
                 if (isset($data[$name]) || !empty($data[$name])) {
