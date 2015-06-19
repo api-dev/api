@@ -509,6 +509,7 @@
             data[0][name] = 'Доллар'
             data[0][iso] = 'USD'
             data[0][symbol] = '$'
+            data[0][exchange_rate] = '1.1'
             data[1][external_id] = '888888888'
             data[1][name] = 'Рубль'
             data[1][iso] = 'RUB'
