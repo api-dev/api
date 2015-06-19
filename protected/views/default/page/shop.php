@@ -497,6 +497,7 @@
                     <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название валюты</span> </li>
                     <li><span class="param">iso</span> <span class="type">(string)</span> <span class="info">Сокращение валюты</span> </li>
                     <li><span class="param">symbol</span> <span class="type">(string)</span> <span class="info">Символ валюты</span> </li>
+                    <li><span class="param">exchange_rate</span> <span class="type">(string)</span> <span class="info">Курс валюты</span> </li>
                 </ul>
             </li>
         </ul>

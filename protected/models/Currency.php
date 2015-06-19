@@ -9,6 +9,8 @@
  * @property string $name
  * @property string $iso
  * @property string $symbol
+ * @property string $exchange_rate
+ * @property string $update_time
  *
  * The followings are the available model relations:
  * @property Price[] $prices
@@ -35,11 +37,10 @@ class Currency extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			//array('id', 'numerical', 'integerOnly'=>true),
-			array('external_id, name, iso, symbol', 'safe'),
+			array('external_id, name, iso, symbol, exchange_rate, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, external_id, name, iso, symbol', 'safe', 'on'=>'search'),
+			array('id, external_id, name, iso, symbol, exchange_rate, update_time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +67,8 @@ class Currency extends CActiveRecord
 			'name' => 'Название',
 			'iso' => 'ISO',
 			'symbol' => 'Символ',
+			'exchange_rate' => 'Курс валюты',
+			'update_time' => 'Дата обновления',
 		);
 	}
 
@@ -92,6 +95,8 @@ class Currency extends CActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('iso',$this->iso,true);
 		$criteria->compare('symbol',$this->symbol,true);
+		$criteria->compare('exchange_rate',$this->exchange_rate,true);
+		$criteria->compare('update_time',$this->update_time,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
