@@ -1166,6 +1166,7 @@ class ShopController extends Controller
                 if (isset($data[$name]) || !empty($data[$name]))
                     $model->$name = $data[$name];
             }
+            $model->update_time = date('Y-m-d H:i:s');
             
             if($model->save()) {
                 $transaction->commit();
