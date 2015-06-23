@@ -363,21 +363,18 @@ class ShopController extends Controller
         $transaction = $app->db_auth->beginTransaction();
         try {
             $category = ProductCategory::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
-            /*
+            set_time_limit(0);
+            
             if (!$category) {
                 $category = new ProductCategory();
             }
-            */
-            
-            set_time_limit(0);
-            if($category) {
+            /*else {
                 // del all children
                 $allChildren = $category->children()->findAll();
                 foreach($allChildren as $oneChild){
                    $oneChild->deleteNode();
                 }
-            } else            
-                $category = new ProductCategory();
+            }*/
             
             foreach ($category as $name => $v) {
                 if (isset($data[$name]) || !empty($data[$name])) {
@@ -398,7 +395,6 @@ class ShopController extends Controller
             $makerId = ProductMaker::model()->find('external_id=:external_id', array(':external_id' => $data['equipment_maker']))->id;
             if(!empty($makerId)) $product->product_maker_id = $makerId;
             
-
             $root = ProductCategory::model()->findByAttributes(array('level'=>1));
             if(empty($parentId)) {
                 if(empty($root)) {
