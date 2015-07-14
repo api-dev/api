@@ -87,7 +87,7 @@ return array(
 
         'db_lbr' => array(
             'class' => 'system.db.CDbConnection',
-            'connectionString' => 'sqlite:' . dirname(__FILE__) . '/../../../git-lbr/protected/data/lbr.db',
+            'connectionString' => 'sqlite:' . dirname(__FILE__) . '/../../../lbr/protected/data/lbr.db',
             'initSQLs' => array(
                 'PRAGMA foreign_keys = ON',
             ),
