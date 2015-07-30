@@ -12,11 +12,12 @@
     <!--a href="#addmodelproduct">Добавление/редактирование отношения товаров (запчастей) к модельным рядам (какие запчасти закреплены за модельным рядом)</a-->
     <a href="#addrelatedproduct">Добавление/редактирование сопутствующих товаров</a>
     <a href="#addanalogproduct">Добавление/редактирование товаров-аналогов</a>
-    <a href="#getsp">Получение данных о запчастях</a>
     <a href="#adddraft">Добавление/редактирование сборочных чертежей</a>
     <a href="#addfilial">Добавление/редактирование филиалов и зон</a>
     <a href="#addcurrency">Добавление/редактирование валюты</a>
     <a href="#addprice">Добавление/редактирование цен запчастей (по филиалам)</a>
+    <a href="#getsp">Получение данных о запчастях</a>
+    <a href="#getanalitics">Получение аналитики</a>
 </div>
 <div class="item">
     <h4><a name="addproductmaker">Добавление/редактирование производителя запчастей</a></h4>
@@ -398,6 +399,44 @@
                     &lt;model external_id=&quot;3567&quot;&gt;3567&lt;/model&gt;
                 &lt;/models&gt;
             &lt;/sparepart&gt;
+            
+            </pre>        
+        </code>
+    </div>
+    <h4><a name="getanalitics">Получение аналитики</a></h4>
+    <div class="text">
+        <p><span class="param">URL</span> : api.lbr.ru/shop?m=get</p>
+        <p>Параметры:</p>
+        <ul>
+            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>analitics.</b></li>
+        </ul>
+        <div class="h2">Примеры:</div>
+        Пример вернет xml-файл со следующими параметрами:
+        <pre style='font-size: 11px;'>
+            customer_id - id пользователя (email)
+            subscription_id - id рассылки
+            link_id - id ссылки
+            time - время в секундах
+        </pre>
+        <br/>Возвращаемый xml:
+        <code>
+            <pre style='font-size:12px;'>
+            &lt;info id=&quot;5555&quot;&gt;
+                &lt;customer_id&gt;test1@mail.ru_test2@mail.ru&lt;/customer_id&gt;
+                &lt;subscription_id&gt;test_info&lt;/subscription_id&gt;
+                &lt;link_id&gt;link&lt;/link_id&gt;
+                &lt;time&gt;6.061&lt;/time&gt;
+                &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
+                &lt;url_mark&gt;5555&lt;/url_mark&gt;
+            &lt;/info&gt;
+            &lt;info id=&quot;666&quot;&gt;
+                &lt;customer_id&gt;test1@mail.ru&lt;/customer_id&gt;
+                &lt;subscription_id&gt;test_info&lt;/subscription_id&gt;
+                &lt;link_id&gt;&lt;/link_id&gt;
+                &lt;time&gt;12.671&lt;/time&gt;
+                &lt;url&gt;http://lbr-market.ru&lt;/url&gt;
+                &lt;url_mark&gt;&lt;/url_mark&gt;
+            &lt;/info&gt;
             
             </pre>        
         </code>
