@@ -8,7 +8,7 @@ class ShopController extends Controller
         $get = filter_input_array(INPUT_GET);
         /**************************/
         //test
-        //$get = array('m'=>'set', 'action'=>'category');
+        //$get = array('m'=>'get', 'action'=>'analitics');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -19,7 +19,7 @@ class ShopController extends Controller
         if (method_exists($this, $method)) {
             $this->$method($request);
         } else
-            return $this->result('Неверные параметры. Допустимые: m - set; action - sparepart. Полученные: m=' . $request['m'] . ', action=' . $request['action']);
+            return $this->result('Неверные параметры. Допустимые: m - set/get; action - sparepart. Полученные: m=' . $request['m'] . ', action=' . $request['action']);
     }
     
     /*-------- Get Sparepart --------*/
@@ -44,26 +44,46 @@ class ShopController extends Controller
     }
     /*-------- End get Sparepart ----*/
     /*-------- Get Order ------------*/
-    private function getOrder($request) 
+    /*private function getOrder($request) 
     {
         $data = $request['data'];
         if (!$data || empty($data))
             return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
 
-        /*$in = array();
-        foreach ($data as $item)
-            array_push($in, $item[external_id]);
+//        $in = array();
+//        foreach ($data as $item)
+//            array_push($in, $item[external_id]);
+//        
+//        $sp = Yii::app()->db_shop->createCommand()
+//                ->select('*')
+//                ->from('product')
+//                ->where(array('in', 'external_id', $in))
+//                ->queryAll()
+//        ;
         
-        $sp = Yii::app()->db_shop->createCommand()
-                ->select('*')
-                ->from('product')
-                ->where(array('in', 'external_id', $in))
-                ->queryAll()
-        ;
-        */
         $this->renderPartial('orderxml', array('data' => $sp));
-    }
+    }*/
     /*-------- End get Order --------*/
+    /*-------- Start get Analitics --------*/
+    private function getAnalitics($request) 
+    {
+        $analitics = Yii::app()->db_shop->createCommand()
+            ->select('*')
+            ->from('analitics')
+            ->where('push_1C=:flag', array(':flag'=>true))
+            ->queryAll()
+        ;
+        
+        $temp = $analitics;
+        foreach($temp as $info){
+            $item = ShopAnalitics::model()->findByPk($info[id]);
+            $item->push_1C = false;
+            $item->save();
+        }
+        
+        $this->renderPartial('analiticsxml', array('data' => $analitics));
+    }
+    /*-------- End get Analitics --------*/
     /*-------- Set Sparepart --------*/
     private function setSparepart($request) 
     {
