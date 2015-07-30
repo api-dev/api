@@ -421,7 +421,7 @@
         <br/>Возвращаемый xml:
         <code>
             <pre style='font-size:12px;'>
-            &lt;info id=&quot;5555&quot;&gt;
+            &lt;info id=&quot;2&quot;&gt;
                 &lt;customer_id&gt;test1@mail.ru_test2@mail.ru&lt;/customer_id&gt;
                 &lt;subscription_id&gt;test_info&lt;/subscription_id&gt;
                 &lt;link_id&gt;link&lt;/link_id&gt;
