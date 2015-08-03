@@ -39,6 +39,9 @@ return array(
             'class' => 'WebUser',
             'allowAutoLogin' => true,
         ),
+        'thumb'=>array(
+             'class'=>'ext.CThumbCreator.CThumbCreator',
+        ),
         'session' => array(
             'class' => 'HttpSession',
         ),
