@@ -11,6 +11,8 @@
  * @property string $logo
  * @property boolean $published
  * @property string $country
+ * @property string $path
+ * @property string $update_time
  *
  * The followings are the available model relations:
  * @property Product[] $products
@@ -37,12 +39,10 @@ class ProductMaker extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
-			array('external_id, name, description, logo, published, country', 'safe'),
+			array('external_id, name, description, logo, published, country, path, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, external_id, name, description, logo, published, country', 'safe', 'on'=>'search'),
+			array('id, external_id, name, description, logo, published, country, path, update_time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +71,8 @@ class ProductMaker extends CActiveRecord
 			'logo' => 'Логотип',
 			'published' => 'Опубликовать',
 			'country' => 'Страна',
+			'path' => 'Path',
+			'update_time' => 'Время обновления'
 		);
 	}
 
@@ -94,11 +96,13 @@ class ProductMaker extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('external_id',$this->external_id,true);
-		$criteria->compare('name',$this->name,true);
+                $criteria->compare('name',$this->name,true);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('logo',$this->logo,true);
 		$criteria->compare('published',$this->published);
 		$criteria->compare('country',$this->country,true);
+		$criteria->compare('path',$this->path,true);
+		$criteria->compare('update_time',$this->update_time,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

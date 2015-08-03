@@ -417,8 +417,13 @@
             subscription_id - id рассылки
             link_id - id ссылки
             time - время в секундах
-            url_mark - соответствие позиции каталога (category/modelline/maker/product),
-                       Например: "category=MNN01111" или "category=MNN01111;maker=000111"
+            url_mark - соответствие позиции каталога (category/modelline/maker/pmaker/product)
+                       Например: "category=MNN01111" или "category=MNN01111;maker=000111",
+                       здесь <b>maker</b> - производитель техники, 
+                       <b>pmaker</b> - производитель запчастей, 
+                       <b>category</b> - тип техники, 
+                       <b>product</b> - запчасть, 
+                       <b>modelline</b> - модельный ряд
         </pre>
         <br/>Возвращаемый xml:
         <code>
