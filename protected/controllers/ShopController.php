@@ -836,7 +836,9 @@ class ShopController extends Controller
                     $model->$name = $data[$name];
             }
             
+            if(!empty($model->name)) $model->path = '/'.Translite::rusencode($model->name, '-');
             $model->published = true;
+            
             if(!empty($data['image_name'])) {
                 $index = 1;
                 $photo = $this->setMakerPhoto($index, $data['image_name']);
@@ -938,7 +940,9 @@ class ShopController extends Controller
                     $model->$name = $data[$name];
             }
             
+            if(!empty($model->name)) $model->path = '/'.Translite::rusencode($model->name, '-');
             $model->published = true;
+            
             if(!empty($data['image_name'])) {
                 $index = 1;
                 $photo = $this->setMakerPhoto($index, $data['image_name']);
