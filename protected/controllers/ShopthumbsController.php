@@ -18,15 +18,7 @@ class ShopthumbsController extends Controller
         $images = scandir($folder);
         foreach ($images as $image) {
             if (($image != '.') && ($image != '..') && (exif_imagetype($folder.$image) == IMAGETYPE_JPEG)) {
-                $thumb = Yii::app()->thumb;
-                $thumb->image = $folder.$image;
-                $thumb->width = $width;
-                $thumb->height = $height;
-                $thumb->square = true;
-                $thumb->defaultName = $image;
-                $thumb->directory = $saveFolder;
-                $thumb->createThumb();
-                $thumb->save();
+                $this->saveThumbnail($image, $width, $height, $folder, $saveFolder);
             }
         }
     }
@@ -47,18 +39,24 @@ class ShopthumbsController extends Controller
         $images = scandir($folder);
         foreach ($images as $image) {
             if (($image != '.') && ($image != '..') && (exif_imagetype($folder.$image) == IMAGETYPE_JPEG)) {
-                $thumb = Yii::app()->thumb;
-                $thumb->image = $folder.$image;
-                $thumb->width = $width;
-                $thumb->height = $height;
-                $thumb->square = true;
-                $thumb->defaultName = $image;
-                $thumb->directory = $saveFolder;
-                $thumb->createThumb();
-                $thumb->save();
+                $this->saveThumbnail($image, $width, $height, $folder, $saveFolder);
             }
         }
     }
+    
+    public function saveThumbnail($image, $width, $height, $folder, $saveFolder) 
+    {
+        $thumb = Yii::app()->thumb;
+        $thumb->defaultName = $image;
+        $thumb->image = $folder.$image; // original image
+        $thumb->directory = $saveFolder;
+        $thumb->width = $width;
+        $thumb->height = $height;
+        $thumb->square = true;
+        $thumb->createThumb();
+        $thumb->save();
+    }
+    
     //----------------- Watermark -----------------------------------------------------------------
     /*
      * set watermark
