@@ -1,6 +1,7 @@
 <?php
 class ShopthumbsController extends Controller 
 {
+    //----------------- Thumbnail -----------------------------------------------------------------
     /*
      * create small thumbnail
      */
@@ -58,6 +59,7 @@ class ShopthumbsController extends Controller
             }
         }
     }
+    //----------------- Watermark -----------------------------------------------------------------
     /*
      * set watermark
      */
