@@ -174,12 +174,12 @@ class CThumbCreator extends CApplicationComponent {
 
     public function createThumb() 
     {
-        if (!$this->tmp) {
+        //if (!$this->tmp) {
             $this->createImg();
-        } else {
-            $this->img = $this->tmp;
-        }
-
+        //} else {
+        //    $this->img = $this->tmp;
+        //}
+        
         $dimension = min($this->width / $this->image_info[0], $this->height / $this->image_info[1]);
 
         if ($dimension < 1) {
