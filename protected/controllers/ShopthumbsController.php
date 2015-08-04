@@ -1,6 +1,9 @@
 <?php
 class ShopthumbsController extends Controller 
 {
+    /*
+     * create small thumbnail
+     */
     public function actionSmall() 
     {
         set_time_limit(0);
@@ -26,7 +29,9 @@ class ShopthumbsController extends Controller
             }
         }
     }
-    
+    /*
+     * create medium thumbnail
+     */
     public function actionMedium() 
     {
         set_time_limit(0);
@@ -53,8 +58,10 @@ class ShopthumbsController extends Controller
             }
         }
     }
-    
-    public function setWatermark() 
+    /*
+     * set watermark
+     */
+    public function actionWatermark() 
     {
         set_time_limit(0);
         ini_set('memory_limit', '-1');
