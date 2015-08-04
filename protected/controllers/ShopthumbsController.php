@@ -1,22 +1,26 @@
 <?php
-
 class ShopthumbsController extends Controller 
 {
     public function actionSmall() 
     {
         set_time_limit(0);
         ini_set('memory_limit', '-1');
-        $folder = $_SERVER['DOCUMENT_ROOT'].'/images/shop/spareparts/';
+        
+        $root = $_SERVER['DOCUMENT_ROOT'].'/images/shop/spareparts/';
+        $folder = $root.'large/';
+        $saveFolder = $root."small/";
+        $width = $height = 100;
+        
         $images = scandir($folder);
         foreach ($images as $image) {
             if (($image != '.') && ($image != '..') && (exif_imagetype($folder.$image) == IMAGETYPE_JPEG)) {
                 $thumb = Yii::app()->thumb;
                 $thumb->image = $folder.$image;
-                $thumb->width = 100;
-                $thumb->height = 100;
+                $thumb->width = $width;
+                $thumb->height = $height;
                 $thumb->square = true;
                 $thumb->defaultName = $image;
-                $thumb->directory = $folder."s/";
+                $thumb->directory = $saveFolder;
                 $thumb->createThumb();
                 $thumb->save();
             }
@@ -27,77 +31,80 @@ class ShopthumbsController extends Controller
     {
         set_time_limit(0);
         ini_set('memory_limit', '-1');
-        $folder = $_SERVER['DOCUMENT_ROOT'].'/images/shop/spareparts/';
+        
+        $root = $_SERVER['DOCUMENT_ROOT'].'/images/shop/spareparts/';
+        $folder = $root.'large/';
+        $saveFolder = $root."medium/";
+        $width = 160;
+        $height = 120;
+        
         $images = scandir($folder);
         foreach ($images as $image) {
             if (($image != '.') && ($image != '..') && (exif_imagetype($folder.$image) == IMAGETYPE_JPEG)) {
                 $thumb = Yii::app()->thumb;
                 $thumb->image = $folder.$image;
-                $thumb->width = 160;
-                $thumb->height = 120;
+                $thumb->width = $width;
+                $thumb->height = $height;
                 $thumb->square = true;
                 $thumb->defaultName = $image;
-                $thumb->directory = $folder."m/";
+                $thumb->directory = $saveFolder;
                 $thumb->createThumb();
                 $thumb->save();
             }
         }
     }
     
-    public function actionWatermark() 
+    public function setWatermark() 
     {
         set_time_limit(0);
         ini_set('memory_limit', '-1');
-        $folder = $_SERVER['DOCUMENT_ROOT'].'/images/shop/new/';
-        $watermarkImg = $_SERVER['DOCUMENT_ROOT'].'/images/shop/watermark/watermark_new.png';
+        $root = $_SERVER['DOCUMENT_ROOT'].'/images/shop/spareparts/';
+        $folder = $root.'large/';
+        $watermarkImg = $root.'watermark/watermark.png';
         $images = scandir($folder);
         foreach ($images as $image) {
             if (($image != '.') && ($image != '..') && (exif_imagetype($folder.$image) == IMAGETYPE_JPEG)) {
-                $image_path = $folder.$image;
-                $image = imagecreatefromjpeg($image_path);
+                $imagePath = $folder.$image;
+                $image = imagecreatefromjpeg($imagePath);
+                
                 // if something wrong
                 if ($image === false) {
                     return false;
                 }
-                $size = getimagesize($image_path);
-
-                if(($size[0]>=250)||($size[1]>=250)){
+                
+                $size = getimagesize($imagePath);
+                if(($size[0] >= 250) || ($size[1] >= 250)) {
                     // create watermark
-                    $watermark = imagecreatefrompng($watermarkImg);  
-
-                    // het watermark's height/widht
-                    $watermark_width = imagesx($watermark);
-                    $watermark_height = imagesy($watermark); 
-
+                    $watermark = imagecreatefrompng($watermarkImg);
+                    // get watermark's height/widht
+                    $watermarkWidth = imagesx($watermark);
+                    $watermarkHeight = imagesy($watermark);
                     // change watermark's size
-                    $k_w=$watermark_height/$watermark_width;
-                    $k_h=$watermark_width/$watermark_height;
+                    $kW = $watermarkHeight/$watermarkWidth;
+                    $kH = $watermarkWidth/$watermarkHeight;
 
-                    $k1=$size[0]/$watermark_width;
-                    $k2=$size[1]/$watermark_height;
+                    $k1 = $size[0]/$watermarkWidth;
+                    $k2 = $size[1]/$watermarkHeight;
 
-                    if($k1>$k2){
-                        $k=$k1;
-                        $w=$watermark_width*$k;
-                        $h=$w*$k_w;
-                    }
-                    else{
-                        $k=$k2;
-                        $h=$watermark_height*$k;
-                        $w=$h*$k_h;
+                    if($k1 > $k2) {
+                        $k = $k1;
+                        $w = $watermarkWidth*$k;
+                        $h = $w*$kW;
+                    } else {
+                        $k = $k2;
+                        $h = $watermarkHeight*$k;
+                        $w = $h*$kH;
                     }
 
                     // put watermark to image
                     imagealphablending($image, true);
                     imagealphablending($watermark, true);
-
                     // create new image
-                    imagecopyresampled($image,$watermark,0,0,0,0,$w,$h,$watermark_width,$watermark_height);
-                    imagejpeg($image,$image_path);
+                    imagecopyresampled($image, $watermark, 0, 0, 0, 0, $w, $h, $watermarkWidth, $watermarkHeight);
+                    imagejpeg($image, $imagePath);
                     // clear memeory
                     imagedestroy($watermark);  
                 }
-
                 imagedestroy($image);
             }
         }
