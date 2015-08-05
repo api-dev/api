@@ -53,3 +53,42 @@ Allow from all
 Deny from env=NO_AUTH
 Satisfy any
 </Limit>
+
+# cache
+<IfModule mod_expires.c>
+    Header append Cache-Control "public"
+    FileETag MTime Size
+    ExpiresActive on
+
+    ExpiresDefault "access plus 1 month"
+
+    # media: img, video, audio
+    ExpiresByType image/ico  "access plus 1 month"
+    ExpiresByType image/gif  "access plus 1 month"
+    ExpiresByType image/bmp  "access plus 1 month"
+    ExpiresByType image/png  "access plus 1 month"
+    ExpiresByType image/jpg  "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType video/ogg  "access plus 1 month"
+    ExpiresByType audio/ogg  "access plus 1 month"
+    ExpiresByType video/mp4  "access plus 1 month"
+    ExpiresByType video/webm "access plus 1 month"
+
+    # css, javascript
+    ExpiresByType text/css                  "access plus 1 month"
+    ExpiresByType application/javascript    "access plus 1 month"
+    ExpiresByType text/javascript           "access plus 1 month"
+</IfModule>
+
+# gzip
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE text/css
+    <IfModule mod_setenvif.c>
+        BrowserMatch ^Mozilla/4 gzip-only-text/html
+        BrowserMatch ^Mozilla/4\.0[678] no-gzip
+        BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+    </IfModule>
+</IfModule>
