@@ -1,140 +1,32 @@
 <?php
-/**
- * @package CThumbCreator
- */
-class CThumbCreator extends CApplicationComponent {
-
-    /**
-     *
-     * @var int largura da imagem
-     */
+class CThumbCreator extends CApplicationComponent 
+{
     public $width = 200;
-
-    /**
-     *
-     * @var int altura da imagem
-     */
     public $height = 200;
-
-    /**
-     *
-     * @var string pasta onde ser� salvo as miniaturas
-     */
     public $directory;
-
-    /**
-     *
-     * @var string nome padr�o das miniaturas
-     */
     public $defaultName = "thumb";
-
-    /**
-     *
-     * @var string sufixo para o nome
-     */
     public $suffix;
-
-    /**
-     *
-     * @var string prefixo para o nome
-     */
     public $prefix;
-
-    /**
-     *
-     * @var mixed imagem a ser redimensionada
-     */
     public $image;
-
-    /**
-     *
-     * @var int qualidade da imagem
-     */
     public $quality = 75;
-
-    /**
-     *
-     * @var int taxa de conversao para arquivos png
-     */
     public $compression = 6;
-
-    /**
-     *
-     * @var int Posicao para recortar a imagem no eixo X
-     */
     public $posX = 0;
-
-    /**
-     *
-     * @var int Posicao para recortar a imagem no eixo Y
-     */
     public $posY = 0;
-
-    /**
-     *
-     * @var int Largura do recorte
-     */
     public $cutWidth;
-
-    /**
-     *
-     * @var int Altura do recorte
-     */
     public $cutHeight;
-
-    /**
-     *
-     * @var bool Indica se deve alinhar o recorte ao centro da imagem
-     */
     public $cutCenter = false;
-
-    /**
-     *
-     * @var int Distancia esquerda do recorte
-     */
     public $distX = 0;
-
-    /**
-     *
-     * @var int Distancia direita do recorte
-     */
     public $distY = 0;
-
-    /**
-     *
-     * @var array dimensoes e tipo da imagem
-     */
     private $image_info;
-
-    /**
-     *
-     * @var string extensao da imagem
-     */
     private $ext;
-
-    /**
-     *
-     * @var mixed variavel que armazenar� a imagem
-     */
     private $img;
-
-    /**
-     *
-     * @var mixed vari�vel que armazenar� a imagem tempor�ria
-     */
     private $tmp;
-
-    /**
-     *
-     * @var bool flag indicando se deve ser gerado um quadrado preto em volta das miniaturas
-     */
-    public $square = false;
+    public $square = true;
 
     public function init() 
     {
-
         if (!function_exists("imagecreatetruecolor")) {
-            throw new Exception("Voce precisa habilitar a biblioteca GD para usar essa classe", 500);
+            throw new Exception("Can't be found function imagecreatetruecolor", 500);
         }
         parent::init();
     }
@@ -142,7 +34,7 @@ class CThumbCreator extends CApplicationComponent {
     private function createImg() 
     {
         if (!$this->image) {
-            throw new Exception("Nome da imagem deve ser informado", 500);
+            throw new Exception("Image error", 500);
         }
 
         $this->image_info = getimagesize($this->image);
@@ -162,7 +54,7 @@ class CThumbCreator extends CApplicationComponent {
                 $this->img = imagecreatefrompng($this->image);
                 break;
             default:
-                throw new Exception("Tipo de imagem nao suportado", 500);
+                throw new Exception("Invalid image type", 500);
         }
     }
 
@@ -174,12 +66,7 @@ class CThumbCreator extends CApplicationComponent {
 
     public function createThumb() 
     {
-        //if (!$this->tmp) {
-            $this->createImg();
-        //} else {
-        //    $this->img = $this->tmp;
-        //}
-        
+        $this->createImg();
         $dimension = min($this->width / $this->image_info[0], $this->height / $this->image_info[1]);
 
         if ($dimension < 1) {
@@ -198,14 +85,14 @@ class CThumbCreator extends CApplicationComponent {
             if (imagecopyresampled($this->tmp, $this->img, ($this->width - $newDimension[0]) / 2, ($this->height - $newDimension[1]) / 2, 0, 0, $newDimension[0], $newDimension[1], $this->image_info[0], $this->image_info[1])) {
                 $this->updateDimensions($newDimension[0], $newDimension[1]);
             } else {
-                throw new Exception("Problema ao criar a miniatura", 500);
+                throw new Exception("The problem with creating thumbnails", 500);
             }
         } else {
             $this->tmp = imagecreatetruecolor($newDimension[0], $newDimension[1]);
             if (imagecopyresampled($this->tmp, $this->img, 0, 0, 0, 0, $newDimension[0], $newDimension[1], $this->image_info[0], $this->image_info[1])) {
                 $this->updateDimensions($newDimension[0], $newDimension[1]);
             } else {
-                throw new Exception("Problema ao criar a miniatura", 500);
+                throw new Exception("The problem with creating thumbnails", 500);
             }
         }
     }
@@ -213,7 +100,7 @@ class CThumbCreator extends CApplicationComponent {
     public function cut() 
     {
         if (!$this->width || !$this->height) {
-            throw new Exception("Por favor, informe uma largura e altura para a imagem", 500);
+            throw new Exception("Width or height invalid", 500);
         }
 
         if (!$this->cutWidth) {
@@ -239,28 +126,29 @@ class CThumbCreator extends CApplicationComponent {
         if (imagecopyresampled($this->tmp, $this->img, $this->distX, $this->distY, $this->posX, $this->posY, $this->width, $this->height, $this->width, $this->height)) {
             $this->updateDimensions($this->cutWidth, $this->cutHeight);
         } else {
-            throw new Exception("Problema ao recortar a imagem", 500);
+            throw new Exception("Problem with image cut", 500);
         }
     }
 
     public function save() 
     {
         if (!$this->directory) {
-            throw new Exception("Informe o diretorio para salvar as miniaturas", 500);
+            throw new Exception("Directory doesn't found", 500);
         }
 
         switch ($this->ext) {
             case "jpg":
-                imagejpeg($this->tmp, $this->directory . $this->prefix . $this->defaultName . $this->suffix . "." . $this->ext, $this->quality);
-                break;
             case "jpeg":
-                imagejpeg($this->tmp, $this->directory . $this->prefix . $this->defaultName . $this->suffix . "." . $this->ext, $this->quality);
+                imagejpeg($this->tmp, $this->directory . $this->prefix . $this->defaultName, $this->quality);
+                //imagejpeg($this->tmp, $this->directory . $this->prefix . $this->defaultName . $this->suffix . "." . $this->ext, $this->quality);
                 break;
             case "gif":
-                imagegif($this->tmp, $this->directory . $this->prefix . $this->defaultName . $this->suffix . "." . $this->ext, $this->quality);
+                imagegif($this->tmp, $this->directory . $this->prefix . $this->defaultName, $this->quality);
+                //imagegif($this->tmp, $this->directory . $this->prefix . $this->defaultName . $this->suffix . "." . $this->ext, $this->quality);
                 break;
             case "png":
-                imagepng($this->tmp, $this->directory . $this->prefix . $this->defaultName . $this->suffix . "." . $this->ext, $this->compression);
+                imagepng($this->tmp, $this->directory . $this->prefix . $this->defaultName, $this->compression);
+                //imagepng($this->tmp, $this->directory . $this->prefix . $this->defaultName . $this->suffix . "." . $this->ext, $this->compression);
                 break;
         }
     }

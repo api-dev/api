@@ -2,7 +2,7 @@
 class ShopthumbsController extends Controller 
 {
     //----------------- Thumbnail -----------------------------------------------------------------
-    /*
+    /**
      * create small thumbnail
      */
     public function actionSmall() 
@@ -22,7 +22,7 @@ class ShopthumbsController extends Controller
             }
         }
     }
-    /*
+    /**
      * create medium thumbnail
      */
     public function actionMedium() 
@@ -52,13 +52,12 @@ class ShopthumbsController extends Controller
         $thumb->directory = $saveFolder;
         $thumb->width = $width;
         $thumb->height = $height;
-        $thumb->square = true;
         $thumb->createThumb();
         $thumb->save();
     }
     
     //----------------- Watermark -----------------------------------------------------------------
-    /*
+    /**
      * set watermark
      */
     public function actionWatermark() 
