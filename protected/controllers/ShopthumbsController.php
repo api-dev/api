@@ -43,6 +43,27 @@ class ShopthumbsController extends Controller
             }
         }
     }
+    /**
+     * create medium draft thumbnail
+     */
+    public function actionMedium() 
+    {
+        set_time_limit(0);
+        ini_set('memory_limit', '-1');
+        
+        $root = $_SERVER['DOCUMENT_ROOT'].'/images/shop/drafts/';
+        $folder = $root.'large/';
+        $saveFolder = $root."medium/";
+        $width = 160;
+        $height = 120;
+        
+        $images = scandir($folder);
+        foreach ($images as $image) {
+            if (($image != '.') && ($image != '..') && (exif_imagetype($folder.$image) == IMAGETYPE_JPEG)) {
+                $this->saveThumbnail($image, $width, $height, $folder, $saveFolder);
+            }
+        }
+    }
     
     public function saveThumbnail($image, $width, $height, $folder, $saveFolder) 
     {
