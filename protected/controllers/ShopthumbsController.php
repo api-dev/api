@@ -46,7 +46,7 @@ class ShopthumbsController extends Controller
     /**
      * create medium draft thumbnail
      */
-    public function actionMedium() 
+    public function actionDraft() 
     {
         set_time_limit(0);
         ini_set('memory_limit', '-1');
