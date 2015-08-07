@@ -8,7 +8,7 @@ class ShopController extends Controller
         $get = filter_input_array(INPUT_GET);
         /**************************/
         //test
-        //$get = array('m'=>'get', 'action'=>'analitics');
+        //$get = array('m'=>'get', 'action'=>'sparepart');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -1214,10 +1214,12 @@ class ShopController extends Controller
         if (isset($data['id'])) {
             Yii::log('shop: delSparepart = '. $data['external_id'], 'info');
             Product::model()->deleteAll('external_id=:id', array(':id' => $data['external_id']));
+            ShopChanges::saveChange($data['user_id'], 'Через api удалена запчасть с id='.$data['external_id']);
         } else {
             foreach ($data as $sparepart):
                Yii::log('shop: delSparepart = '. $sparepart['external_id'], 'info');
                Product::model()->deleteAll('external_id=:id', array(':id' => $sparepart['external_id']));
+               ShopChanges::saveChange($sparepart['user_id'], 'Через api удалена запчасть с id='.$sparepart['external_id']);
             endforeach;
         }
         return $this->result('Удаление прошло успешно.');

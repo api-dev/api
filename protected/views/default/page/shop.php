@@ -2,6 +2,7 @@
 <p>Для того, чтобы начать работать с магазином, требуется открыть http соединение по адресу <b>api.lbr.ru</b></p>
 <p class="list">Список разделов:</p>
 <div class="api-tr-list">
+    <b>Добавление</b>
     <a href="#addproductmaker">Добавление/редактирование производителя запчастей</a>
     <a href="#addequipmentmaker">Добавление/редактирование производителя техники</a>
     <a href="#addcategory">Добавление/редактирование категорий</a>
@@ -16,8 +17,10 @@
     <a href="#addfilial">Добавление/редактирование филиалов и зон</a>
     <a href="#addcurrency">Добавление/редактирование валюты</a>
     <a href="#addprice">Добавление/редактирование цен запчастей (по филиалам)</a>
+    <b>Получение</b>
     <a href="#getsp">Получение данных о запчастях</a>
     <a href="#getanalitics">Получение аналитики</a>
+    <b>Удаление</b>
     <a href="#delsp">Удаление запчасти</a>
 </div>
 <div class="item">
@@ -603,6 +606,7 @@
                 <ul class="table">
                     <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
                     <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор в системе учета 1С. Уникальный. Обязательный</span></li>
+                    <li><span class="param">user_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор пользователя в системе учета, удалившего запчасть</span></li>
                 </ul>
             </li>
         </ul>
@@ -611,12 +615,15 @@
         <pre style='font-size: 11px;'>
             action = 'sparepart'
             data[0][external_id] = '666666666'
+            data[0][user_id] = '1'
             data[1][external_id] = '222222222'
+            data[1][user_id] = '3'
         </pre>
         <p>Пример удаляет одну запчасть:</p>
         <pre style='font-size: 11px;'>
             action = 'sparepart'
             data[external_id] = '666666666'
+            data[user_id] = '2'
         </pre>
     </div>
 </div>
