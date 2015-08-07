@@ -21,7 +21,7 @@
     <a href="#getsp">Получение данных о запчастях</a>
     <a href="#getanalitics">Получение аналитики</a>
     <b>Удаление</b>
-    <a href="#delsp">Удаление запчасти</a>
+    <a href="#delsp">Удаление запчастей</a>
 </div>
 <div class="item">
     <h4><a name="addproductmaker">Добавление/редактирование производителя запчастей</a></h4>
@@ -594,7 +594,7 @@
             data[0][price] = '8'
         </pre>
     </div>
-    <h4><a name="delsp">Удаление запчасти</a></h4>
+    <h4><a name="delsp">Удаление запчастей</a></h4>
     <div class="text">
         <p><span class="param">URL</span> : api.lbr.ru/shop?m=del</p>
         <p>Параметры:</p>
