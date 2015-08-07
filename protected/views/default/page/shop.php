@@ -18,6 +18,7 @@
     <a href="#addprice">Добавление/редактирование цен запчастей (по филиалам)</a>
     <a href="#getsp">Получение данных о запчастях</a>
     <a href="#getanalitics">Получение аналитики</a>
+    <a href="#delsp">Удаление запчасти</a>
 </div>
 <div class="item">
     <h4><a name="addproductmaker">Добавление/редактирование производителя запчастей</a></h4>
@@ -588,6 +589,34 @@
             data[0][product_id] = '777777777'
             data[0][currency_code] = '888888888'
             data[0][price] = '8'
+        </pre>
+    </div>
+    <h4><a name="delsp">Удаление запчасти</a></h4>
+    <div class="text">
+        <p><span class="param">URL</span> : api.lbr.ru/shop?m=del</p>
+        <p>Параметры:</p>
+        <ul>
+            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>sparepart.</b></li>
+            <li><span class="param">data</span> - массив с данными.</li>
+            <li><br>Принимаемые параметры <span class="param">data</span> при <span class="param">action=sparepart:</span> </li>
+            <li>
+                <ul class="table">
+                    <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                    <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор в системе учета 1С. Уникальный. Обязательный</span></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="h2">Примеры:</div>
+        <p>Пример удаляет две запчасти:</p>
+        <pre style='font-size: 11px;'>
+            action = 'sparepart'
+            data[0][external_id] = '666666666'
+            data[1][external_id] = '222222222'
+        </pre>
+        <p>Пример удаляет одну запчасть:</p>
+        <pre style='font-size: 11px;'>
+            action = 'sparepart'
+            data[external_id] = '666666666'
         </pre>
     </div>
 </div>

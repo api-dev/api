@@ -19,7 +19,7 @@ class ShopController extends Controller
         if (method_exists($this, $method)) {
             $this->$method($request);
         } else
-            return $this->result('Неверные параметры. Допустимые: m - set/get; action - sparepart. Полученные: m=' . $request['m'] . ', action=' . $request['action']);
+            return $this->result('Неверные параметры. Допустимые: m - set/get/del; action - sparepart. Полученные: m=' . $request['m'] . ', action=' . $request['action']);
     }
     
     /*-------- Get Sparepart --------*/
@@ -1203,7 +1203,26 @@ class ShopController extends Controller
             return false;
         }
     }
-    /*-------- End Set Currency -------*/
+    /*-------- End Set Currency --------*/
+    /* -------Start-DELETE-block-------- */
+    private function delSparepart($request) 
+    {
+        $data = $request['data'];
+        if (!$data || empty($data))
+            return $this->result('Ошибка. Нет данных о перевозке. Попробуйте еще раз.');
+
+        if (isset($data['id'])) {
+            Yii::log('shop: delSparepart = '. $data['external_id'], 'info');
+            Product::model()->deleteAll('external_id=:id', array(':id' => $data['external_id']));
+        } else {
+            foreach ($data as $sparepart):
+               Yii::log('shop: delSparepart = '. $sparepart['external_id'], 'info');
+               Product::model()->deleteAll('external_id=:id', array(':id' => $sparepart['external_id']));
+            endforeach;
+        }
+        return $this->result('Удаление прошло успешно.');
+    }
+    /* -------End-DELETE-block-------- */
     private function result($text) {
         $this->renderPartial('index', array('text' => $text));
         return false;
