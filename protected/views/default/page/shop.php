@@ -485,7 +485,7 @@
             action = 'draft'
             data[0][external_id] = 'MNS-00001088'
             data[0][name] = 'Ботвоудалитель'
-            data[0][image_name] = 'MNS-00001088.jpg'
+            data[0][image] = 'MNS-00001088.jpg'
             data[0][inner][0][product_id] = '111111'
             data[0][inner][0][level] = '1'
             data[0][inner][0][count] = '2'
