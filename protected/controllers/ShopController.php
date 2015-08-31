@@ -9,7 +9,7 @@ class ShopController extends Controller
         $get = filter_input_array(INPUT_GET);
         /**************************/
         //test
-        $get = array('m'=>'get', 'action'=>'analitics');
+        //$get = array('m'=>'get', 'action'=>'analitics');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
