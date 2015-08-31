@@ -2,13 +2,14 @@
 
 class ShopController extends Controller
 {
+    
     public function actionIndex()
-    {
+    {   
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
         //test
-        //$get = array('m'=>'get', 'action'=>'sparepart');
+        $get = array('m'=>'get', 'action'=>'analitics');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -63,10 +64,11 @@ class ShopController extends Controller
         
         $this->renderPartial('orderxml', array('data' => $sp));
     }*/
-    /*-------- End get Order --------*/
+    /*-------- End get Order --------------*/
     /*-------- Start get Analitics --------*/
     private function getAnalitics($request) 
     {
+        set_time_limit(0);
         $analitics = Yii::app()->db_shop->createCommand()
             ->select('*')
             ->from('analitics')
@@ -82,6 +84,19 @@ class ShopController extends Controller
         }
         
         $this->renderPartial('analiticsxml', array('data' => $analitics));
+    }
+    
+    public function getTime($time)
+    {
+        $hours = (int)($time/3600);
+        $time -= $hours*3600; 
+        if(strlen($hours) == 1) $hours = '0'.$hours;
+        $minutes = (int)($time/60);
+        if(strlen($minutes) == 1) $minutes = '0'.$minutes;
+        $seconds = (int)($time%60);
+        if(strlen($seconds) == 1) $seconds = '0'.$seconds;
+        
+        return $hours.':'.$minutes.':'.$seconds;
     }
     /*-------- End get Analitics --------*/
     /*-------- Set Sparepart --------*/
