@@ -122,6 +122,7 @@ class ShopController extends Controller
                 'external_id'=>'MNS0016106',
                 'problem'=>'Проблемный',
                 'multiplicity'=>'1',
+                'date_sale_off'=>'2015-09-01 16:45'
             ),
         );*/
         

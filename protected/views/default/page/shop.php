@@ -227,6 +227,7 @@
                     <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор в системе учета 1С. Уникальный. Обязательный</span> </li>
                     <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название запчасти</span> </li>
                     <li><span class="param">product_group</span> <span class="type">(string)</span> <span class="info">ID группы в 1С, которой принадлежит запчасть</span> </li>
+                    <li><span class="param">product_group_name</span> <span class="type">(string)</span> <span class="info">Название группы в 1С, которой принадлежит запчасть</span> </li>
                     <!--li><span class="param">price_id</span> <span class="type">(int)</span> <span class="info">ID группы цен в 1С</span> </li-->
                     <li><span class="param">catalog_number</span> <span class="type">(string)</span> <span class="info">Каталожный номер</span> </li>
                     <li><span class="param">product_maker</span> <span class="type">(string)</span> <span class="info">ID производителя в 1С, которой принадлежит запчасть</span> </li>
@@ -237,7 +238,7 @@
                     <li><span class="param">additional_info</span> <span class="type">(string)</span> <span class="info">Дополнительная информация</span> </li>
                     <li><span class="param">problem</span> <span class="type">(string)</span> <span class="info">Проблемный/сверхпроблемный</span> </li>
                     <li><span class="param">units</span> <span class="type">(string)</span> <span class="info">Единицы измерения</span> </li>
-                    <li><span class="param">multiplicity</span> <span class="type">(string)</span> <span class="info">Кратность</span> </li>
+                    <li><span class="param">multiplicity</span> <span class="type">(string)</span> <span class="info">Кратность заказа</span> </li>
                     <li><span class="param">material</span> <span class="type">(string)</span> <span class="info">Материал изделия</span> </li>
                     <li><span class="param">size</span> <span class="type">(string)</span> <span class="info">Размер изделия</span> </li>
                     <li><span class="param">date_sale_off</span> <span class="type">(string)</span> <span class="info">Дата снятия с продажи</span> </li>
