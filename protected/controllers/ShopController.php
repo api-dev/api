@@ -122,7 +122,9 @@ class ShopController extends Controller
                 'external_id'=>'MNS0016106',
                 'problem'=>'Проблемный',
                 'multiplicity'=>'1',
-                'date_sale_off'=>'2015-09-01 16:45'
+                'date_sale_off'=>'2015-09-01 16:45',
+                'product_group'=>'111',
+                'product_group_name'=>'test'
             ),
         );*/
         
@@ -208,7 +210,15 @@ class ShopController extends Controller
             }
             
             $groupId = ProductGroup::model()->find('external_id=:external_id', array(':external_id' => $data['product_group']))->id;
-            if(!empty($groupId)) $product->product_group_id = $groupId;
+            if(!empty($groupId)) {
+                $product->product_group_id = $groupId;
+            } else {
+                $root = ProductGroup::model()->findByAttributes(array('level'=>1));
+                $group = new ProductGroup();
+                $group->name = $data['product_group_name'];
+                $group->appendTo($root);
+                $product->product_group_id = $group->id;
+            }
             
             $makerId = ProductMaker::model()->find('external_id=:external_id', array(':external_id' => $data['product_maker']))->id;
             if(!empty($makerId)) $product->product_maker_id = $makerId;
