@@ -237,7 +237,7 @@
                     <li><span class="param">additional_info</span> <span class="type">(string)</span> <span class="info">Дополнительная информация</span> </li>
                     <li><span class="param">problem</span> <span class="type">(string)</span> <span class="info">Проблемный/сверхпроблемный</span> </li>
                     <li><span class="param">units</span> <span class="type">(string)</span> <span class="info">Единицы измерения</span> </li>
-                    <li><span class="param">muliplicity</span> <span class="type">(string)</span> <span class="info">Кратность</span> </li>
+                    <li><span class="param">multiplicity</span> <span class="type">(string)</span> <span class="info">Кратность</span> </li>
                     <li><span class="param">material</span> <span class="type">(string)</span> <span class="info">Материал изделия</span> </li>
                     <li><span class="param">size</span> <span class="type">(string)</span> <span class="info">Размер изделия</span> </li>
                     <li><span class="param">date_sale_off</span> <span class="type">(string)</span> <span class="info">Дата снятия с продажи</span> </li>

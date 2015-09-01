@@ -119,6 +119,14 @@ class ShopController extends Controller
         
         /*$data = array(
             0 => array(
+                'external_id'=>'MNS0016106',
+                'problem'=>'Проблемный',
+                'multiplicity'=>'1',
+            ),
+        );*/
+        
+        /*$data = array(
+            0 => array(
                 'external_id'=>'UPR0000334',
                 'name'=>'Барнаул',
                 'inner'=>array(
@@ -188,12 +196,16 @@ class ShopController extends Controller
                 $product = new Product();
 
             foreach ($product as $name => $v) {
-                if (isset($data[$name]) || !empty($data[$name]))
-                    $product->$name = $data[$name];
+                if (isset($data[$name]) || !empty($data[$name])) {
+                    if($name == 'problem') {
+                        $product->$name = mb_strtolower($data[$name], 'UTF-8');
+                    } else {
+                        $product->$name = $data[$name];
+                    }
+                }
                 Yii::log($name.' = '.$product->$name, 'info');
             }
             
-            if(!empty($product->problem)) $product->problem = strtolower($product->problem);
             $groupId = ProductGroup::model()->find('external_id=:external_id', array(':external_id' => $data['product_group']))->id;
             if(!empty($groupId)) $product->product_group_id = $groupId;
             
