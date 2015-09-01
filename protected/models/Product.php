@@ -67,10 +67,10 @@ class Product extends CActiveRecord
 		);*/
                 
                 return array(
-			array('external_id, name, weight, update_time, product_group_id, catalog_number, product_maker_id, liquidity, image, additional_info, published', 'safe'),
+			array('external_id, name, weight, update_time, product_group_id, catalog_number, product_maker_id, liquidity, image, additional_info, published, problem, units, multiplicity, material, size, date_sale_off', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, external_id, name, product_group_id, catalog_number, product_maker_id, count, liquidity, image, min_quantity, additional_info, published, productGroup_name, productMaker_name', 'safe', 'on'=>'search'),
+			array('id, external_id, name, product_group_id, catalog_number, product_maker_id, count, liquidity, image, min_quantity, additional_info, published, productGroup_name, productMaker_name, problem, units, multiplicity, material, size, date_sale_off', 'safe', 'on'=>'search'),
                 );
 	}
 
@@ -135,8 +135,14 @@ class Product extends CActiveRecord
                         //'price_value'=>'Цена',
                         //'currency_iso'=>'Валюта',
 			'published' => 'Опубликовать',
-                        'update_time' => 'Update Time',
+                        'update_time' => 'Дата обновления',
                         'weight' => 'Вес',
+                        'problem' => 'Проблемный', 
+                        'units' => 'Единицы измерения', 
+                        'multiplicity' => 'Кратность', 
+                        'material' => 'Материал изделия', 
+                        'size' => 'Размер изделия', 
+                        'date_sale_off' => 'Дата снятия с продажи'
 		);
 	}
 
