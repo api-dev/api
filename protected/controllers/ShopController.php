@@ -213,11 +213,11 @@ class ShopController extends Controller
             if(!empty($groupId)) {
                 $product->product_group_id = $groupId;
             } else {
-                $root = ProductGroup::model()->findByAttributes(array('level'=>1));
+                /*$root = ProductGroup::model()->findByAttributes(array('level'=>1));
                 $group = new ProductGroup();
                 $group->name = $data['product_group_name'];
                 $group->appendTo($root);
-                $product->product_group_id = $group->id;
+                $product->product_group_id = $group->id;*/
             }
             
             $makerId = ProductMaker::model()->find('external_id=:external_id', array(':external_id' => $data['product_maker']))->id;
