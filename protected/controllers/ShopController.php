@@ -9,7 +9,7 @@ class ShopController extends Controller
         $get = filter_input_array(INPUT_GET);
         /**************************/
         //test
-        //$get = array('m'=>'get', 'action'=>'analitics');
+        //$get = array('m'=>'set', 'action'=>'sparepart');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -192,6 +192,8 @@ class ShopController extends Controller
                     $product->$name = $data[$name];
                 Yii::log($name.' = '.$product->$name, 'info');
             }
+            
+            if(!empty($product->problem)) $product->problem = strtolower($product->problem);
             $groupId = ProductGroup::model()->find('external_id=:external_id', array(':external_id' => $data['product_group']))->id;
             if(!empty($groupId)) $product->product_group_id = $groupId;
             
