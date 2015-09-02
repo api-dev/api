@@ -7,8 +7,7 @@ class ShopController extends Controller
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
-        //test
-        //$get = array('m'=>'set', 'action'=>'sparepart');
+        //$get = array('m'=>'del', 'action'=>'group');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -114,7 +113,6 @@ class ShopController extends Controller
         $data = $request['data'];
 
         /**************************/
-        //test
         
         /*$data = array(
             0 => array(
@@ -141,6 +139,12 @@ class ShopController extends Controller
                         'name'=>'Восточно-Казахстанская область2',
                     ),
                 ),
+            ),
+        );*/
+        /*$data = array(
+            0 => array(
+                'external_id'=>'MNS0003740',
+                'user_id'=>'10000',
             ),
         );*/
         /*
@@ -1251,21 +1255,56 @@ class ShopController extends Controller
     {
         $data = $request['data'];
         if (!$data || empty($data))
-            return $this->result('Ошибка. Нет данных о перевозке. Попробуйте еще раз.');
+            return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
 
-        if (isset($data['id'])) {
-            Yii::log('shop: delSparepart = '. $data['external_id'], 'info');
-            Product::model()->deleteAll('external_id=:id', array(':id' => $data['external_id']));
-            ShopChanges::saveChange($data['user_id'], 'Через api удалена запчасть с id='.$data['external_id']);
+        if (isset($data['external_id'])) {
+            if(!empty($data['user_id'])){
+                Yii::log('shop: delSparepart = '. $data['external_id'], 'info');
+                Product::model()->deleteAll('external_id=:id', array(':id' => $data['external_id']));
+                ShopChanges::saveChange($data['user_id'], 'Через api удалена запчасть с id='.$data['external_id']);
+            } else return $this->result('Ошибка. Нет данных о пользователе соврешающем транзакцию. Попробуйте еще раз.');
         } else {
-            foreach ($data as $sparepart):
-               Yii::log('shop: delSparepart = '. $sparepart['external_id'], 'info');
-               Product::model()->deleteAll('external_id=:id', array(':id' => $sparepart['external_id']));
-               ShopChanges::saveChange($sparepart['user_id'], 'Через api удалена запчасть с id='.$sparepart['external_id']);
-            endforeach;
+            foreach ($data as $sparepart) {
+               if(!empty($sparepart['user_id'])) {
+                    Yii::log('shop: delSparepart = '. $sparepart['external_id'], 'info');
+                    Product::model()->deleteAll('external_id=:id', array(':id' => $sparepart['external_id']));
+                    ShopChanges::saveChange($sparepart['user_id'], 'Через api удалена запчасть с id='.$sparepart['external_id']);
+               } else return $this->result('Ошибка. Нет данных о пользователе соврешающем транзакцию. Попробуйте еще раз.');
+            } 
         }
         return $this->result('Удаление прошло успешно.');
     }
+    
+    private function delGroup($request) 
+    {
+        $data = $request['data'];
+        if (!$data || empty($data))
+            return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
+
+        if (isset($data['external_id'])) {
+            if(!empty($data['user_id'])) {
+                Yii::log('shop: delGroup = '. $data['external_id'], 'info');
+                $groupId = ProductGroup::model()->findByAttributes(array('external_id'=>$data['external_id']))->id;
+                Product::model()->deleteAll('product_group_id=:id', array('id'=>$groupId));
+                ProductGroup::model()->deleteAll('external_id=:id', array(':id' => $data['external_id']));
+                
+                ShopChanges::saveChange($data['user_id'], 'Через api удалена группа запчастей с id='.$data['external_id'].' и все запчасти, входящие в нее.');
+            } else return $this->result('Ошибка. Нет данных о пользователе соврешающем транзакцию. Попробуйте еще раз.');
+        } else {
+            foreach ($data as $group) {
+               if(!empty($group['user_id'])) {
+                    Yii::log('shop: delGroup = '.$group['external_id'], 'info');
+                    $groupId = ProductGroup::model()->findByAttributes(array('external_id'=>$group['external_id']))->id;
+                    Product::model()->deleteAll('product_group_id=:id', array('id'=>$groupId));
+                    ProductGroup::model()->deleteAll('external_id=:id', array(':id' => $group['external_id']));
+                    
+                    ShopChanges::saveChange($group['user_id'], $groupId.'Через api удалена группа запчастей с id='.$group['external_id'].' и все запчасти, входящие в нее.');
+               } else return $this->result('Ошибка. Нет данных о пользователе соврешающем транзакцию. Попробуйте еще раз.');
+            } 
+        }
+        return $this->result('Удаление прошло успешно.');
+    }
+    
     /* -------End-DELETE-block-------- */
     private function result($text) {
         $this->renderPartial('index', array('text' => $text));
