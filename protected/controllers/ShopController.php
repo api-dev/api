@@ -122,7 +122,7 @@ class ShopController extends Controller
                 'external_id'=>'MNS0016106',
                 'problem'=>'Проблемный',
                 'multiplicity'=>'1',
-                'date_sale_off'=>'2015-09-01 16:45',
+                'date_sale_off'=>'10.07.2014',
                 'product_group'=>'111',
                 'product_group_name'=>'test'
             ),
@@ -202,6 +202,8 @@ class ShopController extends Controller
                 if (isset($data[$name]) || !empty($data[$name])) {
                     if($name == 'problem') {
                         $product->$name = mb_strtolower($data[$name], 'UTF-8');
+                    } else if($name == 'date_sale_off') {
+                        $product->$name = date('Y-m-d', strtotime($product->$name));
                     } else {
                         $product->$name = $data[$name];
                     }
