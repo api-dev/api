@@ -120,9 +120,9 @@ class ShopController extends Controller
         /*$data = array(
             0 => array(
                 'external_id'=>'MNS0016106',
-                'problem'=>'Проблемный',
+                'problem'=>'Пр',
                 'multiplicity'=>'1',
-                'date_sale_off'=>'10.07.2014',
+                'date_sale_off'=>'07.07.2017',
                 'product_group'=>'111',
                 'product_group_name'=>'test'
             ),
@@ -201,9 +201,9 @@ class ShopController extends Controller
             foreach ($product as $name => $v) {
                 if (isset($data[$name]) || !empty($data[$name])) {
                     if($name == 'problem') {
-                        $product->$name = mb_strtolower($data[$name], 'UTF-8');
+                        $product->problem = mb_strtolower($data['problem'], 'UTF-8');
                     } else if($name == 'date_sale_off') {
-                        $product->$name = date('Y-m-d', strtotime($product->$name));
+                        $product->date_sale_off = date('Y-m-d', strtotime($data['date_sale_off']));
                     } else {
                         $product->$name = $data[$name];
                     }
