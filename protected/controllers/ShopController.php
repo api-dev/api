@@ -1262,14 +1262,14 @@ class ShopController extends Controller
                 Yii::log('shop: delSparepart = '. $data['external_id'], 'info');
                 Product::model()->deleteAll('external_id=:id', array(':id' => $data['external_id']));
                 ShopChanges::saveChange($data['user_id'], 'Через api удалена запчасть с id='.$data['external_id']);
-            } else return $this->result('Ошибка. Нет данных о пользователе соврешающем транзакцию. Попробуйте еще раз.');
+            } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
         } else {
             foreach ($data as $sparepart) {
                if(!empty($sparepart['user_id'])) {
                     Yii::log('shop: delSparepart = '. $sparepart['external_id'], 'info');
                     Product::model()->deleteAll('external_id=:id', array(':id' => $sparepart['external_id']));
                     ShopChanges::saveChange($sparepart['user_id'], 'Через api удалена запчасть с id='.$sparepart['external_id']);
-               } else return $this->result('Ошибка. Нет данных о пользователе соврешающем транзакцию. Попробуйте еще раз.');
+               } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
             } 
         }
         return $this->result('Удаление прошло успешно.');
@@ -1289,7 +1289,7 @@ class ShopController extends Controller
                 ProductGroup::model()->deleteAll('external_id=:id', array(':id' => $data['external_id']));
                 
                 ShopChanges::saveChange($data['user_id'], 'Через api удалена группа запчастей с id='.$data['external_id'].' и все запчасти, входящие в нее.');
-            } else return $this->result('Ошибка. Нет данных о пользователе соврешающем транзакцию. Попробуйте еще раз.');
+            } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
         } else {
             foreach ($data as $group) {
                if(!empty($group['user_id'])) {
@@ -1299,7 +1299,7 @@ class ShopController extends Controller
                     ProductGroup::model()->deleteAll('external_id=:id', array(':id' => $group['external_id']));
                     
                     ShopChanges::saveChange($group['user_id'], $groupId.'Через api удалена группа запчастей с id='.$group['external_id'].' и все запчасти, входящие в нее.');
-               } else return $this->result('Ошибка. Нет данных о пользователе соврешающем транзакцию. Попробуйте еще раз.');
+               } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
             } 
         }
         return $this->result('Удаление прошло успешно.');
