@@ -2,7 +2,6 @@
 
 class ShopController extends Controller
 {
-    
     public function actionIndex()
     {   
         $post = filter_input_array(INPUT_POST);
@@ -122,7 +121,7 @@ class ShopController extends Controller
                 'external_id'=>'MNS0016106',
                 'problem'=>'Пр',
                 'multiplicity'=>'1',
-                'date_sale_off'=>'07.07.2017',
+                'date_sale_off'=>'07.07.2007',
                 'product_group'=>'111',
                 'product_group_name'=>'test'
             ),
@@ -203,7 +202,7 @@ class ShopController extends Controller
                     if($name == 'problem') {
                         $product->problem = mb_strtolower($data['problem'], 'UTF-8');
                     } else if($name == 'date_sale_off') {
-                        $product->date_sale_off = date('Y-m-d', strtotime($data['date_sale_off']));
+                        $product->date_sale_off = date_format(date_create_from_format('d.m.Y', $data['date_sale_off']), 'Y-m-d');
                     } else {
                         $product->$name = $data[$name];
                     }

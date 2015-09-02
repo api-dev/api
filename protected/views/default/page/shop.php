@@ -241,7 +241,7 @@
                     <li><span class="param">multiplicity</span> <span class="type">(string)</span> <span class="info">Кратность заказа</span> </li>
                     <li><span class="param">material</span> <span class="type">(string)</span> <span class="info">Материал изделия</span> </li>
                     <li><span class="param">size</span> <span class="type">(string)</span> <span class="info">Размер изделия</span> </li>
-                    <li><span class="param">date_sale_off</span> <span class="type">(string)</span> <span class="info">Дата снятия с продажи</span> </li>
+                    <li><span class="param">date_sale_off</span> <span class="type">(string)</span> <span class="info">Дата снятия с продажи (формат d.m.Y, например 10.07.2014)</span> </li>
                     <li><span class="param">image_name</span> <span class="type">(string)</span> <span class="info">Имя изображения запчасти (как она будет называться на сайте)</span> </li>
                     <li><span class="param">+ картинка</span><span class="info" style="margin-left: 100px;">Пакет данных</span></li>
                     <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Модели, к которым относится запчасть:
