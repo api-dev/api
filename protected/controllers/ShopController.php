@@ -218,6 +218,7 @@ class ShopController extends Controller
                 $group->name = $data['product_group_name'];
                 $group->appendTo($root);
                 $product->product_group_id = $group->id;*/
+                $product->product_group_id = null;
             }
             
             $makerId = ProductMaker::model()->find('external_id=:external_id', array(':external_id' => $data['product_maker']))->id;
