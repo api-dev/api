@@ -7,7 +7,7 @@ class ShopController extends Controller
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
-        //$get = array('m'=>'get', 'action'=>'analiticsbytime');
+        //$get = array('m'=>'get', 'action'=>'analiticsbyevpid');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -92,44 +92,88 @@ class ShopController extends Controller
         $data = $request['data'];
         
         /*$data = array(
-            0 => array(
-                'from'=>'2015-08-14',
-                'to'=>'2015-08-19',
-            ),
+            'from'=>'2015-08-14',
+            'to'=>'2015-08-19',
         );*/
         
-        $analitics = Yii::app()->db_shop->createCommand()
-            ->select('*')
-            ->from('analitics')
-            ->where('date_created between "'.date('Y-m-d', strtotime($data['from'])).'" and "'.date('Y-m-d', strtotime($data['to'].' +1 days')).'"')
-            ->queryAll()
-        ;
+        if(!empty($data['from']) && !empty($data['to'])) {
+            $analitics = Yii::app()->db_shop->createCommand()
+                ->select('*')
+                ->from('analitics')
+                ->where('date_created between "'.date('Y-m-d', strtotime($data['from'])).'" and "'.date('Y-m-d', strtotime($data['to'].' +1 days')).'"')
+                ->queryAll()
+            ;
+            Yii::log('shop: getAnalitics by time ('.$data['from'].' - '.$data['to'].') - it was found '.count($analitics).' records', 'info');
         
-        Yii::log('shop: getAnalitics by time ('.$data['from'].' - '.$data['to'].') - it was found '.count($analitics).' records', 'info');
-        
-        $this->renderPartial('analiticsxml', array('data' => $analitics));
+            $this->renderPartial('analiticsxml', array('data' => $analitics));
+        } else 
+            Yii::log('shop: getAnalitics by time - no info data[from] or data[to]', 'info');
     }
     
     // get analitics by evp's id
-    /*private function getAnaliticsbyevpid($request) 
+    private function getAnaliticsbyevpid($request) 
     {
         set_time_limit(0);
-        $analitics = Yii::app()->db_shop->createCommand()
-            ->select('*')
-            ->from('analitics')
-            ->where('push_1C=:flag', array(':flag'=>true))
-            ->queryAll()
-        ;
+        $data = $request['data'];
         
-        $temp = $analitics;
-        foreach($temp as $info){
-            $item = ShopAnalitics::model()->findByPk($info[id]);
-            $item->push_1C = false;
-            $item->save();
-        }
+        /*$data = array(
+            'subscription_id'=>'EVP_market1',
+            'link_id'=>'1'
+        );*/
         
-        $this->renderPartial('analiticsxml', array('data' => $analitics));
-    }*/
+        if(!empty($data['subscription_id']) && isset($data['link_id'])) {
+            $sql = 'and link_id is null';
+            if((int)$data['link_id']) {
+                $sql = 'and link_id is not null';
+            }
+
+            $analitics = Yii::app()->db_shop->createCommand()
+                ->select('*')
+                ->from('analitics')
+                ->where('subscription_id=:id '.$sql, array('id'=>$data['subscription_id']))
+                ->queryAll()
+            ;
+            
+            $this->renderPartial('analiticsxml', array('data' => $analitics));
+        } else 
+            Yii::log('shop: getAnalitics by evp id - no info data[subscription_id] or data[link_id]', 'info');
+    }
+    
+    // get analitics by evp's id unique
+    private function getAnaliticsbyevpidunique($request) 
+    {
+        set_time_limit(0);
+        $data = $request['data'];
+        
+        /*$data = array(
+            'subscription_id'=>'EVP_market1',
+            'link_id'=>'1'
+        );*/
+        
+        if(!empty($data['subscription_id']) && isset($data['link_id'])) {
+            $sql = 'and link_id is null';
+            if((int)$data['link_id']) {
+                $sql = 'and link_id is not null';
+            }
+
+            $analitics = Yii::app()->db_shop->createCommand()
+                ->select('*')
+                ->from('analitics')
+                ->where('subscription_id=:id and push_1C=:flag '.$sql, array('id'=>$data['subscription_id'], 'flag'=>true))
+                ->queryAll()
+            ;
+            
+            $temp = $analitics;
+            foreach($temp as $info){
+                $item = ShopAnalitics::model()->findByPk($info[id]);
+                $item->push_1C = false;
+                $item->save();
+            }
+            
+            $this->renderPartial('analiticsxml', array('data' => $analitics));
+        } else 
+            Yii::log('shop: getAnalitics by evp id - no info data[subscription_id] or data[link_id]', 'info');
+    }
     
     public function getTime($time)
     {
