@@ -7,7 +7,7 @@ class ShopController extends Controller
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
-        //$get = array('m'=>'del', 'action'=>'group');
+        //$get = array('m'=>'get', 'action'=>'analiticsbytime');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -64,6 +64,7 @@ class ShopController extends Controller
     }*/
     /*-------- End get Order --------------*/
     /*-------- Start get Analitics --------*/
+    // get all unique analitics
     private function getAnalitics($request) 
     {
         set_time_limit(0);
@@ -83,6 +84,52 @@ class ShopController extends Controller
         
         $this->renderPartial('analiticsxml', array('data' => $analitics));
     }
+    
+    // get all analitics by time
+    private function getAnaliticsbytime($request) 
+    {
+        set_time_limit(0);
+        $data = $request['data'];
+        
+        /*$data = array(
+            0 => array(
+                'from'=>'2015-08-14',
+                'to'=>'2015-08-19',
+            ),
+        );*/
+        
+        $analitics = Yii::app()->db_shop->createCommand()
+            ->select('*')
+            ->from('analitics')
+            ->where('date_created between "'.date('Y-m-d', strtotime($data['from'])).'" and "'.date('Y-m-d', strtotime($data['to'].' +1 days')).'"')
+            ->queryAll()
+        ;
+        
+        Yii::log('shop: getAnalitics by time ('.$data['from'].' - '.$data['to'].') - it was found '.count($analitics).' records', 'info');
+        
+        $this->renderPartial('analiticsxml', array('data' => $analitics));
+    }
+    
+    // get analitics by evp's id
+    /*private function getAnaliticsbyevpid($request) 
+    {
+        set_time_limit(0);
+        $analitics = Yii::app()->db_shop->createCommand()
+            ->select('*')
+            ->from('analitics')
+            ->where('push_1C=:flag', array(':flag'=>true))
+            ->queryAll()
+        ;
+        
+        $temp = $analitics;
+        foreach($temp as $info){
+            $item = ShopAnalitics::model()->findByPk($info[id]);
+            $item->push_1C = false;
+            $item->save();
+        }
+        
+        $this->renderPartial('analiticsxml', array('data' => $analitics));
+    }*/
     
     public function getTime($time)
     {
