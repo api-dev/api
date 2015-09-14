@@ -111,8 +111,10 @@ class ShopChanges extends CActiveRecord
             $change['user_id'] = $userId;
             $change['user'] = $userId;
             $change['date'] = date('Y-m-d H:i:s');
+            Yii::log('shop: user_id = '.$change->user, 'info');
             $change['description'] = $message;
             $change->save();
+            Yii::log('shop: user_id = '.$change->id, 'info');
             return;
         }
 }
