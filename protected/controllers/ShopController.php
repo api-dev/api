@@ -7,7 +7,7 @@ class ShopController extends Controller
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
-        //$get = array('m'=>'get', 'action'=>'analiticsbyevpid');
+        //$get = array('m'=>'del', 'action'=>'sparepart');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -1345,9 +1345,10 @@ class ShopController extends Controller
     private function delSparepart($request) 
     {
         $data = $request['data'];
+        
         if (!$data || empty($data))
             return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
-
+        
         if (isset($data['external_id'])) {
             if(!empty($data['user_id'])){
                 Yii::log('shop: delSparepart = '. $data['external_id'], 'info');

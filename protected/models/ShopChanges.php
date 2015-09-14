@@ -32,7 +32,7 @@ class ShopChanges extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id', 'numerical', 'integerOnly'=>true),
+			//array('user_id', 'numerical', 'integerOnly'=>true),
 			array('date, description', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -106,15 +106,12 @@ class ShopChanges extends CActiveRecord
 	}
         
         public static function saveChange($userId, $message)
-        {   //ShopChanges::saveChange($userId, $message);
+        {   
             $change = new ShopChanges();
-            $change['user_id'] = $userId;
-            $change['user'] = $userId;
-            $change['date'] = date('Y-m-d H:i:s');
-            Yii::log('shop: user_id = '.$change->user, 'info');
-            $change['description'] = $message;
+            $change->user = $userId;
+            $change->date = date('Y-m-d H:i:s');
+            $change->description = $message;
             $change->save();
-            Yii::log('shop: user_id = '.$change->id, 'info');
             return;
         }
 }
