@@ -8,6 +8,7 @@
  * @property string $date
  * @property string $description
  * @property integer $user_id
+ * @property string $user
  */
 class ShopChanges extends CActiveRecord
 {
@@ -35,7 +36,7 @@ class ShopChanges extends CActiveRecord
 			array('date, description', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, date, description, user_id', 'safe', 'on'=>'search'),
+			array('id, date, description, user, user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,6 +61,7 @@ class ShopChanges extends CActiveRecord
 			'date' => 'Время изменения',
 			'description' => 'Описание изменений',
 			'user_id' => 'User',
+			'user' => 'User',
 		);
 	}
 
@@ -85,6 +87,7 @@ class ShopChanges extends CActiveRecord
 		$criteria->compare('date',$this->date,true);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('user',$this->user);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -106,6 +109,7 @@ class ShopChanges extends CActiveRecord
         {   //ShopChanges::saveChange($userId, $message);
             $change = new ShopChanges();
             $change['user_id'] = $userId;
+            $change['user'] = $userId;
             $change['date'] = date('Y-m-d H:i:s');
             $change['description'] = $message;
             $change->save();
