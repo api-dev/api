@@ -1352,6 +1352,7 @@ class ShopController extends Controller
             if(!empty($data['user_id'])){
                 Yii::log('shop: delSparepart = '. $data['external_id'], 'info');
                 Product::model()->deleteAll('external_id=:id', array(':id' => $data['external_id']));
+                Yii::log('shop: user_id = '.$data['user_id'], 'info');
                 ShopChanges::saveChange($data['user_id'], 'Через api удалена запчасть с id='.$data['external_id']);
             } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
         } else {
@@ -1359,6 +1360,7 @@ class ShopController extends Controller
                if(!empty($sparepart['user_id'])) {
                     Yii::log('shop: delSparepart = '. $sparepart['external_id'], 'info');
                     Product::model()->deleteAll('external_id=:id', array(':id' => $sparepart['external_id']));
+                    Yii::log('shop: user_id = '.$sparepart['user_id'], 'info');
                     ShopChanges::saveChange($sparepart['user_id'], 'Через api удалена запчасть с id='.$sparepart['external_id']);
                } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
             } 
