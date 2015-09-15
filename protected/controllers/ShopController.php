@@ -1392,7 +1392,7 @@ class ShopController extends Controller
                     Product::model()->deleteAll('product_group_id=:id', array('id'=>$groupId));
                     ProductGroup::model()->deleteAll('external_id=:id', array(':id' => $group['external_id']));
                     
-                    ShopChanges::saveChange($group['user_id'], $groupId.'Через api удалена группа запчастей с id='.$group['external_id'].' и все запчасти, входящие в нее.');
+                    ShopChanges::saveChange($group['user_id'], 'Через api удалена группа запчастей с id='.$group['external_id'].' и все запчасти, входящие в нее.');
                } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
             } 
         }
