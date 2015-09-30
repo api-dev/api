@@ -7,7 +7,7 @@ class ShopController extends Controller
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
-        //$get = array('m'=>'del', 'action'=>'sparepart');
+        //$get = array('m'=>'get', 'action'=>'sparepart');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -25,6 +25,13 @@ class ShopController extends Controller
     private function getSparepart($request) 
     {
         $data = $request['data'];
+        //////////////////////////////
+        /*$data = array(
+            0 => array(
+                'external_id'=>'MNS0016106'
+            )
+        );*/
+        /////////////////////////////////
         if (!$data || empty($data))
             return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
 

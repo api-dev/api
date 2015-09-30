@@ -16,6 +16,7 @@ foreach ($data as $sp):
         $echo .= '<min_quantity>'.$sp[min_quantity].'</min_quantity>';
         $echo .= '<additional_info>'.$sp[additional_info].'</additional_info>';
         $echo .= '<published>'.(int)$sp[published].'</published>';
+        $echo .= '<url>http://lbr-market.ru'.$sp[path].'</url>';
         if(count($productModels)) {
             $echo .= '<models>';
                 foreach ($productModels as $productModel):
