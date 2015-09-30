@@ -395,6 +395,7 @@
                 &lt;liquidity&gt;A&lt;/liquidity&gt;
                 &lt;additional_info&gt;Сопутствующая информация.&lt;/additional_info&gt;
                 &lt;published&gt;1&lt;/published&gt;
+                &lt;url&gt;http://lbr-market.ru/sparepart/16251-mufta-kontrolya-vyseva-404-068k/&lt;/url&gt;
                 &lt;models&gt;
                     &lt;model external_id=&quot;3566&quot;&gt;3566&lt;/model&gt;
                     &lt;model external_id=&quot;3567&quot;&gt;3567&lt;/model&gt;
@@ -408,6 +409,7 @@
                 &lt;liquidity&gt;A&lt;/liquidity&gt;
                 &lt;additional_info&gt;Сопутствующая информация.&lt;/additional_info&gt;
                 &lt;published&gt;1&lt;/published&gt;
+                &lt;url&gt;http://lbr-market.ru/sparepart/16251-mufta-kontrolya-vyseva-404-068k/&lt;/url&gt;
                 &lt;models&gt;
                     &lt;model external_id=&quot;3566&quot;&gt;3566&lt;/model&gt;
                     &lt;model external_id=&quot;3567&quot;&gt;3567&lt;/model&gt;
