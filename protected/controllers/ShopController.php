@@ -7,7 +7,7 @@ class ShopController extends Controller
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
-        //$get = array('m'=>'get', 'action'=>'sparepart');
+        //$get = array('m'=>'del', 'action'=>'modelline');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -1400,6 +1400,38 @@ class ShopController extends Controller
                     ProductGroup::model()->deleteAll('external_id=:id', array(':id' => $group['external_id']));
                     
                     ShopChanges::saveChange($group['user_id'], 'Через api удалена группа запчастей с id='.$group['external_id'].' и все запчасти, входящие в нее.');
+               } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
+            } 
+        }
+        return $this->result('Удаление прошло успешно.');
+    }
+    
+    private function delModelline($request) 
+    {
+        $data = $request['data'];
+        if (!$data || empty($data))
+            return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
+
+        if (isset($data['external_id'])) {
+            if(!empty($data['user_id'])) {
+                Yii::log('shop: delModelline = '. $data['external_id'], 'info');
+                $model = ProductModelLine::model()->findByAttributes(array('external_id' => $data['external_id']));
+                if($model) {
+                    ProductInModelLine::model()->deleteAll('model_line_id=:id', array('id' => $model->id));
+                    $model->deleteNode();
+                    ShopChanges::saveChange($data['user_id'], 'Через api удален модельный ряд с id='.$data['external_id'].'.');
+                }
+            } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
+        } else {
+            foreach ($data as $item) {
+               if(!empty($item['user_id'])) {
+                    Yii::log('shop: delModelline = '.$item['external_id'], 'info');
+                    $model = ProductModelLine::model()->findByAttributes(array('external_id' => $item['external_id']));
+                    if($model) {
+                        ProductInModelLine::model()->deleteAll('model_line_id=:id', array('id' => $model->id));
+                        $model->deleteNode();
+                        ShopChanges::saveChange($item['user_id'], 'Через api удален модельный ряд с id='.$item['external_id'].'.');
+                    }
                } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
             } 
         }
