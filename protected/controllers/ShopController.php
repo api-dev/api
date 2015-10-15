@@ -1414,7 +1414,7 @@ class ShopController extends Controller
 
         if (isset($data['external_id'])) {
             if(!empty($data['user_id'])) {
-                Yii::log('shop: delModelline = '. $data['external_id'], 'info');
+                Yii::log('shop: delModelline = '. $data['external_id'].', user_id = '.$data['user_id'], 'info');
                 $model = ProductModelLine::model()->findByAttributes(array('external_id' => $data['external_id']));
                 if($model) {
                     ProductInModelLine::model()->deleteAll('model_line_id=:id', array('id' => $model->id));
@@ -1425,7 +1425,7 @@ class ShopController extends Controller
         } else {
             foreach ($data as $item) {
                if(!empty($item['user_id'])) {
-                    Yii::log('shop: delModelline = '.$item['external_id'], 'info');
+                    Yii::log('shop: delModelline = '.$item['external_id'].', user_id = '.$item['user_id'], 'info');
                     $model = ProductModelLine::model()->findByAttributes(array('external_id' => $item['external_id']));
                     if($model) {
                         ProductInModelLine::model()->deleteAll('model_line_id=:id', array('id' => $model->id));
