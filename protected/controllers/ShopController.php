@@ -1452,7 +1452,7 @@ class ShopController extends Controller
                 $modelline = ProductModelLine::model()->findByAttributes(array('external_id' => $item['modelline_id']));
                 if(!empty($product->id) && !empty($modelline->id)) {
                     ProductInModelLine::model()->deleteAll('model_line_id=:id and product_id=:product_id', array('id' => $modelline->id, 'product_id' => $product->id));
-                    ShopChanges::saveChange($item['user_id'], 'Через api удален модельный ряд с id='.$item['external_id'].'.');
+                    ShopChanges::saveChange($item['user_id'], 'Через api из модельного ряда с id='.$item['modelline_id'].' удалена запчасть '.$item['product_id'].'.');
                 } else {
                     Yii::log('One of params modelline = '.$item['modelline_id'].' or product_id = '.$item['product_id'].' not found', 'info');
                 }
