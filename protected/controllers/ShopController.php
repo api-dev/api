@@ -7,7 +7,7 @@ class ShopController extends Controller
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
-        //$get = array('m'=>'del', 'action'=>'modelline');
+        //$get = array('m'=>'del', 'action'=>'productfrommodelline');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -1436,6 +1436,30 @@ class ShopController extends Controller
             } 
         }
         return $this->result('Удаление прошло успешно.');
+    }
+    
+    private function delProductfrommodelline($request) 
+    {
+        $data = $request['data'];
+        
+        if (!$data || empty($data))
+            return $this->result('Ошибка. Нет данных. Попробуйте еще раз.');
+        
+        foreach ($data as $item) {
+            if(!empty($item['user_id'])) {
+                Yii::log('shop: ProductFromModelline modelline = '.$item['modelline_id'].', product_id = '.$item['product_id'].', user_id = '.$item['user_id'], 'info');
+                $product = Product::model()->findByAttributes(array('external_id' => $item['product_id']));
+                $modelline = ProductModelLine::model()->findByAttributes(array('external_id' => $item['modelline_id']));
+                if(!empty($product->id) && !empty($modelline->id)) {
+                    ProductInModelLine::model()->deleteAll('model_line_id=:id and product_id=:product_id', array('id' => $modelline->id, 'product_id' => $product->id));
+                    ShopChanges::saveChange($item['user_id'], 'Через api удален модельный ряд с id='.$item['external_id'].'.');
+                } else {
+                    Yii::log('One of params modelline = '.$item['modelline_id'].' or product_id = '.$item['product_id'].' not found', 'info');
+                }
+            } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
+         } 
+         
+         return $this->result('Удаление прошло успешно.');
     }
     
     /* -------End-DELETE-block-------- */

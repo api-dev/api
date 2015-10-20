@@ -20,6 +20,7 @@
     <a href="#delsp">Удаление запчастей</a>
     <a href="#delgroup">Удаление группы запчастей</a>
     <a href="#delmodelline">Удаление моделей и модельных рядов</a>
+    <a href="#delproductfrommodelline">Удаление товара из модельного ряда</a>
     <b>Получение</b>
     <a href="#getsp">Получение данных о запчастях</a>
     <b>Аналитика</b>
@@ -862,6 +863,39 @@
                     <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
                     <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор в системе учета 1С. Уникальный. Обязательный</span></li>
                     <li><span class="param">user_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор пользователя в системе учета, удалившего модель/модельный ряд</span></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="h2">Примеры:</div>
+        <p>Пример удаляет две модели:</p>
+        <pre style='font-size: 11px;'>
+            action = 'sparepart'
+            data[0][external_id] = '666666666'
+            data[0][user_id] = '1'
+            data[1][external_id] = '222222222'
+            data[1][user_id] = '3'
+        </pre>
+        <p>Пример удаляет одну модель:</p>
+        <pre style='font-size: 11px;'>
+            action = 'group'
+            data[external_id] = '666666666'
+            data[user_id] = '2'
+        </pre>
+    </div>
+    <h4><a name="delproductfrommodelline">Удаление товара из модельного ряда</a></h4>
+    <div class="text">
+        <p><span class="param">URL</span> : api.lbr.ru/shop?m=del</p>
+        <p>Параметры:</p>
+        <ul>
+            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>productfrommodelline.</b></li>
+            <li><span class="param">data</span> - массив с данными.</li>
+            <li><br>Принимаемые параметры <span class="param">data</span> при <span class="param">action=productfrommodelline:</span> </li>
+            <li>
+                <ul class="table">
+                    <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                    <li><span class="param">modelline_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор модельного ряда в системе учета 1С. Уникальный. Обязательный</span></li>
+                    <li><span class="param">product_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор запчасти в системе учета</span></li>
+                    <li><span class="param">user_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор пользователя в системе учета</span></li>
                 </ul>
             </li>
         </ul>
