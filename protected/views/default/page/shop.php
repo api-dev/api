@@ -902,17 +902,13 @@
         <div class="h2">Примеры:</div>
         <p>Пример удаляет две модели:</p>
         <pre style='font-size: 11px;'>
-            action = 'sparepart'
-            data[0][external_id] = '666666666'
+            action = 'productfrommodelline'
+            data[0][modelline_id] = '666666666'
+            data[0][product_id] = '1'
             data[0][user_id] = '1'
-            data[1][external_id] = '222222222'
+            data[1][modelline_id] = '222222222'
+            data[1][product_id] = '3'
             data[1][user_id] = '3'
-        </pre>
-        <p>Пример удаляет одну модель:</p>
-        <pre style='font-size: 11px;'>
-            action = 'group'
-            data[external_id] = '666666666'
-            data[user_id] = '2'
         </pre>
     </div>
 </div>
