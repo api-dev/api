@@ -10,6 +10,7 @@ foreach ($data as $info):
         $result .= '<time>'.$this->getTime($info[time]).'</time>';
         $result .= '<url>'.$info[url].'</url>';
         $result .= '<url_mark>'.$info[url_mark].'</url_mark>';
+        $result .= '<title>'.$info[title].'</title>';
     $result .= '</info>';
 endforeach;
 $result .= '</data>';

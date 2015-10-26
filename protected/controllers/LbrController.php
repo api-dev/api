@@ -7,7 +7,7 @@ class LbrController extends Controller
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
-        //$get = array('m'=>'get', 'action'=>'analiticsbytime');
+        //$get = array('m'=>'get', 'action'=>'analitics');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         

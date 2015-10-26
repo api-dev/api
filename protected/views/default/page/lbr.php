@@ -43,8 +43,9 @@
                     &lt;link_id&gt;link&lt;/link_id&gt;
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
-                    &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
+                    &lt;url&gt;http://lbr.ru/selskohozyaystvennaya-tehnika/type/&lt;/url&gt;
                     &lt;url_mark&gt;5555&lt;/url_mark&gt;
+                    &lt;title&gt;По типу машин&lt;/title&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
                     &lt;customer_id&gt;test1@mail.ru&lt;/customer_id&gt;
@@ -52,8 +53,9 @@
                     &lt;link_id&gt;&lt;/link_id&gt;
                     &lt;time&gt;12.671&lt;/time&gt;
                     &lt;date&gt;2015.08.14 16:48&lt;/date&gt;
-                    &lt;url&gt;http://lbr-market.ru&lt;/url&gt;
+                    &lt;url&gt;http://lbr.ru&lt;/url&gt;
                     &lt;url_mark&gt;&lt;/url_mark&gt;
+                    &lt;title&gt;&lt;/title&gt;
                 &lt;/info&gt;
             &lt;/data&gt;
             </pre>        
@@ -101,8 +103,9 @@
                     &lt;link_id&gt;link&lt;/link_id&gt;
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
-                    &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
+                    &lt;url&gt;http://lbr.ru/selskohozyaystvennaya-tehnika/type/&lt;/url&gt;
                     &lt;url_mark&gt;5555&lt;/url_mark&gt;
+                    &lt;title&gt;По типу машин&lt;/title&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
                     &lt;customer_id&gt;test1@mail.ru&lt;/customer_id&gt;
@@ -110,8 +113,9 @@
                     &lt;link_id&gt;&lt;/link_id&gt;
                     &lt;time&gt;12.671&lt;/time&gt;
                     &lt;date&gt;2015.08.14 16:48&lt;/date&gt;
-                    &lt;url&gt;http://lbr-market.ru&lt;/url&gt;
+                    &lt;url&gt;http://lbr.ru&lt;/url&gt;
                     &lt;url_mark&gt;&lt;/url_mark&gt;
+                    &lt;title&gt;&lt;/title&gt;
                 &lt;/info&gt;
             &lt;/data&gt;
             </pre>        
@@ -159,8 +163,9 @@
                     &lt;link_id&gt;link&lt;/link_id&gt;
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
-                    &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
+                    &lt;url&gt;http://lbr.ru/selskohozyaystvennaya-tehnika/type/&lt;/url&gt;
                     &lt;url_mark&gt;5555&lt;/url_mark&gt;
+                    &lt;title&gt;По типу машин&lt;/title&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
                     &lt;customer_id&gt;test1@mail.ru&lt;/customer_id&gt;
@@ -168,8 +173,9 @@
                     &lt;link_id&gt;&lt;/link_id&gt;
                     &lt;time&gt;12.671&lt;/time&gt;
                     &lt;date&gt;2015.08.14 16:48&lt;/date&gt;
-                    &lt;url&gt;http://lbr-market.ru&lt;/url&gt;
+                    &lt;url&gt;http://lbr.ru&lt;/url&gt;
                     &lt;url_mark&gt;&lt;/url_mark&gt;
+                    &lt;title&gt;&lt;/title&gt;
                 &lt;/info&gt;
             &lt;/data&gt;
             </pre>        
@@ -217,8 +223,9 @@
                     &lt;link_id&gt;link&lt;/link_id&gt;
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
-                    &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
+                    &lt;url&gt;http://lbr.ru/selskohozyaystvennaya-tehnika/type/&lt;/url&gt;
                     &lt;url_mark&gt;5555&lt;/url_mark&gt;
+                    &lt;title&gt;По типу машин&lt;/title&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
                     &lt;customer_id&gt;test1@mail.ru&lt;/customer_id&gt;
@@ -226,8 +233,9 @@
                     &lt;link_id&gt;&lt;/link_id&gt;
                     &lt;time&gt;12.671&lt;/time&gt;
                     &lt;date&gt;2015.08.14 16:48&lt;/date&gt;
-                    &lt;url&gt;http://lbr-market.ru&lt;/url&gt;
+                    &lt;url&gt;http://lbr.ru&lt;/url&gt;
                     &lt;url_mark&gt;&lt;/url_mark&gt;
+                    &lt;title&gt;&lt;/title&gt;
                 &lt;/info&gt;
             &lt;/data&gt;
             </pre>        
