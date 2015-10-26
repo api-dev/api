@@ -17,7 +17,7 @@
         <li><a href="/?view=user">Пользователи</a></li>
         <li><a href="/?view=transport">Биржа</a></li>
         <li><a href="/?view=shop">Магазин</a></li>
-        <li><a href="http://www.lbr.ru/users/login/">Вход на сайт ЛБР</a></li>
+        <li><a href="/?view=lbr">Cайт ЛБР</a></li>
         <li class="login"><?php
     $app = Yii::app();
     if(!$app->user->isGuest)
