@@ -16,7 +16,7 @@ class LbrAnalitics extends CActiveRecord
 {
         public function getDbConnection()
         {
-            return Yii::app()->db_shop;
+            return Yii::app()->db_lbr;
         }
 	/**
 	 * @return string the associated database table name

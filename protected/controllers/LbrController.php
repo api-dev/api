@@ -7,13 +7,13 @@ class LbrController extends Controller
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
-        $get = array('m'=>'get', 'action'=>'analitics');
+        //$get = array('m'=>'get', 'action'=>'analiticsbytime');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
-        Yii::log('input from shop !!!!!!!!!', 'info');
-        Yii::log('shop: '.$method, 'info');
+        Yii::log('input from lbr !!!!!!!!!', 'info');
+        Yii::log('lbr: '.$method, 'info');
 
         if (method_exists($this, $method)) {
             $this->$method($request);
@@ -26,13 +26,13 @@ class LbrController extends Controller
     private function getAnalitics($request) 
     {
         set_time_limit(0);
-        $analitics = Yii::app()->db_shop->createCommand()
+        $analitics = Yii::app()->db_lbr->createCommand()
             ->select('*')
             ->from('analitics')
             ->where('push_1C=:flag', array(':flag'=>true))
             ->queryAll()
         ;
-        
+       
         $temp = $analitics;
         foreach($temp as $info){
             $item = LbrAnalitics::model()->findByPk($info[id]);
@@ -51,21 +51,21 @@ class LbrController extends Controller
         
         /*$data = array(
             'from'=>'2015-08-14',
-            'to'=>'2015-08-19',
+            'to'=>'2015-11-19',
         );*/
         
         if(!empty($data['from']) && !empty($data['to'])) {
-            $analitics = Yii::app()->db_shop->createCommand()
+            $analitics = Yii::app()->db_lbr->createCommand()
                 ->select('*')
                 ->from('analitics')
                 ->where('date_created between "'.date('Y-m-d', strtotime($data['from'])).'" and "'.date('Y-m-d', strtotime($data['to'].' +1 days')).'"')
                 ->queryAll()
             ;
-            Yii::log('shop: getAnalitics by time ('.$data['from'].' - '.$data['to'].') - it was found '.count($analitics).' records', 'info');
+            Yii::log('lbr: getAnalitics by time ('.$data['from'].' - '.$data['to'].') - it was found '.count($analitics).' records', 'info');
         
             $this->renderPartial('analiticsxml', array('data' => $analitics));
         } else 
-            Yii::log('shop: getAnalitics by time - no info data[from] or data[to]', 'info');
+            Yii::log('lbr: getAnalitics by time - no info data[from] or data[to]', 'info');
     }
     
     // get analitics by evp's id
@@ -85,7 +85,7 @@ class LbrController extends Controller
                 $sql = 'and link_id is not null';
             }
 
-            $analitics = Yii::app()->db_shop->createCommand()
+            $analitics = Yii::app()->db_lbr->createCommand()
                 ->select('*')
                 ->from('analitics')
                 ->where('subscription_id=:id '.$sql, array('id'=>$data['subscription_id']))
@@ -94,7 +94,7 @@ class LbrController extends Controller
             
             $this->renderPartial('analiticsxml', array('data' => $analitics));
         } else 
-            Yii::log('shop: getAnalitics by evp id - no info data[subscription_id] or data[link_id]', 'info');
+            Yii::log('lbr: getAnalitics by evp id - no info data[subscription_id] or data[link_id]', 'info');
     }
     
     // get analitics by evp's id unique
@@ -114,7 +114,7 @@ class LbrController extends Controller
                 $sql = 'and link_id is not null';
             }
 
-            $analitics = Yii::app()->db_shop->createCommand()
+            $analitics = Yii::app()->db_lbr->createCommand()
                 ->select('*')
                 ->from('analitics')
                 ->where('subscription_id=:id and push_1C=:flag '.$sql, array('id'=>$data['subscription_id'], 'flag'=>true))
@@ -130,7 +130,7 @@ class LbrController extends Controller
             
             $this->renderPartial('analiticsxml', array('data' => $analitics));
         } else 
-            Yii::log('shop: getAnalitics by evp id - no info data[subscription_id] or data[link_id]', 'info');
+            Yii::log('lbr: getAnalitics by evp id - no info data[subscription_id] or data[link_id]', 'info');
     }
     
     public function getTime($time)
