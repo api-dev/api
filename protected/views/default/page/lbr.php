@@ -25,13 +25,8 @@
             link_id - id ссылки
             time - время в секундах
             date - время регистрации захода (формат Y.m.d H:i)
-            url_mark - соответствие позиции каталога (category/modelline/maker/pmaker/product)
-                       Например: "category=MNN01111" или "category=MNN01111;maker=000111",
-                       здесь <b>maker</b> - производитель техники, 
-                       <b>pmaker</b> - производитель запчастей, 
-                       <b>category</b> - тип техники, 
-                       <b>product</b> - запчасть, 
-                       <b>modelline</b> - модельный ряд
+            url - url страницы
+            title - заголовок страницу
         </pre>
         <br/>Возвращаемый xml:
         <code>
@@ -44,7 +39,6 @@
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru/selskohozyaystvennaya-tehnika/type/&lt;/url&gt;
-                    &lt;url_mark&gt;5555&lt;/url_mark&gt;
                     &lt;title&gt;По типу машин&lt;/title&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
@@ -54,7 +48,6 @@
                     &lt;time&gt;12.671&lt;/time&gt;
                     &lt;date&gt;2015.08.14 16:48&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru&lt;/url&gt;
-                    &lt;url_mark&gt;&lt;/url_mark&gt;
                     &lt;title&gt;&lt;/title&gt;
                 &lt;/info&gt;
             &lt;/data&gt;
@@ -85,13 +78,8 @@
             link_id - id ссылки
             time - время в секундах
             date - время регистрации захода (формат Y.m.d H:i)
-            url_mark - соответствие позиции каталога (category/modelline/maker/pmaker/product)
-                       Например: "category=MNN01111" или "category=MNN01111;maker=000111",
-                       здесь <b>maker</b> - производитель техники, 
-                       <b>pmaker</b> - производитель запчастей, 
-                       <b>category</b> - тип техники, 
-                       <b>product</b> - запчасть, 
-                       <b>modelline</b> - модельный ряд
+            url - url страницы
+            title - заголовок страницу
         </pre>
         <br/>Возвращаемый xml:
         <code>
@@ -104,7 +92,6 @@
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru/selskohozyaystvennaya-tehnika/type/&lt;/url&gt;
-                    &lt;url_mark&gt;5555&lt;/url_mark&gt;
                     &lt;title&gt;По типу машин&lt;/title&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
@@ -114,7 +101,6 @@
                     &lt;time&gt;12.671&lt;/time&gt;
                     &lt;date&gt;2015.08.14 16:48&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru&lt;/url&gt;
-                    &lt;url_mark&gt;&lt;/url_mark&gt;
                     &lt;title&gt;&lt;/title&gt;
                 &lt;/info&gt;
             &lt;/data&gt;
@@ -145,13 +131,8 @@
             link_id - id ссылки
             time - время в секундах
             date - время регистрации захода (формат Y.m.d H:i)
-            url_mark - соответствие позиции каталога (category/modelline/maker/pmaker/product)
-                       Например: "category=MNN01111" или "category=MNN01111;maker=000111",
-                       здесь <b>maker</b> - производитель техники, 
-                       <b>pmaker</b> - производитель запчастей, 
-                       <b>category</b> - тип техники, 
-                       <b>product</b> - запчасть, 
-                       <b>modelline</b> - модельный ряд
+            url - url страницы
+            title - заголовок страницу
         </pre>
         <br/>Возвращаемый xml:
         <code>
@@ -164,7 +145,6 @@
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru/selskohozyaystvennaya-tehnika/type/&lt;/url&gt;
-                    &lt;url_mark&gt;5555&lt;/url_mark&gt;
                     &lt;title&gt;По типу машин&lt;/title&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
@@ -174,7 +154,6 @@
                     &lt;time&gt;12.671&lt;/time&gt;
                     &lt;date&gt;2015.08.14 16:48&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru&lt;/url&gt;
-                    &lt;url_mark&gt;&lt;/url_mark&gt;
                     &lt;title&gt;&lt;/title&gt;
                 &lt;/info&gt;
             &lt;/data&gt;
@@ -205,13 +184,8 @@
             link_id - id ссылки
             time - время в секундах
             date - время регистрации захода (формат Y.m.d H:i)
-            url_mark - соответствие позиции каталога (category/modelline/maker/pmaker/product)
-                       Например: "category=MNN01111" или "category=MNN01111;maker=000111",
-                       здесь <b>maker</b> - производитель техники, 
-                       <b>pmaker</b> - производитель запчастей, 
-                       <b>category</b> - тип техники, 
-                       <b>product</b> - запчасть, 
-                       <b>modelline</b> - модельный ряд
+            url - url страницы
+            title - заголовок страницу
         </pre>
         <br/>Возвращаемый xml:
         <code>
@@ -224,7 +198,6 @@
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru/selskohozyaystvennaya-tehnika/type/&lt;/url&gt;
-                    &lt;url_mark&gt;5555&lt;/url_mark&gt;
                     &lt;title&gt;По типу машин&lt;/title&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
@@ -234,7 +207,6 @@
                     &lt;time&gt;12.671&lt;/time&gt;
                     &lt;date&gt;2015.08.14 16:48&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru&lt;/url&gt;
-                    &lt;url_mark&gt;&lt;/url_mark&gt;
                     &lt;title&gt;&lt;/title&gt;
                 &lt;/info&gt;
             &lt;/data&gt;
