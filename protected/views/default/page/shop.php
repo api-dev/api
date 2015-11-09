@@ -454,7 +454,7 @@
                     &lt;link_id&gt;link&lt;/link_id&gt;
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
-                    &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
+                    &lt;url&gt;http://lbr-market.ru/sparepart/10970-lemeh-s-naplavkoy-sb56-pravyy-3352234mo&lt;/url&gt;
                     &lt;url_mark&gt;product=MNS0014309&lt;/url_mark&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
@@ -512,7 +512,7 @@
                     &lt;link_id&gt;link&lt;/link_id&gt;
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
-                    &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
+                    &lt;url&gt;http://lbr-market.ru/sparepart/10970-lemeh-s-naplavkoy-sb56-pravyy-3352234mo&lt;/url&gt;
                     &lt;url_mark&gt;product=MNS0014309&lt;/url_mark&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
@@ -570,7 +570,7 @@
                     &lt;link_id&gt;link&lt;/link_id&gt;
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
-                    &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
+                    &lt;url&gt;http://lbr-market.ru/sparepart/10970-lemeh-s-naplavkoy-sb56-pravyy-3352234mo&lt;/url&gt;
                     &lt;url_mark&gt;product=MNS0014309&lt;/url_mark&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
@@ -628,7 +628,7 @@
                     &lt;link_id&gt;link&lt;/link_id&gt;
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
-                    &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
+                    &lt;url&gt;http://lbr-market.ru/sparepart/10970-lemeh-s-naplavkoy-sb56-pravyy-3352234mo&lt;/url&gt;
                     &lt;url_mark&gt;product=MNS0014309&lt;/url_mark&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
