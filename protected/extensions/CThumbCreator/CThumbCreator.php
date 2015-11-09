@@ -38,7 +38,9 @@ class CThumbCreator extends CApplicationComponent
         }
 
         $this->image_info = getimagesize($this->image);
-        $this->ext = strtolower(end(explode("/", $this->image_info["mime"])));
+        $mime_array=explode("/", $this->image_info["mime"]);
+        $extension=end($mime_array);
+        $this->ext = strtolower($extension);
 
         switch ($this->ext) {
             case "jpg":
