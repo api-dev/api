@@ -455,7 +455,7 @@
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
                     &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
-                    &lt;url_mark&gt;5555&lt;/url_mark&gt;
+                    &lt;url_mark&gt;product=MNS0014309&lt;/url_mark&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
                     &lt;customer_id&gt;test1@mail.ru&lt;/customer_id&gt;
@@ -513,7 +513,7 @@
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
                     &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
-                    &lt;url_mark&gt;5555&lt;/url_mark&gt;
+                    &lt;url_mark&gt;product=MNS0014309&lt;/url_mark&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
                     &lt;customer_id&gt;test1@mail.ru&lt;/customer_id&gt;
@@ -571,7 +571,7 @@
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
                     &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
-                    &lt;url_mark&gt;5555&lt;/url_mark&gt;
+                    &lt;url_mark&gt;product=MNS0014309&lt;/url_mark&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
                     &lt;customer_id&gt;test1@mail.ru&lt;/customer_id&gt;
@@ -629,7 +629,7 @@
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
                     &lt;url&gt;http://lbr-market.ru/catalog/traktornaya-tehnika&lt;/url&gt;
-                    &lt;url_mark&gt;5555&lt;/url_mark&gt;
+                    &lt;url_mark&gt;product=MNS0014309&lt;/url_mark&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
                     &lt;customer_id&gt;test1@mail.ru&lt;/customer_id&gt;
