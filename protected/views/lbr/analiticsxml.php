@@ -9,6 +9,7 @@ foreach ($data as $info):
         $result .= '<date>'.date('Y.m.d H:i', strtotime($info[date_created])).'</date>';
         $result .= '<time>'.$this->getTime($info[time]).'</time>';
         $result .= '<url>'.$info[url].'</url>';
+        $result .= '<url_mark>'.$info[url_mark].'</url_mark>';
         $result .= '<title>'.$info[title].'</title>';
     $result .= '</info>';
 endforeach;

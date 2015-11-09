@@ -26,6 +26,7 @@
             time - время в секундах
             date - время регистрации захода (формат Y.m.d H:i)
             url - url страницы
+            url_mark - id страницы (соответствие 1С)
             title - заголовок страницы
         </pre>
         <br/>Возвращаемый xml:
@@ -39,6 +40,7 @@
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru/selskohozyaystvennaya-tehnika/type/&lt;/url&gt;
+                    &lt;url_mark&gt;1111&lt;/url_mark&gt;
                     &lt;title&gt;По типу машин&lt;/title&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
@@ -48,6 +50,7 @@
                     &lt;time&gt;12.671&lt;/time&gt;
                     &lt;date&gt;2015.08.14 16:48&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru&lt;/url&gt;
+                    &lt;url_mark&gt;1111&lt;/url_mark&gt;
                     &lt;title&gt;&lt;/title&gt;
                 &lt;/info&gt;
             &lt;/data&gt;
@@ -79,6 +82,7 @@
             time - время в секундах
             date - время регистрации захода (формат Y.m.d H:i)
             url - url страницы
+            url_mark - id страницы (соответствие 1С)
             title - заголовок страницы
         </pre>
         <br/>Возвращаемый xml:
@@ -92,6 +96,7 @@
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru/selskohozyaystvennaya-tehnika/type/&lt;/url&gt;
+                    &lt;url_mark&gt;1111&lt;/url_mark&gt;
                     &lt;title&gt;По типу машин&lt;/title&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
@@ -101,6 +106,7 @@
                     &lt;time&gt;12.671&lt;/time&gt;
                     &lt;date&gt;2015.08.14 16:48&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru&lt;/url&gt;
+                    &lt;url_mark&gt;1111&lt;/url_mark&gt;
                     &lt;title&gt;&lt;/title&gt;
                 &lt;/info&gt;
             &lt;/data&gt;
@@ -132,6 +138,7 @@
             time - время в секундах
             date - время регистрации захода (формат Y.m.d H:i)
             url - url страницы
+            url_mark - id страницы (соответствие 1С)
             title - заголовок страницы
         </pre>
         <br/>Возвращаемый xml:
@@ -145,6 +152,7 @@
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru/selskohozyaystvennaya-tehnika/type/&lt;/url&gt;
+                    &lt;url_mark&gt;1111&lt;/url_mark&gt;
                     &lt;title&gt;По типу машин&lt;/title&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
@@ -154,6 +162,7 @@
                     &lt;time&gt;12.671&lt;/time&gt;
                     &lt;date&gt;2015.08.14 16:48&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru&lt;/url&gt;
+                    &lt;url_mark&gt;1111&lt;/url_mark&gt;
                     &lt;title&gt;&lt;/title&gt;
                 &lt;/info&gt;
             &lt;/data&gt;
@@ -185,6 +194,7 @@
             time - время в секундах
             date - время регистрации захода (формат Y.m.d H:i)
             url - url страницы
+            url_mark - id страницы (соответствие 1С)
             title - заголовок страницы
         </pre>
         <br/>Возвращаемый xml:
@@ -198,6 +208,7 @@
                     &lt;time&gt;6.061&lt;/time&gt;
                     &lt;date&gt;2014.10.01 12:11&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru/selskohozyaystvennaya-tehnika/type/&lt;/url&gt;
+                    &lt;url_mark&gt;1111&lt;/url_mark&gt;
                     &lt;title&gt;По типу машин&lt;/title&gt;
                 &lt;/info&gt;
                 &lt;info id=&quot;666&quot;&gt;
@@ -207,6 +218,7 @@
                     &lt;time&gt;12.671&lt;/time&gt;
                     &lt;date&gt;2015.08.14 16:48&lt;/date&gt;
                     &lt;url&gt;http://lbr.ru&lt;/url&gt;
+                    &lt;url_mark&gt;1111&lt;/url_mark&gt;
                     &lt;title&gt;&lt;/title&gt;
                 &lt;/info&gt;
             &lt;/data&gt;
