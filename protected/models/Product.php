@@ -67,10 +67,10 @@ class Product extends CActiveRecord
 		);*/
                 
                 return array(
-			array('external_id, name, weight, update_time, product_group_id, catalog_number, product_maker_id, liquidity, image, additional_info, published, problem, units, multiplicity, material, size, date_sale_off', 'safe'),
+			array('external_id, name, weight, update_time, product_group_id, catalog_number, product_maker_id, liquidity, image, additional_info, published, problem, units, multiplicity, material, size, date_sale_off, original', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, external_id, name, product_group_id, catalog_number, product_maker_id, count, liquidity, image, min_quantity, additional_info, published, productGroup_name, productMaker_name, problem, units, multiplicity, material, size, date_sale_off', 'safe', 'on'=>'search'),
+			array('id, external_id, name, product_group_id, catalog_number, product_maker_id, count, liquidity, image, min_quantity, additional_info, published, productGroup_name, productMaker_name, problem, units, multiplicity, material, size, date_sale_off, original', 'safe', 'on'=>'search'),
                 );
 	}
 
@@ -142,7 +142,8 @@ class Product extends CActiveRecord
                         'multiplicity' => 'Кратность', 
                         'material' => 'Материал изделия', 
                         'size' => 'Размер изделия', 
-                        'date_sale_off' => 'Дата снятия с продажи'
+                        'date_sale_off' => 'Дата снятия с продажи',
+                        'original' => 'Оригинальная запчасть'
 		);
 	}
 
@@ -176,6 +177,7 @@ class Product extends CActiveRecord
                 $criteria->compare('min_quantity',$this->min_quantity);
 		$criteria->compare('published',$this->published);
                 $criteria->compare('additional_info',$this->additional_info,true);
+                $criteria->compare('original',$this->original,true);
                 
                 if(Yii::app()->search->prepareSqlite()){
                     $condition_name='lower(t.name) like lower("%'.$this->name.'%")';    

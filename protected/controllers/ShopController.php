@@ -305,6 +305,8 @@ class ShopController extends Controller
                         $product->problem = mb_strtolower($data['problem'], 'UTF-8');
                     } else if($name == 'date_sale_off') {
                         $product->date_sale_off = date_format(date_create_from_format('d.m.Y', $data['date_sale_off']), 'Y-m-d');
+                    } else if($name == 'original') {
+                        $product->original = (int)$data['original'];
                     } else {
                         $product->$name = $data[$name];
                     }

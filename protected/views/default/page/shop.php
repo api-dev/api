@@ -233,6 +233,7 @@
                     <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
                     <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор в системе учета 1С. Уникальный. Обязательный</span> </li>
                     <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Название запчасти</span> </li>
+                    <li><span class="param">original</span> <span class="type">(string)</span> <span class="info">Оригинальная запчасть (1 - "Да", 0 - "Нет")</span> </li>
                     <li><span class="param">product_group</span> <span class="type">(string)</span> <span class="info">ID группы в 1С, которой принадлежит запчасть</span> </li>
                     <!--li><span class="param">price_id</span> <span class="type">(int)</span> <span class="info">ID группы цен в 1С</span> </li-->
                     <li><span class="param">catalog_number</span> <span class="type">(string)</span> <span class="info">Каталожный номер</span> </li>
