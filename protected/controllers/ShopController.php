@@ -346,9 +346,10 @@ class ShopController extends Controller
             //if ($product->validate() && $product->save()) {
             $product->published = true;
             $product->update_time = date('Y-m-d H:i:s');
-            if(!empty($product->name)) $product->path = '/sparepart/'.$product->id.'-'.Translite::rusencode($product->name, '-').'/';
                 
             if ($product->save()) {
+                if(!empty($product->name)) $product->path = '/sparepart/'.$product->id.'-'.Translite::rusencode($product->name, '-').'/';
+                
                 $transaction->commit();
                 if(is_array($data['inner'])) {
                     foreach($data['inner'] as $item) {
