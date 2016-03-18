@@ -6,6 +6,11 @@ class TrController extends Controller
     public function actionIndex() {
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
+        
+        /**************************/
+        //$get = array('m'=>'set', 'action'=>'transport');
+        /**************************/
+        
         $request = $post ? array_merge_recursive($post, $get) : $get;
         $method = strtolower($request['m']) . ucfirst(strtolower($request['action']));
         /*foreach($request['data'] as $v){
@@ -33,6 +38,19 @@ class TrController extends Controller
             return $this->result('Системная ошибка. Метод "'.$method.'" не найден.');
 
         $data = $request['data'];
+        
+        /**************************/
+        
+//        $data = array(
+//            0 => array(
+//                't_id'=>'UPR-111111111',
+//                'location_from'=>'Test2',
+//                'location_to'=>'Test2',
+//                'user_id' => 'cheshenkov'
+//            ),
+//        );
+        
+        /**************************/
 
         if (!$data || empty($data)){
             return $this->result('Ошибка. Нет данных при вызове метода "'.$method.'". Попробуйте еще раз.');
@@ -56,12 +74,6 @@ class TrController extends Controller
         Yii::log('(входящее) new_transport ='.$data['new_transport'], 'info');
         Yii::log('(входящее) date_close ='.$data['date_close'], 'info');
         Yii::log('(входящее) date_close ='.$data['description'], 'info');
-        //Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
-        //Yii::log('(входящее) date_to ='.$data['date_to'], 'info');
-        
-        /*Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
-        Yii::log('(входящее) date_to ='.$data['date_to'], 'info');
-        Yii::log('(входящее) date_close ='.$data['date_close'], 'info');*/
         
         /*if(!empty($tr)) {
             $tr->edit_status = 'Перевозка участвует в торгах. Изменение невозможно.';
@@ -152,10 +164,17 @@ class TrController extends Controller
                 $model = new $model_name;
                 $method = 'addDefault' . $model_name . 'Collum';
                 $attribute = $this->$method($attribute);
+                TrChanges::saveChange($attribute['user_id'], 'Выгрузка из 1С перевозки '.$attribute['t_id']);
             } else {
-                $model->status = 1;
-                $model->del_reason = null;
-                $model->date_published = date('Y-m-d H:i:s');
+                if($model_name == 'Transport') {
+                    $model->status = 1;
+                    $model->del_reason = null;
+                    $model->date_published = date('Y-m-d H:i:s');
+                    
+                    $rates = Rate::model()->findAll('transport_id = :id', array('id'=>$model->id));
+                    TrChanges::saveChange($attribute['user_id'], 'Выгрузка из 1С перевозки '.$attribute['t_id'].', т.к. идентификатор перевозки используется повторно, то было удалено '.count($rates).' шт. ставок.');
+                    Rate::model()->deleteAll('transport_id = :id', array('id'=>$model->id));
+                }
             }
             
             foreach ($model as $name => $v) {
@@ -182,8 +201,8 @@ class TrController extends Controller
     private function addDefaultTransportCollum($data) {
         $app = Yii::app();
         //$data[new_transport] = 1;
-        $data[status] = 1;
-        $data[date_published] = date('Y-m-d H:i:s');
+        $data['status'] = 1;
+        $data['date_published'] = date('Y-m-d H:i:s');
         //$data[del_reason] = null;
         
         /*
