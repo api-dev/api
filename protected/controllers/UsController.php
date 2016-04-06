@@ -199,7 +199,6 @@ class UsController extends Controller
             $transaction->rollback();
             return false;
         }
-
     }
     
 
