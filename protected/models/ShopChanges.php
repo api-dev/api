@@ -12,6 +12,8 @@
  */
 class ShopChanges extends CActiveRecord
 {
+        const ITEM_API=13;
+        
         public function getDbConnection()
         {
             return Yii::app()->db_shop;
@@ -111,6 +113,7 @@ class ShopChanges extends CActiveRecord
             $change->user = $userId;
             $change->date = date('Y-m-d H:i:s');
             $change->description = $message;
+            $change->item_id= ShopChanges::ITEM_API;
             $change->save();
             return;
         }
