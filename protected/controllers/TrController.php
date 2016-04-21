@@ -73,7 +73,7 @@ class TrController extends Controller
         Yii::log('(входящее) создатель ='.$data['user_id'], 'info');
         Yii::log('(входящее) new_transport ='.$data['new_transport'], 'info');
         Yii::log('(входящее) date_close ='.$data['date_close'], 'info');
-        Yii::log('(входящее) date_close ='.$data['description'], 'info');
+        Yii::log('(входящее) date_description ='.$data['description'], 'info');
         
         /*if(!empty($tr)) {
             $tr->edit_status = 'Перевозка участвует в торгах. Изменение невозможно.';
