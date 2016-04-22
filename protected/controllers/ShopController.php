@@ -1375,8 +1375,8 @@ class ShopController extends Controller
             if(!empty($data['user_id'])){
                 $product = Product::model()->find('external_id=:id', array(':id'=>$data['external_id']));
                 if(!empty($product)) {
-                    Product::model()->deleteAll('external_id=:id', array(':id' => $data['external_id']));
                     ProductInModelLine::model()->deleteAll('product_id = :id', array(':id'=>$product->id));
+                    Product::model()->deleteAll('external_id=:id', array(':id' => $data['external_id']));
                     
                     Yii::log('shop: delSparepart = '. $data['external_id'], 'info');
                     Yii::log('shop: user_id = '.$data['user_id'], 'info');
@@ -1388,8 +1388,8 @@ class ShopController extends Controller
                if(!empty($sparepart['user_id'])) {
                     $product = Product::model()->find('external_id=:id', array(':id'=>$sparepart['external_id']));
                     if(!empty($product)) {
-                        Product::model()->deleteAll('external_id=:id', array(':id' => $sparepart['external_id']));
                         ProductInModelLine::model()->deleteAll('product_id = :id', array(':id'=>$product->id));
+                        Product::model()->deleteAll('external_id=:id', array(':id' => $sparepart['external_id']));
                         
                         Yii::log('shop: delSparepart = '. $sparepart['external_id'], 'info');
                         Yii::log('shop: user_id = '.$sparepart['user_id'], 'info');
