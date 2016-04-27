@@ -453,14 +453,18 @@ class ShopController extends Controller
         if (empty($data['external_id']))
             return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
         
+        if(empty($data['user_id']))
+            return $this->result('Ошибка. Нет данных о пользователе, совершающем транзакцию. Попробуйте еще раз.');
+        
         Yii::log('shop: setOneGroup = '. $data['external_id'], 'info');
         
         $app = Yii::app();
         $transaction = $app->db_auth->beginTransaction();
         try {
             $group = ProductGroup::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
-            if (!$group){
+            if (!$group) {
                 $group = new ProductGroup();
+                ShopChanges::saveChange($data['user_id'], 'Через api создана группа с id='.$data['external_id']);
             }
             
             foreach ($group as $name => $v) {
@@ -1376,26 +1380,28 @@ class ShopController extends Controller
                 $product = Product::model()->find('external_id=:id', array(':id'=>$data['external_id']));
                 if(!empty($product)) {
                     ProductInModelLine::model()->deleteAll('product_id = :id', array(':id'=>$product->id));
+                    Wishlist::model()->deleteAll('product_id = :id', array(':id'=>$product->id));
                     Product::model()->deleteAll('external_id=:id', array(':id' => $data['external_id']));
                     
                     Yii::log('shop: delSparepart = '. $data['external_id'], 'info');
                     Yii::log('shop: user_id = '.$data['user_id'], 'info');
                     ShopChanges::saveChange($data['user_id'], 'Через api удалена запчасть с id='.$data['external_id']);
                 }
-            } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
+            } else return $this->result('Ошибка. Нет данных о пользователе, совершающем транзакцию. Попробуйте еще раз.');
         } else {
             foreach ($data as $sparepart) {
                if(!empty($sparepart['user_id'])) {
                     $product = Product::model()->find('external_id=:id', array(':id'=>$sparepart['external_id']));
                     if(!empty($product)) {
                         ProductInModelLine::model()->deleteAll('product_id = :id', array(':id'=>$product->id));
+                        Wishlist::model()->deleteAll('product_id = :id', array(':id'=>$product->id));
                         Product::model()->deleteAll('external_id=:id', array(':id' => $sparepart['external_id']));
                         
                         Yii::log('shop: delSparepart = '. $sparepart['external_id'], 'info');
                         Yii::log('shop: user_id = '.$sparepart['user_id'], 'info');
                         ShopChanges::saveChange($sparepart['user_id'], 'Через api удалена запчасть с id='.$sparepart['external_id']);
                     }    
-                } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
+                } else return $this->result('Ошибка. Нет данных о пользователе, совершающем транзакцию. Попробуйте еще раз.');
             } 
         }
         return $this->result('Удаление прошло успешно.');
@@ -1415,7 +1421,7 @@ class ShopController extends Controller
                 ProductGroup::model()->deleteAll('external_id=:id', array(':id' => $data['external_id']));
                 
                 ShopChanges::saveChange($data['user_id'], 'Через api удалена группа запчастей с id='.$data['external_id'].' и все запчасти, входящие в нее.');
-            } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
+            } else return $this->result('Ошибка. Нет данных о пользователе, совершающем транзакцию. Попробуйте еще раз.');
         } else {
             foreach ($data as $group) {
                if(!empty($group['user_id'])) {
@@ -1425,7 +1431,7 @@ class ShopController extends Controller
                     ProductGroup::model()->deleteAll('external_id=:id', array(':id' => $group['external_id']));
                     
                     ShopChanges::saveChange($group['user_id'], 'Через api удалена группа запчастей с id='.$group['external_id'].' и все запчасти, входящие в нее.');
-               } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
+               } else return $this->result('Ошибка. Нет данных о пользователе, совершающем транзакцию. Попробуйте еще раз.');
             } 
         }
         return $this->result('Удаление прошло успешно.');
@@ -1446,7 +1452,7 @@ class ShopController extends Controller
                     $model->deleteNode();
                     ShopChanges::saveChange($data['user_id'], 'Через api удален модельный ряд с id='.$data['external_id'].'.');
                 }
-            } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
+            } else return $this->result('Ошибка. Нет данных о пользователе, совершающем транзакцию. Попробуйте еще раз.');
         } else {
             foreach ($data as $item) {
                if(!empty($item['user_id'])) {
@@ -1457,7 +1463,7 @@ class ShopController extends Controller
                         $model->deleteNode();
                         ShopChanges::saveChange($item['user_id'], 'Через api удален модельный ряд с id='.$item['external_id'].'.');
                     }
-               } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
+               } else return $this->result('Ошибка. Нет данных о пользователе, совершающем транзакцию. Попробуйте еще раз.');
             } 
         }
         return $this->result('Удаление прошло успешно.');
@@ -1481,7 +1487,7 @@ class ShopController extends Controller
                 } else {
                     Yii::log('One of params modelline = '.$item['modelline_id'].' or product_id = '.$item['product_id'].' not found', 'info');
                 }
-            } else return $this->result('Ошибка. Нет данных о пользователе, соврешающем транзакцию. Попробуйте еще раз.');
+            } else return $this->result('Ошибка. Нет данных о пользователе, совершающем транзакцию. Попробуйте еще раз.');
          } 
          
          return $this->result('Удаление прошло успешно.');
