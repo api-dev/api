@@ -257,7 +257,7 @@ class TrController extends Controller
 
     /* -------Start-GET-block-------- */
 
-    private function getTransport($request) 
+    private function getTransport($request)
     {
         $data = $request['data'];
         if (!$data || empty($data))
