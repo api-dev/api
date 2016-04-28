@@ -1359,7 +1359,7 @@ class ShopController extends Controller
     }
     /*-------- End Set Currency --------*/
     /* -------Start-DELETE-block-------- */
-    private function delSparepart($request) 
+    /*private function delSparepart($request) 
     {
         $data = $request['data'];
         
@@ -1405,7 +1405,7 @@ class ShopController extends Controller
             } 
         }
         return $this->result('Удаление прошло успешно.');
-    }
+    }*/
     
     private function delGroup($request) 
     {
