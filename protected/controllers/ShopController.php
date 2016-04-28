@@ -1405,7 +1405,7 @@ class ShopController extends Controller
             } 
         }
         return $this->result('Удаление прошло успешно.');
-    }*/
+    }
     
     private function delGroup($request) 
     {
@@ -1435,7 +1435,7 @@ class ShopController extends Controller
             } 
         }
         return $this->result('Удаление прошло успешно.');
-    }
+    }*/
     
     private function delModelline($request) 
     {
