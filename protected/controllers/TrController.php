@@ -171,7 +171,7 @@ class TrController extends Controller
                     $model->del_reason = null;
                     $model->date_published = date('Y-m-d H:i:s');
                     $model->rate_id = null;
-                    $model->date_close_new = null;
+                    //$model->date_close_new = null;
                     
                     $rates = Rate::model()->findAll('transport_id = :id', array('id'=>$model->id));
                     TrChanges::saveChange($attribute['user_id'], 'Выгрузка из 1С перевозки '.$attribute['t_id'].', т.к. идентификатор перевозки используется повторно, то было удалено '.count($rates).' шт. ставок.');
