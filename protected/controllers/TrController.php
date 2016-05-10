@@ -172,6 +172,8 @@ class TrController extends Controller
                     $model->del_reason = null;
                     $model->date_published = date('Y-m-d H:i:s');
                     $model->rate_id = null;
+                    $model->date_from = null;
+                    $model->save();
                     //$model->date_close_new = null;
                     
                     $rates = Rate::model()->findAll('transport_id = :id', array('id'=>$model->id));
