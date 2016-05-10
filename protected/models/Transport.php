@@ -55,14 +55,18 @@ class Transport extends CActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
-		return array(
-			array('new_transport, rate_id, start_rate, status, type, currency', 'numerical', 'integerOnly'=>true),
-			array('t_id, user_id', 'length', 'max'=>64),
-			array('location_from, location_to, auto_info, description, date_close, date_from, date_to, date_published', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, t_id, new_transport, rate_id, start_rate, status, type, user_id, currency, location_from, location_to, auto_info, description, date_close, date_from, date_to, date_published', 'safe', 'on'=>'search'),
-		);
+//		return array(
+//			array('new_transport, rate_id, start_rate, status, type, currency', 'numerical', 'integerOnly'=>true),
+//			array('t_id, user_id', 'length', 'max'=>64),
+//			array('location_from, location_to, auto_info, description, date_close, date_from, date_to, date_published', 'safe'),
+//			// The following rule is used by search().
+//			// @todo Please remove those attributes that should not be searched.
+//			array('id, t_id, new_transport, rate_id, start_rate, status, type, user_id, currency, location_from, location_to, auto_info, description, date_close, date_from, date_to, date_published', 'safe', 'on'=>'search'),
+//		);
+            
+            return array(
+		array('t_id, pto, del_date, del_reason, location_from, new_transport, rate_id, start_rate, status, type, user_id, currency, customs_clearance_RF, customs_clearance_EU, location_to, auto_info, description, date_to_customs_clearance_RF, date_close, date_from, date_to, date_published', 'safe')
+            );
 	}
 
 	/**
@@ -157,10 +161,10 @@ class Transport extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-        
+        /*
         protected function beforeSave() {
             parent::beforeSave();
             $this->date_from = date('Y-m-d H:i:s', strtotime($this->date_from . ' 08:00:00'));
             return true;
-        }
+        }*/
 }
