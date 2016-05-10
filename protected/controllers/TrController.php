@@ -195,11 +195,11 @@ class TrController extends Controller
 //                    //if($name == 'date_close') $model->$name = date('Y-m-d H:i:s', strtotime($attribute[$name]));
 //                    else $model->$name = $attribute[$name];
                     if($name == 'date_close') {
-                        $model->date_close = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+                        $model->date_close = date('Y-m-d H:i:s', strtotime($attribute['date_close']));
                     } else if($name == 'date_to') {
-                        $model->date_to = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+                        $model->date_to = date('Y-m-d H:i:s', strtotime($attribute['date_to']));
                     } else if($name == 'date_from') {
-                        $model->date_from = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+                        $model->date_from = date('Y-m-d H:i:s', strtotime($attribute['date_from']));
                     } else $model->$name = $attribute[$name];
                     
                     //Yii::log($name.' = '.$attribute[$name], 'info');
