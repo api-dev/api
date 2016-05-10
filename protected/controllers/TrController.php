@@ -180,15 +180,20 @@ class TrController extends Controller
             }
             
             foreach ($model as $name => $v) {
-                if (isset($attribute[$name]) || !empty($attribute[$name])){
-                    //if($name == 'date_close' || $name == 'date_from' || $name == 'date_to') $model->$name = date('Y-m-d H:i:s', strtotime($attribute[$name]));
-                    if($name == 'date_close') {
+                if (isset($attribute[$name]) || !empty($attribute[$name])) {
+                    /*if($name == 'date_close') {
                         if(!empty(trim($attribute[$name]))){
                             $model->$name = date('Y-m-d H:i:s', strtotime(trim($attribute[$name])));
                         } else {
                             TrChanges::saveChange($attribute['user_id'], 'При выгрузке из 1С перевозки '.$attribute['t_id'].', в поле "date_close" было передано пустое значение.');
                         }
                     } else $model->$name = $attribute[$name];
+                    */
+                    
+                    if($name == 'date_close' || $name == 'date_from' || $name == 'date_to') $model->$name = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+                    //if($name == 'date_close') $model->$name = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+                    else $model->$name = $attribute[$name];
+                    
                     //Yii::log($name.' = '.$attribute[$name], 'info');
                 }
             }
