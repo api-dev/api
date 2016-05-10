@@ -8,7 +8,7 @@ class TrController extends Controller
         $get = filter_input_array(INPUT_GET);
         
         /**************************/
-        //$get = array('m'=>'set', 'action'=>'transport');
+        $get = array('m'=>'set', 'action'=>'transport');
         /**************************/
         
         $request = $post ? array_merge_recursive($post, $get) : $get;
@@ -41,14 +41,14 @@ class TrController extends Controller
         
         /**************************/
         
-//        $data = array(
-//            0 => array(
-//                't_id'=>'UPR-111111111',
-//                'location_from'=>'Test2',
-//                'location_to'=>'Test2',
-//                'user_id' => 'cheshenkov'
-//            ),
-//        );
+        $data = array(
+            0 => array(
+                't_id'=>'UPR-111111111',
+                'location_from'=>'Test2',
+                'location_to'=>'Test2',
+                'user_id' => 'cheshenkov'
+            ),
+        );
         
         /**************************/
 
@@ -73,6 +73,7 @@ class TrController extends Controller
         Yii::log('(входящее) создатель ='.$data['user_id'], 'info');
         Yii::log('(входящее) new_transport ='.$data['new_transport'], 'info');
         Yii::log('(входящее) date_close ='.$data['date_close'], 'info');
+        Yii::log('(входящее) date_from ='.$data['date_from'], 'info');
         Yii::log('(входящее) date_description ='.$data['description'], 'info');
         
         /*if(!empty($tr)) {
