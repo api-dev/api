@@ -191,9 +191,16 @@ class TrController extends Controller
                     } else $model->$name = $attribute[$name];
                     */
                     
-                    if($name == 'date_close' || $name == 'date_from' || $name == 'date_to') $model->$name = date('Y-m-d H:i:s', strtotime($attribute[$name]));
-                    //if($name == 'date_close') $model->$name = date('Y-m-d H:i:s', strtotime($attribute[$name]));
-                    else $model->$name = $attribute[$name];
+//                    if($name == 'date_close' || $name == 'date_from' || $name == 'date_to') $model->$name = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+//                    //if($name == 'date_close') $model->$name = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+//                    else $model->$name = $attribute[$name];
+                    if($name == 'date_close') {
+                        $model->date_close = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+                    } else if($name == 'date_to') {
+                        $model->date_to = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+                    } else if($name == 'date_from') {
+                        $model->date_from = date('Y-m-d H:i:s', strtotime($attribute[$name]));
+                    } else $model->$name = $attribute[$name];
                     
                     //Yii::log($name.' = '.$attribute[$name], 'info');
                 }
