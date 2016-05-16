@@ -170,7 +170,7 @@ class TrController extends Controller
                 if($model_name == 'Transport') {
                     $model->status = 1;
                     $model->rate_id = null;
-                    //$model->del_reason = null;
+                    $model->del_reason = null;
                     $model->description = null;
                     $model->auto_info = null;
                     $model->date_published = date('Y-m-d H:i:s');
