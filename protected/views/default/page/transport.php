@@ -144,8 +144,8 @@
         <code>
             <pre style='font-size:12px;'>
             &lt;transport t_id=&quot;UPR-009041&quot;&gt;
-                &lt;status&gt;3&lt;/status&gt;
-                &lt;deletereason&gt;Удалена за необходимостью&lt;/deletereason&gt;
+                &lt;status&gt;0&lt;/status&gt;
+                &lt;deletereason&gt;&lt;/deletereason&gt;
                 &lt;datepublished&gt;2014-04-01 10:48:03&lt;/datepublished&gt;
                 &lt;dateclose&gt;2014-04-01 15:00:00&lt;/dateclose&gt;
                 &lt;editstatus&gt;Перевозка участвует в торгах. Изменение невозможно.&lt;/editstatus&gt;
