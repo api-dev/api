@@ -22,8 +22,8 @@ foreach ($data as $tr):
         $echo .= '<startprice>'.$tr[start_rate].'</startprice>';
         $echo .= '<ratescount>'.$ratesCount.'</ratescount>';
         $echo .= '<memberscount>'.$membersCount.'</memberscount>';
-        //if($tr[status]=='0')
-        //{
+        if($tr[status]=='0')
+        {
             $rate = Rate::model()->findByPk($tr[rate_id]);
             $user = $parent = $rate->user;
             
@@ -40,7 +40,7 @@ foreach ($data as $tr):
                 $echo .= '<currency>'.$tr[currency].'</currency>';
                 $echo .= '<date>'.$rate->date.'</date>';
             $echo .= '</win>';
-        //}
+        }
     $echo .= '</transport>';
 endforeach;
 $echo .= '</data>';
