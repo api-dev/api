@@ -169,13 +169,6 @@
                 &lt;startprice&gt;1200&lt;/startprice&gt;
                 &lt;ratescount&gt;0&lt;/ratescount&gt;
                 &lt;memberscount&gt;0&lt;/memberscount&gt;
-                &lt;win&gt;
-                    &lt;inn&gt;&lt;/inn&gt;
-                    &lt;nds&gt;&lt;/nds&gt;
-                    &lt;price&gt;&lt;/price&gt;
-                    &lt;currency&gt;2&lt;/currency&gt;
-                    &lt;date&gt;&lt;/date&gt;
-                &lt;/win&gt;
             &lt;/transport&gt;
             </pre>        
         </code>
