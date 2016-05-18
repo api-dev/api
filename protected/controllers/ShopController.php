@@ -7,7 +7,7 @@ class ShopController extends Controller
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
-        $get = array('m'=>'set', 'action'=>'draftmodel');
+        //$get = array('m'=>'set', 'action'=>'draftmodel');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -245,18 +245,14 @@ class ShopController extends Controller
                 'user_id'=>'10000',
             ),
         );*/
-        /*
-        $data = array(
+        
+        /*$data = array(
             0 => array(
-                'external_id'=>'MNS0001337',
-                'name'=>'1.Тракторная техника',
-                'published'=>'1',
+                'external_id'=>'MNS-00001088',
+                'name'=>'jjjjj',
                 'inner'=>array(
-                    0 => array(
-                        'external_id'=>'UPR0',
-                        'published'=>'1',
-                        'name'=>'Тракторы',
-                    ),
+                    0 => array('model_line_id'=>'1 051'),
+                    1 => array('model_line_id'=>'1 018'),
                 ),
             ),
         );*/
@@ -1188,7 +1184,7 @@ class ShopController extends Controller
     /*-------- Set Draft for model --------*/
     
     private function setDraftmodel($request) 
-    {
+    {        
         Yii::log('shop: setDraftmodel', 'info');
         $this->setItems($request, 'Draftmodel', 'external_id');
     }
@@ -1235,7 +1231,7 @@ class ShopController extends Controller
             $transaction = $app->db_auth->beginTransaction();
             $element = new DraftInModelLine;
             $element->draft_id = $draftId;
-            $element->product_id = $modelline->id;
+            $element->model_line_id = $modelline->id;
             if($element->save()) {
                 $transaction->commit();
                 return $this->result('Сохранение чертежа для модельного ряда (id = '.$data['model_line_id'].') произошло успешно.');
