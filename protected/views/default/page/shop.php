@@ -648,7 +648,7 @@
             </pre>        
         </code>
     </div>
-    <h4><a name="adddraft">Добавление/редактирование сборочных чертежей для запчастей</a></h4>
+    <h4><a name="adddraft">Добавление/редактирование сборочных чертежей для товаров</a></h4>
     <div class="text">
         <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
         <p>Параметры:</p>
@@ -692,7 +692,7 @@
             data[0][inner][1][note] = 'Примечание'
         </pre>
     </div>
-    <h4><a name="adddrafts">Добавление/редактирование сборочных чертежей для товаров</a></h4>
+    <h4><a name="adddrafts">Добавление/редактирование сборочных чертежей для моделей</a></h4>
     <div class="text">
         <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
         <p>Параметры:</p>
