@@ -7,7 +7,7 @@ class ShopController extends Controller
         $post = filter_input_array(INPUT_POST);
         $get = filter_input_array(INPUT_GET);
         /**************************/
-        //$get = array('m'=>'del', 'action'=>'sparepart');
+        //$get = array('m'=>'set', 'action'=>'draftmodel');
         /**************************/
         $request = $post ? array_merge_recursive($post, $get) : $get;
         
@@ -245,18 +245,14 @@ class ShopController extends Controller
                 'user_id'=>'10000',
             ),
         );*/
-        /*
-        $data = array(
+        
+        /*$data = array(
             0 => array(
-                'external_id'=>'MNS0001337',
-                'name'=>'1.Тракторная техника',
-                'published'=>'1',
+                'external_id'=>'MNS-00001088',
+                'name'=>'jjjjj',
                 'inner'=>array(
-                    0 => array(
-                        'external_id'=>'UPR0',
-                        'published'=>'1',
-                        'name'=>'Тракторы',
-                    ),
+                    0 => array('model_line_id'=>'1 051'),
+                    1 => array('model_line_id'=>'1 018'),
                 ),
             ),
         );*/
@@ -1120,7 +1116,7 @@ class ShopController extends Controller
         }
     }
     /*-------- End Set EquipmentMaker -------*/
-    /*-------- Set Draft --------*/
+    /*-------- Set Draft for product --------*/
     
     private function setDraft($request) 
     {
@@ -1184,7 +1180,71 @@ class ShopController extends Controller
             return $this->result('Ошибка. Продукт с id='.$data['product_id'].' не найден.');
         }
     }
-    /*-------- End Set Draft --------*/
+    /*-------- End Set Draft for product --------*/
+    /*-------- Set Draft for model --------*/
+    
+    private function setDraftmodel($request) 
+    {        
+        Yii::log('shop: setDraftmodel', 'info');
+        $this->setItems($request, 'Draftmodel', 'external_id');
+    }
+    
+    private function setOneDraftmodel($data)
+    {
+        if (empty($data['external_id']))
+            return $this->result('Ошибка. Нет уникального идентефикатора 1С.');
+        
+        Yii::log('shop: setOneDraftmodel = '. $data['external_id'], 'info');
+        
+        try {
+            $model = Draft::model()->find('external_id=:external_id', array(':external_id' => $data['external_id']));
+            if (!$model) {
+                $model = new Draft;
+            }
+            //if(!empty($data['name']))$model->name = $data['name'];
+            //if(!empty($data['image']))$model->image = $data['image'];
+            foreach ($model as $name => $v) {
+                if (isset($data[$name]) || !empty($data[$name]))
+                    $model->$name = $data[$name];
+            }
+            $model->save();
+            
+            DraftInModelLine::model()->deleteAll('draft_id=:id', array(':id' => $model->id));
+            if(is_array($data['inner'])) {
+                foreach($data['inner'] as $item) {
+                    $this->saveDraftInModel($item, $model->id);
+                }
+                return $this->result('Выгрузка запчастей для сборочного черетежа '.$data['external_id'].' закончена.');
+            }
+        } catch (Exception $e) {
+            $this->result("Исключение: " . $e->getMessage() . "\n");
+            $transaction->rollback();
+            return false;
+        }
+    }
+    
+    private function saveDraftInModel($data, $draftId)
+    {
+        $app = Yii::app();
+        $modelline = ModelLine::model()->find('external_id=:external_id', array(':external_id' => $data['model_line_id']));
+        if($modelline) {
+            $transaction = $app->db_auth->beginTransaction();
+            $element = new DraftInModelLine;
+            $element->draft_id = $draftId;
+            $element->model_line_id = $modelline->id;
+            if($element->save()) {
+                $transaction->commit();
+                return $this->result('Сохранение чертежа для модельного ряда (id = '.$data['model_line_id'].') произошло успешно.');
+            } else {
+                $transaction->rollback();
+                return $this->result($element->getErrors());
+            }
+        } else {
+            return $this->result('Ошибка. Модельный ряд с id='.$data['model_line_id'].' не найден.');
+        }
+    }
+    
+    /*-------- End Set Draft for model --------*/
     /*-------- Set Filial ----------*/
     
     private function setFilial($request)
