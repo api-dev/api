@@ -12,7 +12,8 @@
     <!--a href="#addmodelproduct">Добавление/редактирование отношения товаров (запчастей) к модельным рядам (какие запчасти закреплены за модельным рядом)</a-->
     <a href="#addrelatedproduct">Добавление/редактирование сопутствующих товаров</a>
     <a href="#addanalogproduct">Добавление/редактирование товаров-аналогов</a>
-    <a href="#adddraft">Добавление/редактирование сборочных чертежей</a>
+    <a href="#adddraft">Добавление/редактирование сборочных чертежей для товаров</a>
+    <a href="#adddrafts">Добавление/редактирование сборочных чертежей для моделей</a>
     <a href="#addfilial">Добавление/редактирование филиалов и зон</a>
     <a href="#addcurrency">Добавление/редактирование валюты</a>
     <a href="#addprice">Добавление/редактирование цен запчастей (по филиалам)</a>
@@ -647,7 +648,7 @@
             </pre>        
         </code>
     </div>
-    <h4><a name="adddraft">Добавление/редактирование сборочных чертежей</a></h4>
+    <h4><a name="adddraft">Добавление/редактирование сборочных чертежей для запчастей</a></h4>
     <div class="text">
         <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
         <p>Параметры:</p>
@@ -689,6 +690,41 @@
             data[0][inner][1][level] = '2'
             data[0][inner][1][count] = '1'
             data[0][inner][1][note] = 'Примечание'
+        </pre>
+    </div>
+    <h4><a name="adddrafts">Добавление/редактирование сборочных чертежей для товаров</a></h4>
+    <div class="text">
+        <p><span class="param">URL</span> : api.lbr.ru/shop?m=set</p>
+        <p>Параметры:</p>
+        <ul>
+            <li><span class="param">action</span> - тип передаваемых данных. Принимаемые: <b>draftmodel.</b></li>
+            <li><span class="param">data</span> - массив с данными.</li>
+            <li><br>Принимаемые параметры <span class="param">data</span> при <span class="param">action=draftmodel:</span> </li>
+            <li>
+                <ul class="table">
+                    <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                    <li><span class="param">external_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор сборочного чертежа в системе учета 1С. Уникальный. Обязательный</span></li>
+                    <li><span class="param">name</span> <span class="type">(string)</span> <span class="info">Наименование сборочного чертежа</span></li>
+                    <li><span class="param">image</span> <span class="type">(string)</span> <span class="info">Имя изображения сборочного чертежа (как он будет называться на сайте)</span></li>
+                    <li><span class="param">inner</span> <span class="type">(array)</span> <span class="info">Запчасти, относящиеся к сборочному чертежу:
+                            <ul class="table-inner">
+                                <li><span class="param">Параметр</span> <span class="type"><b>Тип</b></span> <span class="info"><b>Описание</b></span> </li>
+                                <li><span class="param">model_line_id</span> <span class="type">(string)</span> <span class="info">Идентефикатор модели в системе учета 1С. Уникальный. Обязательный</span> </li>
+                            </ul>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="h2">Примеры:</div>
+        <p>Пример добавляет два товара (запчасти) в модельный ряд:</p>
+        <pre style='font-size: 11px;'>
+            action = 'draft'
+            data[0][external_id] = 'MNS-00001088'
+            data[0][name] = 'Ботвоудалитель'
+            data[0][image] = 'MNS-00001088.jpg'
+            data[0][inner][0][model_line_id] = '111111'
+            data[0][inner][1][model_line_id] = '222222'
         </pre>
     </div>
     <h4><a name="addfilial">Добавление/редактирование филиалов и зон</a></h4>
