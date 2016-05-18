@@ -719,7 +719,7 @@
         <div class="h2">Примеры:</div>
         <p>Пример добавляет два товара (запчасти) в модельный ряд:</p>
         <pre style='font-size: 11px;'>
-            action = 'draft'
+            action = 'draftmodel'
             data[0][external_id] = 'MNS-00001088'
             data[0][name] = 'Ботвоудалитель'
             data[0][image] = 'MNS-00001088.jpg'
