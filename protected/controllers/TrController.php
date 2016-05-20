@@ -168,7 +168,7 @@ class TrController extends Controller
                 $attribute = $this->$method($attribute);
                 
                 if($model_name == 'Transport') TrChanges::saveChange($attribute['user_id'], 'Выгрузка из 1С перевозки '.$attribute['t_id']);
-                else if($model_name == 'TrUser') TrChanges::saveChange('0', 'Выгрузка из 1С перевозчика '.$attribute['inn']);
+                else if($model_name == 'TrUser') TrChanges::saveChange('root', 'Выгрузка из 1С перевозчика '.$attribute['inn']);
             } else {
                 if($model_name == 'Transport') {
                     $model->status = 1;
@@ -186,7 +186,7 @@ class TrController extends Controller
                     TrChanges::saveChange($attribute['user_id'], 'Выгрузка из 1С перевозки '.$attribute['t_id'].', т.к. идентификатор перевозки используется повторно, то было удалено '.count($rates).' шт. ставок.');
                     Rate::model()->deleteAll('transport_id = :id', array('id'=>$model->id));
                 } else if($model_name == 'TrUser') {
-                    TrChanges::saveChange('0', 'Выгрузка из 1С перевозчика '.$attribute['inn']);
+                    TrChanges::saveChange('root', 'Выгрузка из 1С перевозчика '.$attribute['inn']);
                 }
             }
             
