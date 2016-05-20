@@ -166,6 +166,9 @@ class TrController extends Controller
                 $model = new $model_name;
                 $method = 'addDefault' . $model_name . 'Collum';
                 $attribute = $this->$method($attribute);
+                
+                Yii::log('Выгрузка перевозчика - '.$model_name, 'info');
+                
                 if($model_name == 'Transport') TrChanges::saveChange($attribute['user_id'], 'Выгрузка из 1С перевозки '.$attribute['t_id']);
                 else if($model_name == 'TrUser') TrChanges::saveChange('0', 'Выгрузка из 1С перевозчика '.$attribute['inn']);
             } else {
@@ -209,7 +212,7 @@ class TrController extends Controller
                         $model->date_from = date('Y-m-d H:i:s', strtotime($attribute['date_from']));
                     } else $model->$name = $attribute[$name];
                     
-                    //Yii::log($name.' = '.$attribute[$name], 'info');
+                    Yii::log($name.' = '.$attribute[$name], 'info');
                 }
             }
             
