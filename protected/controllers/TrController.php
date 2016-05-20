@@ -111,6 +111,7 @@ class TrController extends Controller
     }
 
     private function setOneUser($data) {
+        Yii::log('Выгрузка перевозчика с inn = '.$data['inn'], 'info');
         $id = $this->setOneItem('TrUser', $data, 'inn');
         if ($id) {
             if ($data['persons'])
@@ -178,7 +179,6 @@ class TrController extends Controller
                     $model->date_close_new = null;
                     
                     //$model->save();
-                    
                     
                     $rates = Rate::model()->findAll('transport_id = :id', array('id'=>$model->id));
                     TrChanges::saveChange($attribute['user_id'], 'Выгрузка из 1С перевозки '.$attribute['t_id'].', т.к. идентификатор перевозки используется повторно, то было удалено '.count($rates).' шт. ставок.');
