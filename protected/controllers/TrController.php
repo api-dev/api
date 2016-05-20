@@ -248,7 +248,7 @@ class TrController extends Controller
     }
 
     private function addDefaultTrUserCollum($data) {
-        $data[status] = 1;
+        $data['status'] = 1;
         return $data;
     }
 
