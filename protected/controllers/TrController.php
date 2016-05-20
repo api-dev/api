@@ -212,7 +212,9 @@ class TrController extends Controller
                         $model->date_from = date('Y-m-d H:i:s', strtotime($attribute['date_from']));
                     } else $model->$name = $attribute[$name];
                     
-                    //Yii::log($name.' = '.$attribute[$name], 'info');
+                    if($model_name == 'TrUser') {
+                        Yii::log($name.' = '.$attribute[$name], 'info');
+                    }
                 }
             }
             
