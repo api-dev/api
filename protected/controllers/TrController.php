@@ -167,7 +167,7 @@ class TrController extends Controller
                 $method = 'addDefault' . $model_name . 'Collum';
                 $attribute = $this->$method($attribute);
                 if($model_name == 'Transport') TrChanges::saveChange($attribute['user_id'], 'Выгрузка из 1С перевозки '.$attribute['t_id']);
-                else if($model_name == 'User') TrChanges::saveChange('0', 'Выгрузка из 1С перевозчика '.$attribute['inn']);
+                else if($model_name == 'TrUser') TrChanges::saveChange('0', 'Выгрузка из 1С перевозчика '.$attribute['inn']);
             } else {
                 if($model_name == 'Transport') {
                     $model->status = 1;
