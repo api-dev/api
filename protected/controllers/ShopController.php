@@ -480,9 +480,8 @@ class ShopController extends Controller
             }
             
             if($group->id) {
-                $group->saveNode();
-                //if($group->moveAsLast($root)) 
-                $commit = true;
+                //$group->saveNode();
+                if($group->moveAsLast($root)) $commit = true;
             } else {
                 if($group->appendTo($root)) $commit = true;
             }
