@@ -2,6 +2,7 @@
 <div ng-include="'/tmpl?dir=default&f=templates'"></div>
 <pop-up-save></pop-up-save>
 <pop-up-close></pop-up-close>
+<pop-up-del></pop-up-del>
 <div class="pPanel">
     <div class="onePanel" position="left">
         <div class="group-button">
