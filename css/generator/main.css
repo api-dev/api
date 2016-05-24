@@ -469,31 +469,34 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
   background: url("/images/generator/editor/icons_tools_sprite.png") no-repeat top left;
 }
 .tools .one-tool.move:before {
-  background-position: left -25px;
+  background-position: left -24px;
+}
+.tools .one-tool.delete:before {
+  background-position: left -45px;
 }
 .tools .one-tool.string:before {
-  background-position: left -47px;
-}
-.tools .one-tool.block:before {
   background-position: left -69px;
 }
-.tools .one-tool.image:before {
+.tools .one-tool.block:before {
   background-position: left -90px;
 }
-.tools .one-tool.varible:before {
-  background-position: left -112px;
+.tools .one-tool.image:before {
+  background-position: left -111px;
 }
-.tools .one-tool.header:before {
+.tools .one-tool.varible:before {
   background-position: left -133px;
 }
+.tools .one-tool.header:before {
+  background-position: left -154px;
+}
 .tools .one-tool.title_product:before {
-  background-position: left -149px;
+  background-position: left -170px;
 }
 .tools .one-tool.footer:before {
-  background-position: left -171px;
+  background-position: left -194px;
 }
 .tools .one-tool.page:before {
-  background-position: left -198px;
+  background-position: left -220px;
 }
 .tools .one-tool.hr {
   padding: 0;
@@ -655,7 +658,7 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
 .tree .level-7 > input {
   margin-left: 105px;
 }
-.ui-hover-elem {
+.ui-hover-elem, .ui-delete-elem {
   box-shadow: 0 0 5px #8FC6FC !important;
   background: #8FC6FC !important;
 }
@@ -769,11 +772,7 @@ body.light .panel .bodyClassBut label#label-bodyClass-light {
 .w-7 {
   width: 7%;
   float: left;
-<<<<<<< HEAD
 }
-=======
-}
-
 button {
   cursor: pointer;
 }
@@ -786,6 +785,14 @@ button {
   bottom: 0;
   background: rgba(0,0,0,0.5);
 }
+#popUpDelMsg-bg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.1);
+}
 
 #popUpMsg {
   top: 30%;
@@ -796,8 +803,11 @@ button {
   background: white;
   border-radius: 5px;
   position: absolute;
+  z-index:900;
 }
-
+#popUpDelMsg-bg>#popUpMsg{
+   top: 5%; 
+}
 #popUpMsg .close {
   background: black;
   color: white;
@@ -843,4 +853,3 @@ button {
   float:left;
   margin: 0px 0px 0px 40px;
 }
->>>>>>> test
