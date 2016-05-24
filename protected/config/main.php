@@ -8,6 +8,7 @@
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'API обмена с 1С',
+    'timeZone' => 'Europe/Minsk',
     'sourceLanguage' => 'ru',
     'language' => 'ru',
     'defaultController' => 'default',

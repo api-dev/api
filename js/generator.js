@@ -51,9 +51,8 @@ gFilter.filter('normalDate', function($filter) {
     return function(text) {
         if (text)
         {
-//          var date_r = new Date(text.replace(' ', '\t'));
-            var date_r=new Date(text);
-            return $filter('date')(date_r, "dd.MM.yyyy HH:mm");
+           var date_r = new Date(text.replace(' ', 'T'));
+           return $filter('date')(date_r, "dd.MM.yyyy HH:mm");
         } else {
             return 'Нет даты';
         }
@@ -132,6 +131,7 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
         
         $scope.showPopUpSave = false;
         $scope.showPopUpClose = false;
+        $scope.showPopUpDel=false;
         
         $scope.openPopUpSave = function() {
             $scope.showPopUpSave = true;
@@ -323,6 +323,7 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
         }
 
         $scope.activeLink = '';
+        $scope.activeTarget = '';
         $scope.onClickEvent = function (elem)
 
         {
@@ -351,6 +352,20 @@ gController.controller('KpOneCtrl', ['$scope', '$routeParams', 'Kp', '$http', '$
                             stop: function(event, ui) {
                                 drag.draggable("destroy");
                             }
+                        });
+                    }
+                    break;
+                case 'delete':
+                    if(activeCss.type !== "page"){
+                        $scope.activeLink = ulink;
+                        $scope.activeTarget = target;
+                        if(activeCss.type !== "image"){
+                            $(target).addClass('ui-delete-elem');
+                        } else{
+                            $(target).parent().addClass('ui-delete-elem');
+                        }
+                        $scope.$apply(function() {
+                            $scope.showPopUpDel = true;
                         });
                     }
                     break;
@@ -655,6 +670,35 @@ gController.directive('popUpClose', function(){
     };
 });
 
+gController.directive('popUpDel', function(){
+    return{
+        restrict:'E',
+        scope:false,
+        replace:true,
+        template: '<div id="popUpDelMsg-bg" ng-show="showPopUpDel">'+
+        '<div id="popUpMsg"><div class="close" ng-click="closePopUpDel()">x</div>'+
+        '<div class="content">Удалить выделенный элемент?</div><button class="btn_save" ng-click="deleteElement();">Ok</button>'+
+        '<button class="btn_close" ng-click="closePopUpDel()">Cansel</button></div></div>',
+         controller: function($scope,$location) {
+            $scope.closePopUpDel = function(){
+                $scope.showPopUpDel = false;
+                $($scope.activeTarget).removeClass('ui-delete-elem');
+                $($scope.activeTarget).parent().removeClass('ui-delete-elem');
+                $scope.activeTarget='';
+            }
+            
+            $scope.deleteElement=function(){
+                if ($scope.deleteElem($scope.activeLink)) {
+                    $scope.$apply();
+                    $scope.activeLink="";
+                    $scope.showPopUpDel = false;
+                }
+              
+               
+            }
+         }                                                                                                    
+    };
+});
 /* Services */
 var gService = angular.module('gService', ['ngResource']);
 
